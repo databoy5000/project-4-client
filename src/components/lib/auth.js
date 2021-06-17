@@ -31,3 +31,15 @@ export function isCreator(userId) {
   if (!payload) return false
   return userId === payload.sub
 }
+
+export function isNGO(userType) {
+  const payload = getPayLoad()
+  if (!payload) return false
+  return userType === payload.sub
+}
+
+// export function isHelpSeeker(userType) {
+//   const payload = getPayLoad()
+//   if (!payload) return false
+//   return userType === payload.sub
+// }

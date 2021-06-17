@@ -11,18 +11,19 @@ function Home() {
   const [selectedCrisis, setSelectedCrisis] = React.useState(null)
   const [crises, setCrises] = React.useState(null)
 
-  const [inputHeight, setInputHeight] = React.useState(40)
-  const navHeight = JSON.parse(localStorage.getItem('navHeight'))
+  const navHeight = 70
+  const inputHeight = 150
+  const headerHeight = 50
   
   const viewportWidth = window.innerWidth
-  const viewportHeight = window.innerHeight - (navHeight + inputHeight)
+  const viewportHeight = window.innerHeight - (navHeight + inputHeight + headerHeight)
 
   const [isError, setIsError] = React.useState(false)
   const isLoading = !crises && !isError
 
   const [viewport, setViewport] = React.useState({
-    latitude: 54.405,
-    longitude: 9.431,
+    latitude: 30,
+    longitude: 0,
     width: viewportWidth,
     height: viewportHeight,
     zoom: 1.85,
@@ -31,7 +32,7 @@ function Home() {
   function handleResize() {
     const newWidth = window.innerWidth
     const newHeight = window.innerHeight - (navHeight + inputHeight)
-    console.log(window.innerHeight, window.innerWidth)
+    // console.log(window.innerHeight, window.innerWidth)
     setViewport({ ...viewport, width: newWidth, height: newHeight })
   }
 
@@ -46,21 +47,18 @@ function Home() {
       }
     }
     getData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   React.useEffect(() => {
     window.addEventListener('resize', handleResize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSearch = e => {
     setSearchTerm(e.target.value)
   }
-
-  const getInputHeight = e => {
-    const inputHeight = e.nativeEvent.path[1].offsetHeight
-    setInputHeight(inputHeight)
-  }
-
+  
   const filteredCrises = crises?.filter(crisis => {
     return (
       crisis.location.toLowerCase().includes(searchTerm) ||
@@ -76,7 +74,7 @@ function Home() {
         <h3>World Response Crises Organisation</h3>
       </div>
       {isLoading && <p>...map is loading</p>}
-      <div onFocus={getInputHeight}>
+      <div>
         <input 
           className="form-control"
           type="text"
@@ -84,17 +82,50 @@ function Home() {
           onChange={handleSearch}
           value={searchTerm || ''}
         />
-
       </div>
-      <ReactMapGl
-        {...viewport}
-        mapboxApiAccessToken={publicToken}
-        map
-        onViewportChange={viewport => {
-          setViewport(viewport)
-        }}
+      <div 
+        onClick={handleResize}
       >
-      </ReactMapGl>
+        <ReactMapGl
+          {...viewport}
+          mapboxApiAccessToken={publicToken}
+          onViewportChange={viewport => {
+            setViewport(viewport)
+          }}
+        >
+          {filteredCrises && filteredCrises.map(crisis =>
+            <Marker
+              key={crisis.id}
+              longitude={crisis.location.coordinates[0]}
+              latitude={crisis.location.coordinates[1]}
+            >
+              <button
+                onClick={e => {
+                  e.preventDefault()
+                  setSelectedCrisis(crisis)
+                }}
+              >
+                <img 
+                  height="50px"
+                  width="40px"
+                  src="https://i.imgur.com/BiPApuW.jpg"
+                  alt="3rd red marker"
+                />
+              </button>
+            </Marker>
+          )}
+          {selectedCrisis && (
+            <Popup
+              longitude={selectedCrisis.location.coordinates[0]}
+              latitude={selectedCrisis.location.coordinates[1]}
+            >
+              <h3>{selectedCrisis.location.country}</h3>
+              <h5>{selectedCrisis.disasterType}</h5>
+              <Link to={`${baseUrl}/crises/${selectedCrisis.id}`}>Go to crisis page</Link>
+            </Popup>
+          )}
+        </ReactMapGl>
+      </div>
     </section>
   )
 }
