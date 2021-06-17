@@ -13,8 +13,18 @@ function Navbar() {
     history.push('/')
   }
 
+  const getHeight = (e) => {
+    console.log(e)
+    const navHeight = 0
+    localStorage.setItem('navHeight', JSON.stringify(navHeight))
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark bg-dark"
+      // className="navbar"
+      onOnline={getHeight}
+    >
       <div className="d-flex container-fluid">
         <Link to="/" className="navbar-brand">WoRCO</Link>
         <div className="collapse navbar-collapse">
@@ -36,6 +46,7 @@ function Navbar() {
           }
         </div>
       </div>
+      
     </nav>
   )
 }
