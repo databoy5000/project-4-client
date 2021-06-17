@@ -1,23 +1,28 @@
-import React from 'react'
+import { useState } from 'react' 
 
-export default function useForm(initialState) {
-  const [formdata, setFormdata] = React.useState(initialState)
-  const [formErrors, setFormErrors] = React.useState(initialState)
-  const handleChange = e => {
-    setFormdata({ ...formdata, [e.target.name]: e.target.value })
+export default function useForm(initialState, initialFormError) {
+
+  if (!initialFormError) {
+    initialFormError = initialState
+  }
+  
+  const [formData, setFormData] = useState(initialState)
+  const [formErrors, setFormErrors] = useState(initialFormError)
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
     setFormErrors({ ...formErrors, [e.target.name]: '' })
   }
 
-  const handleMultiSelect = selectedItems => {
-    const values = selectedItems ? selectedItems.map(item => item.value) : []
-    setFormdata({ ...formdata, categories: values }
+  const handleMultiSelect = (selectedItems) => {
+    const values = selectedItems ? selectedItems.map( (item) => item.value) : []
+    setFormData({ ...formData, categories: values }
     )
   }
 
   return {
-    formdata,
+    formData,
     formErrors,
-    setFormdata,
+    setFormData,
     setFormErrors,
     handleChange,
     handleMultiSelect,
