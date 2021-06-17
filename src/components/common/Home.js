@@ -1,8 +1,14 @@
 import React from 'react'
+<<<<<<< HEAD
+// import { Link } from 'react-router-dom'
+import ReactMapGl, { Marker, Popup } from 'react-map-gl'
+import axios from 'axios'
+=======
 import { Link } from 'react-router-dom'
 import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import axios from 'axios'
 
+>>>>>>> development
 import { baseUrl } from '../lib/api'
 import { publicToken } from '../lib/mapbox'
 
@@ -69,6 +75,7 @@ function Home() {
 
   return (
     <section>
+
       <div>
         <h1>WoRCO</h1>
         <h3>World Response Crises Organisation</h3>
@@ -127,7 +134,7 @@ function Home() {
         </ReactMapGl>
       </div>
     </section>
+
   )
 }
-
 export default Home
