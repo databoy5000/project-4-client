@@ -7,15 +7,6 @@ import { About } from './components/common/About'
 import Navbar from './components/common/Navbar'
 
 function App() {
-  React.useEffect(() => {
-    const getData = async () => {
-      const res = await fetch('/api/crises')
-      const data = await res.json()
-      console.log(data)
-    }
-    getData()
-  })
-
   return (
     <Router>
       <Navbar />

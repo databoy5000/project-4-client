@@ -12,8 +12,17 @@ function Navbar() {
     history.push('/')
   }
 
+  const getHeight = e => {
+    const navHeight = e.nativeEvent.path[4].offsetHeight
+    console.log()
+    localStorage.setItem('navHeight', JSON.stringify(navHeight))
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav 
+      onLoad={getHeight}
+      className="navbar navbar-expand-lg navbar-dark bg-dark"
+    >
       <div className="d-flex container-fluid">
         <Link to="/" className="navbar-brand">WoRCO</Link>
         <div className="collapse navbar-collapse">
