@@ -9,15 +9,6 @@ import Navbar from './components/common/Navbar'
 import CrisisCreate from './components/crises/CrisisCreate'
 
 function App() {
-  useEffect(() => {
-    const getData = async () => {
-      const res = await fetch('/api/crises')
-      const data = await res.json()
-      console.log(data)
-    }
-    getData()
-  })
-
   return (
     <Router>
       <Navbar />
