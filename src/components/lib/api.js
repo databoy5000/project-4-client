@@ -1,7 +1,15 @@
 import axios from 'axios'
 import { getToken } from './auth'
 
-const baseUrl = '/api'
+export const baseUrl = '/api'
+export const crisesPath = 'crises'
+export const resourcesPath = 'resources'
+export const registerPath = 'register'
+export const loginPath = 'login'
+export const typesPath = 'types'
+export const authPath = 'auth'
+
+
 
 function headers() {
   return {
@@ -9,30 +17,42 @@ function headers() {
   }
 }
 
+
+// * --- Crises
 export function getAllCrises() {
-  return axios.get(`${baseUrl}/crises`)
+  return axios.get(`${baseUrl}/${crisesPath}`)
 }
 
 export function getSingleCrisis(crisisId) {
-  return axios.get(`${baseUrl}/crises/${crisisId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${crisisId}`)
 }
 
 export function createCrisis(formdata) {
-  return axios.post(`${baseUrl}/crises`, formdata, headers())
+  return axios.post(`${baseUrl}/${crisesPath}/`, formdata, headers())
 }
 
 export function editCrisis(crisisId, formdata) {
-  return axios.put(`${baseUrl}/crises/${crisisId}`, formdata, headers())
+  return axios.put(`${baseUrl}/${crisesPath}/${crisisId}/`, formdata, headers())
 }
 
 export function deleteCrisis(crisisId) {
-  return axios.delete(`${baseUrl}/crises/${crisisId}`, headers())
+  return axios.delete(`${baseUrl}/${crisesPath}/${crisisId}/`, headers())
 }
 
+// * --- Resources
+export function getDisasterTypes() {
+  return axios.get(`${baseUrl}/${crisesPath}/${typesPath}/`)
+}
+
+export function getResourceNamesTypes() {
+  return axios.get(`${baseUrl}/${crisesPath}/${resourcesPath}/`)
+}
+
+// * --- Authentication
 export function registerUser(formdata) {
-  return axios.post(`${baseUrl}/register`, formdata)
+  return axios.post(`${baseUrl}/${authPath}/${registerPath}/`, formdata)
 }
 
 export function loginUser(formdata) {
-  return axios.post(`${baseUrl}/login`, formdata)
+  return axios.post(`${baseUrl}/${authPath}/${loginPath}/`, formdata)
 }

@@ -1,11 +1,10 @@
-import React from 'react'
 import useForm from '../hooks/useForm'
 import { registerUser } from '../lib/api'
 import { useHistory } from 'react-router-dom'
 
 function Register() {
   const history = useHistory()
-  const { formdata, formErrors, setFormErrors, handleChange } = useForm({
+  const { formData, formErrors, setFormErrors, handleChange } = useForm({
     userType: '',
     country: '',
     username: '',
@@ -18,7 +17,7 @@ function Register() {
     e.preventDefault()
 
     try {
-      await registerUser(formdata)
+      await registerUser(formData)
       history.push('/login')
     } catch (err) {
       setFormErrors(err.response.data.errors)
@@ -26,7 +25,7 @@ function Register() {
     }
   }
 
-  console.log('formdata', formdata)
+  console.log('formdata', formData)
 
   return (
     <section>
@@ -45,7 +44,7 @@ function Register() {
               // id="userType"
               value="Help-seeker"
               onChange={handleChange}
-              checked={formdata.userType === 'Help-seeker'}
+              checked={formData.userType === 'Help-seeker'}
             />
             <label className="form-check-label">
               Help-seeker
@@ -59,7 +58,7 @@ function Register() {
               // id="userType"
               value="NGO"
               onChange={handleChange}
-              checked={formdata.userType === 'NGO'}
+              checked={formData.userType === 'NGO'}
             />
             <label className="form-check-label">
               NGO

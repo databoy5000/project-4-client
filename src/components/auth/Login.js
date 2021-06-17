@@ -7,7 +7,7 @@ import { setToken } from '../lib/auth'
 function Login() {
   const history = useHistory()
   const [isError, setIsError] = React.useState(false)
-  const { formdata, handleChange } = useForm({
+  const { formData, handleChange } = useForm({
     email: '',
     password: '',
   })
@@ -16,10 +16,11 @@ function Login() {
     e.preventDefault()
 
     try {
-      const res = await loginUser(formdata)
+      const res = await loginUser(formData)
       setToken(res.data.token)
       history.push('/')
     } catch (err) {
+      console.log('err.response.data: ', err.response.data)
       setIsError(true)
     }
   }
@@ -29,6 +30,7 @@ function Login() {
 
   return (
     <section className="">
+      {console.log('formData: ', formData)}
       <form 
         className=""
         onSubmit={handleSubmit}
