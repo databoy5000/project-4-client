@@ -1,3 +1,5 @@
+const userTypes = ['Help-seeker', 'NGO']
+
 export function setToken(token) {
   window.localStorage.setItem('token', token)
 }
@@ -20,7 +22,6 @@ export function getPayLoad() {
 
 export function isAuthenticated() {
   const payload = getPayLoad()
-  console.log('payload: ', payload)
   if (!payload) return false
   const now = Math.round(Date.now() / 1000)
   return now < payload.exp
@@ -32,10 +33,11 @@ export function isCreator(userId) {
   return userId === payload.sub
 }
 
-export function isNGO(userType) {
+export function isNGO() {
   const payload = getPayLoad()
   if (!payload) return false
-  return userType === payload.sub
+  console.log('payload.type: ', payload.type)
+  return userTypes[1] === payload.type
 }
 
 // export function isHelpSeeker(userType) {
