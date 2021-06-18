@@ -1,14 +1,21 @@
 import { Redirect, Route } from 'react-router'
-import { isAuthenticated, removeToken } from '../lib/auth'
+import { isAuthenticated, isNGO, removeToken } from '../lib/auth'
 
-function SecureRoute({ component: Component, ...rest }) {
+export function SecureRoute({ component: Component, ...rest }) {
   if (!isAuthenticated()) {
     removeToken()
     return (
       <Redirect to="/login"/>
     )
   }
-  return <Route {...rest} component={Component} />
+  return <Route {...rest} component={Component}/>
 }
 
-export default SecureRoute
+export function NGOSecureRoute({ component: Component, ...rest }) {
+  if (!isNGO()) {
+    return (
+      <Redirect to="/"/>
+    )
+  }
+  return <Route {...rest} component={Component}/>
+}

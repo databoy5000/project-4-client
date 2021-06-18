@@ -8,6 +8,7 @@ function Register() {
     userType: '',
     country: '',
     username: '',
+    profilePictureUrl: '',
     email: '',
     password: '',
     passwordConfirmation: '',
@@ -16,12 +17,16 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (formData.userType === 'NGO') {
+      formData.country = ''
+    }
+    console.log('submitted formdata', formData)
     try {
       await registerUser(formData)
       history.push('/login')
     } catch (err) {
-      setFormErrors(err.response.data.errors)
-      console.log(err.response.data.errors)
+      console.log(err.response.data)
+      setFormErrors(err.response.data)
     }
   }
 
@@ -41,7 +46,6 @@ function Register() {
               type="radio"
               className="form-check-input"
               name="userType"
-              // id="userType"
               value="Help-seeker"
               onChange={handleChange}
               checked={formData.userType === 'Help-seeker'}
@@ -55,7 +59,6 @@ function Register() {
               type="radio"
               className="form-check-input"
               name="userType"
-              // id="userType"
               value="NGO"
               onChange={handleChange}
               checked={formData.userType === 'NGO'}
@@ -65,21 +68,25 @@ function Register() {
             </label>
           </div>
         </div>
+        {formData.userType === 'Help-seeker' ?
+          <div className="mb-3">
+            <label className="form-label">As a help-seeker, please enter your country:</label>
+            <input 
+              className="form-control" 
+              name="country"
+              id="country"
+              placeholder="Country"
+              onChange={handleChange}
+            />
+            {formErrors.country && ( 
+              <p className="">{formErrors.country}</p>
+            )}
+          </div>
+          :
+          ''
+        }
         <div className="mb-3">
-          <label className="form-label">If help-seeker, please enter your country:</label>
-          <input 
-            className="form-control" 
-            name="country"
-            id="country"
-            placeholder="Country"
-            onChange={handleChange}
-          />
-          {formErrors.country && ( 
-            <p className="">{formErrors.country}</p>
-          )}
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Username</label>
+          <label className="form-label" htmlFor="username">Username</label>
           <input 
             className="form-control" 
             name="username"
@@ -88,7 +95,20 @@ function Register() {
             onChange={handleChange}
           />
           {formErrors.username && ( 
-            <p className="">{formErrors.username}</p>
+            <p>{formErrors.username}</p>
+          )}
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="profilePictureUrl">Profile picture url:</label>
+          <input 
+            className="form-control" 
+            name="profilePictureUrl"
+            id="profilePictureUrl"
+            placeholder="profilePictureUrl"
+            onChange={handleChange}
+          />
+          {formErrors.profilePictureUrl && ( 
+            <p>{formErrors.profilePictureUrl}</p>
           )}
         </div>
         <div className="mb-3">

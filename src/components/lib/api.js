@@ -9,8 +9,6 @@ export const loginPath = 'login'
 export const typesPath = 'types'
 export const authPath = 'auth'
 
-
-
 function headers() {
   return {
     headers: { Authorization: `Bearer ${getToken()}` },
