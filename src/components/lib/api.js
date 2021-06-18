@@ -17,7 +17,6 @@ function headers() {
   }
 }
 
-
 // * --- Crises
 export function getAllCrises() {
   return axios.get(`${baseUrl}/${crisesPath}`)
@@ -25,6 +24,10 @@ export function getAllCrises() {
 
 export function getSingleCrisis(crisisId) {
   return axios.get(`${baseUrl}/${crisesPath}/${crisisId}`)
+}
+
+export function getUserCrisis(userId) {
+  return axios.get(`${baseUrl}/${crisesPath}/${userId}`)
 }
 
 export function createCrisis(formdata) {

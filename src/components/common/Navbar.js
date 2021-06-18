@@ -38,6 +38,7 @@ function Navbar() {
             :
             <>
               <div>
+                <Link className="btn text-light btn-outline-light m-2" to="/dashboard">My Dashboard</Link>
                 <Link className="btn text-light btn-outline-light m-2" to="/createcrisis">New Crisis</Link>
                 <button className="btn text-light btn-outline-light m-2" onClick={handleLogout}>Log out</button>
               </div>

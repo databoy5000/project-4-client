@@ -4,47 +4,48 @@ export const crisisForm = {
   longitude: '',
   latitude: '',
   placeName: '',
+  country: '',
   disasterDescription: '',
   requests: [
     {
       resource: 1,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 2,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 3,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 4,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 5,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 6,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 7,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 8,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 9,
-      quantity: 0,
+      quantity: '',
     },
     {
       resource: 10,
-      quantity: 0,
+      quantity: '',
     }
   ],
 }
@@ -57,5 +58,36 @@ export const crisisErrorForm = {
   placeName: '',
   country: '',
   disasterDescription: '',
-  requests: '',
+  requests: [
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    },
+    {
+      quantity: '',
+    }
+  ],
 }

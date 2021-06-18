@@ -10,7 +10,7 @@ export function removeToken() {
   window.localStorage.removeItem('token')
 }
 
-function getPayLoad() {
+export function getPayLoad() {
   const token = getToken()
   if (!token) return false
   const parts = token.split('.')

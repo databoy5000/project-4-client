@@ -33,8 +33,7 @@ function CrisisCreate() {
         setMaterialResources(materialResources)
 
       } catch (err) {
-        console.log('err.response.data: ', err.response.data)
-        setFormErrors({ ...crisisErrorForm, apiError: err.response.data })
+        setFormErrors({ ...formErrors, apiError: err.response.data })
       }
     }
     getData()
@@ -53,17 +52,21 @@ function CrisisCreate() {
   }
 
   const handleResult = (e) => {
-
-    function getCountry(resultArray) {
-      const hierarchyLastIndex = resultArray[resultArray.length - 1]
+    
+    function getCountry() {
+      if (e.place_type[0] === 'country') {
+        return e.place_type[0]
+      }
+      const hierarchyLastIndex = e.context[e.context.length - 1]
       const technicallyACountryName = hierarchyLastIndex.text
       return technicallyACountryName
     }
+    
     setFormData({ ...formData,
-      placeName: e.text,
-      country: getCountry(e.context),
       longitude: e.center[0],
       latitude: e.center[1],
+      placeName: e.text,
+      country: getCountry(),
     })
   }
 
@@ -77,27 +80,47 @@ function CrisisCreate() {
       // ! Send to user dashboard
       // history.push('/dashboard')
     } catch (err) {
-      console.log(err.response.data)
-      // ! doesn't work the way we want it to
       setFormErrors(err.response.data)
     }
   }
 
+  const handleFormError = (e, index, resourceType) => {
+
+    if (e.target.name !== 'request') {
+      setFormErrors({ ...formErrors, [e.target.name]: '' })
+    } else {
+
+      let currentIndex = index
+
+      if (resourceType === 'Material') {
+        currentIndex = index + 5
+      }
+
+      const requestsCopy = [ ...formErrors.requests ]
+      requestsCopy[currentIndex].quantity = ''
+      setFormErrors({ ...formErrors, requests: requestsCopy })
+    }
+  }
+
+
   return (
     <>
-      {console.log('formData: ', formData)}
-      {console.log('formErrors: ', formErrors)}
-
       <form
         className=""
         onSubmit={handleSubmit}
       >
         <div className="form-group row">
-          <label className="col-sm-2 col-form-label">Disaster type:</label>
+          <label className="col-sm-2 col-form-label">
+            Disaster type:
+          </label>
           <select
-            className="form-control"
+            className={`
+              form-control
+              ${formErrors.disasterType ? 'is-invalid' : ''}
+            `}
             name="disasterType"
             onChange={handleChange}
+            onBlur={handleFormError}
           >
             <option value="">--------</option>
             {disasterTypes &&
@@ -106,51 +129,71 @@ function CrisisCreate() {
               ))
             }
           </select>
+          <p className="invalid-feedback">Select a disaster type.</p>
         </div>
 
         <div className="form-group row">
           <label className="col-sm-2 col-form-label">Disaster location:</label>
           <input
-            className="form-control"
+            className={`
+              form-control
+              ${formErrors.latitude || formErrors.longitude ? 'is-invalid' : ''}
+            `}
             type="text"
             placeholder="Enter disaster area on map"
             name="placeName"
-            onChange={() => {
-              setFormErrors({ ...crisisErrorForm, placeName: '' })
-            }}
+            onBlur={handleFormError}
             value={formData.placeName || ''}
             onSubmit={handleResult}
-            required
             disabled
           />
+          <p className="invalid-feedback">
+            {formErrors.longitude || formErrors.latitude ? 'A location is required' : ''}
+          </p>
         </div>
 
         <div className="form-group row">
           <label className="col-sm-2 col-form-label">Disaster description:</label>
           <textarea
-            className="form-control"
+            className={`
+              form-control
+              ${formErrors.disasterDescription ? 'is-invalid' : ''}
+            `}
             type="text"
             placeholder="Description"
             name="disasterDescription"
             onChange={handleChange}
-            required
+            onBlur={handleFormError}
           />
+          <p className="invalid-feedback">
+            {formErrors.disasterDescription}
+          </p>
         </div>
         
         <h2>Tell NGOs how many of each resources you need!</h2>
 
         <div className="form-group row">
           {humanResources &&
-            humanResources.map( (resource) => (
+            humanResources.map( (resource, index) => (
               <div className={resource.resourceType} key={resource.id}>
-                <label className="col-sm-2 col-form-label">{resource.resourceName}s:</label>
+                <label className="col-sm-2 col-form-label">
+                  {resource.resourceName}s:
+                </label>
                 <input
-                  className="form-control"
+                  className={`
+                    form-control
+                    ${formErrors.requests[index].quantity ? 'is-invalid' : ''}
+                  `}
                   type="number"
                   id={resource.id}
+                  name="request"
                   placeholder="Enter number"
                   onChange={handleNestedChange}
-                  required/>
+                  onBlur={(e) => handleFormError(e, index, resource.resourceType)}
+                />
+                <p className="invalid-feedback">
+                  {formErrors.requests[index].quantity}
+                </p>
               </div>
             ))
           }
@@ -158,17 +201,24 @@ function CrisisCreate() {
 
         <div className="form-group row">
           {materialResources &&
-            materialResources.map( (resource) => (
+            materialResources.map( (resource, index) => (
               <div className={resource.resourceType} key={resource.id}>
                 <label className="col-sm-2 col-form-label">{resource.resourceName}</label>
                 <input
-                  className="form-control"
+                  className={`
+                    form-control
+                    ${formErrors.requests[index + 5].quantity ? 'is-invalid' : ''}
+                  `}
                   type="number"
                   id={resource.id}
+                  name="request"
                   placeholder="Enter number"
                   onChange={handleNestedChange}
-                  required
+                  onBlur={(e) => handleFormError(e, index, resource.resourceType)}
                 />
+                <p className="invalid-feedback">
+                  {formErrors.requests[index + 5].quantity}
+                </p>
               </div>
             ))
           }
