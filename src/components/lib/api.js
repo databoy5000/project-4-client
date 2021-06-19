@@ -16,6 +16,8 @@ function headers() {
   }
 }
 
+console.log(headers())
+
 // * --- Crises
 export function getAllCrises() {
   return axios.get(`${baseUrl}/${crisesPath}`)
@@ -51,7 +53,7 @@ export function getResourceNamesTypes() {
 }
 
 export function createNGOResources(formdata) {
-  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}`, formdata, headers())
+  return axios.post(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, formdata, headers())
 }
 
 // * --- Authentication

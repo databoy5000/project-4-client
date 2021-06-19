@@ -1,5 +1,3 @@
-@import "~bootstrap/scss/bootstrap";
-
 .form-control {
   width: 40%;
 }
@@ -18,3 +16,10 @@
   border-bottom: 1px solid #D7DBDA;
   padding-bottom: 10px;;
 }
+
+.bg-darker-colour {
+  background-color: rgb(226, 226, 217);
+}
+
+
+@import "~bootstrap/scss/bootstrap";
