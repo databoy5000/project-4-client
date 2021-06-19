@@ -54,7 +54,7 @@ function CrisisCreate() {
     
     function getCountry() {
       if (e.place_type[0] === 'country') {
-        return e.place_type[0]
+        return e.text
       }
       const hierarchyLastIndex = e.context[e.context.length - 1]
       const technicallyACountryName = hierarchyLastIndex.text
