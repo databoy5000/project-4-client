@@ -44,7 +44,17 @@
   position: relative;
   top: -100%;
   width: 300%;
-}  
+}
+
+.selectedPin {
+  background-color: var(--pulsating-dot, #1784dd);
+  height: 25px;
+  width: 25px;
+}
+
+.selectedPin:before {
+  background-color: var(--pulsating-dot, #1784dd);
+}
 
 @keyframes pulseRing {
   0% { transform: scale(.5); }

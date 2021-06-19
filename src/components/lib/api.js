@@ -51,7 +51,11 @@ export function getResourceNamesTypes() {
 }
 
 export function createNGOResources(formdata) {
-  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}`, formdata, headers())
+  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, formdata, headers())
+}
+
+export function getUserNGOResources() {
+  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, headers())
 }
 
 // * --- Authentication

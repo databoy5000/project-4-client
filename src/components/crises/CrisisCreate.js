@@ -55,7 +55,7 @@ function CrisisCreate() {
     
     function getCountry() {
       if (e.place_type[0] === 'country') {
-        return e.place_type[0]
+        return e.text
       }
       const hierarchyLastIndex = e.context[e.context.length - 1]
       const technicallyACountryName = hierarchyLastIndex.text
@@ -181,7 +181,6 @@ function CrisisCreate() {
                 <label className="col-sm-2 col-form-label">
                   {resource.resourceName}s:
                 </label>
-                {console.log('formErrors: ', formErrors)}
                 <input
                   className={`
                     form-control

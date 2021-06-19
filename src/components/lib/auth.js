@@ -14,7 +14,6 @@ export function removeToken() {
 
 export function getPayLoad() {
   const token = getToken()
-  console.log('token: ', token)
   if (!token) return false
   const parts = token.split('.')
   if (parts.length < 3) return false
@@ -37,6 +36,5 @@ export function isCreator(userId) {
 export function isNGO() {
   const payload = getPayLoad()
   if (!payload) return false
-  console.log('payload.type: ', payload.type)
   return userTypes[1] === payload.type
 }

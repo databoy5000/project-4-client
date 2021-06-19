@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import axios from 'axios'
 
-import { baseUrl } from '../lib/api'
+import { baseUrl, crisesPath } from '../lib/api'
 import { publicToken } from '../lib/mapbox'
 
 function Home() {
+  
   const [searchTerm, setSearchTerm] = React.useState('')
   const [selectedCrisis, setSelectedCrisis] = React.useState(null)
   const [crises, setCrises] = React.useState(null)
@@ -61,9 +62,9 @@ function Home() {
     
   const filteredCrises = crises?.filter(crisis => {
     return (
-      crisis.location.toLowerCase().includes(searchTerm) ||
+      crisis.placeName.toLowerCase().includes(searchTerm) ||
       crisis.disasterType.toLowerCase().includes(searchTerm) ||
-      crisis.description.toLowerCase().includes(searchTerm)
+      crisis.disasterDescription.toLowerCase().includes(searchTerm)
     )
   })
 
@@ -96,8 +97,8 @@ function Home() {
           {filteredCrises && filteredCrises.map(crisis =>
             <Marker
               key={crisis.id}
-              longitude={crisis.location.coordinates[0]}
-              latitude={crisis.location.coordinates[1]}
+              longitude={Number(crisis.longitude)}
+              latitude={Number(crisis.latitude)}
             >
               <button
                 onClick={e => {
@@ -116,12 +117,12 @@ function Home() {
           )}
           {selectedCrisis && (
             <Popup
-              longitude={selectedCrisis.location.coordinates[0]}
-              latitude={selectedCrisis.location.coordinates[1]}
+              longitude={Number(selectedCrisis.longitude)}
+              latitude={Number(selectedCrisis.latitude)}
             >
               <h3>{selectedCrisis.location.country}</h3>
               <h5>{selectedCrisis.disasterType}</h5>
-              <Link to={`${baseUrl}/crises/${selectedCrisis.id}`}>Go to crisis page</Link>
+              <Link to={`${baseUrl}/${crisesPath}/${selectedCrisis.id}`}>Go to crisis page</Link>
             </Popup>
           )}
         </ReactMapGl>

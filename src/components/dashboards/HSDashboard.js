@@ -12,6 +12,7 @@ function HSDashboard() {
   const history = useHistory()
 
   const [ userCrises, setUserCrises ] = useState(null)
+  const [ selectedCrisisId, setSelectedCrisisId ] = useState(null)
 
   useEffect( () => {
     const getData = async () => {
@@ -36,15 +37,13 @@ function HSDashboard() {
     history.push(`/${crisesPath}/${crisisId}`)
   }
 
-  // const handlePinData = () => {
-  //   passData(userCrises)
-  // }
-
+  const handlePin = (e) => {
+    setSelectedCrisisId(e.target.id)
+  }
 
   return (
     <>
       <div className="crisis-list">
-
         <table className="table hs-dashboard-table">
           <thead>
             <tr>
@@ -63,13 +62,18 @@ function HSDashboard() {
                 <tr
                   key={crisis.id}
                   className="crisis-row"
-                  // onClick={handlePin}
+                  onClick={handlePin}
                 >
-                  <th scope="row">{index}</th>
-                  <td>{crisis.disasterType}</td>
-                  <td>{crisis.placeName}</td>
-                  <td>{crisis.country}</td>
-                  <td>{crisis.isSolve ? 'Ongoing' : 'Classified'}</td>
+                  <th
+                    scope="row"
+                    id={crisis.id}
+                  >
+                    {index}
+                  </th>
+                  <td id={crisis.id}>{crisis.disasterType}</td>
+                  <td id={crisis.id}>{crisis.placeName}</td>
+                  <td id={crisis.id}>{crisis.country}</td>
+                  <td id={crisis.id}>{crisis.isSolved ? 'Classified' : 'Ongoing' }</td>
                   <td>
                     <button onClick={ () => handleClick(crisis.id)}>
                       See Details
@@ -83,8 +87,7 @@ function HSDashboard() {
         {!userCrises &&
           <div className={ !userCrises ? 'div-no-data' : '' }>* No data to display *</div>
         }
-        {console.log('---userCrises: ', userCrises)}
-        <MapGL crises={userCrises} />
+        <MapGL crises={userCrises} selectedCrisisId={selectedCrisisId} />
 
       </div>
     </>

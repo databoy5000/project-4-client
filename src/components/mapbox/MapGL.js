@@ -4,7 +4,7 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 import { publicToken } from '../lib/mapbox'
 
 
-function MapGL({ crises }) {
+function MapGL({ crises, selectedCrisisId }) {
 
   const mapRef = useRef()
 
@@ -51,7 +51,8 @@ function MapGL({ crises }) {
 
   return (
     <div>
-      {console.log('***crises: ', crises)}
+      {/* {console.log('***crises: ', crises)}
+      {console.log('selectedCrisisId: ', selectedCrisisId)} */}
       {isMapBoxLoading && '... loading map!'}
       {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
 
@@ -71,10 +72,19 @@ function MapGL({ crises }) {
             key={crisis.id}
             latitude={Number(crisis.latitude)}
             longitude={Number(crisis.longitude)}
-            offsetLeft={-8}
-            offsetTop={-8}
+            offsetLeft={-12}
+            offsetTop={-12}
           >
-            <div className="pulsatingDot"></div>
+            <div
+              className={`pulsatingDot
+                ${selectedCrisisId &&
+                  Number(selectedCrisisId) === crisis.id ?
+      'selectedPin'
+      :
+      ''
+    }`
+              }
+            />
           </Marker>
         )}
       </ReactMapGL>
