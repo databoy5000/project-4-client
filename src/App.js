@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-// import Home from './components/common/Home'
+import Home from './components/common/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import { About } from './components/common/About'
@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
-        {/* <Route exact path="/" component={Home}/> */}
+        <Route exact path="/" component={Home}/>
         <Route path="/about" component={About}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>

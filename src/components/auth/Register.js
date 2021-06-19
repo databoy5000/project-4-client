@@ -1,10 +1,11 @@
 import useForm from '../hooks/useForm'
 import { registerUser } from '../lib/api'
 import { useHistory } from 'react-router-dom'
+import ImageUpload from '../hooks/imageUpload'
 
 function Register() {
   const history = useHistory()
-  const { formData, formErrors, setFormErrors, handleChange } = useForm({
+  const { formData, formErrors, setFormErrors, handleChange, handleImageUpload } = useForm({
     userType: '',
     country: '',
     username: '',
@@ -99,14 +100,7 @@ function Register() {
           )}
         </div>
         <div className="mb-3">
-          <label className="form-label" htmlFor="profilePictureUrl">Profile picture url:</label>
-          <input 
-            className="form-control" 
-            name="profilePictureUrl"
-            id="profilePictureUrl"
-            placeholder="profilePictureUrl"
-            onChange={handleChange}
-          />
+          <ImageUpload onUpload={handleImageUpload} />
           {formErrors.profilePictureUrl && ( 
             <p>{formErrors.profilePictureUrl}</p>
           )}

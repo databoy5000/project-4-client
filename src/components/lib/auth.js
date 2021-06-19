@@ -35,11 +35,5 @@ export function isCreator(userId) {
 export function isNGO(userType) {
   const payload = getPayLoad()
   if (!payload) return false
-  return userType === payload.sub
+  return userType === payload.type
 }
-
-// export function isHelpSeeker(userType) {
-//   const payload = getPayLoad()
-//   if (!payload) return false
-//   return userType === payload.sub
-// }

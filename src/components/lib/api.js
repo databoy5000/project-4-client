@@ -8,6 +8,7 @@ export const registerPath = 'register'
 export const loginPath = 'login'
 export const typesPath = 'types'
 export const authPath = 'auth'
+export const ngoResourcesPath = 'ngo_resources'
 
 function headers() {
   return {
@@ -47,6 +48,10 @@ export function getDisasterTypes() {
 
 export function getResourceNamesTypes() {
   return axios.get(`${baseUrl}/${crisesPath}/${resourcesPath}/`)
+}
+
+export function createNGOResources(formdata) {
+  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}`, formdata, headers())
 }
 
 // * --- Authentication

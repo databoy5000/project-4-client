@@ -19,6 +19,10 @@ export default function useForm(initialState, initialFormError) {
     setFormData({ ...formData, categories: values })
   }
 
+  const handleImageUpload = file => {
+    setFormData({ ...formData, profilePictureUrl: file })
+  }
+
   return {
     formData,
     formErrors,
@@ -26,5 +30,6 @@ export default function useForm(initialState, initialFormError) {
     setFormErrors,
     handleChange,
     handleMultiSelect,
+    handleImageUpload,
   }
 }
