@@ -3,6 +3,7 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 
 import { publicToken } from '../lib/mapbox'
 
+
 function MapGL({ crises }) {
 
   const mapRef = useRef()
@@ -65,35 +66,17 @@ function MapGL({ crises }) {
       >
 
         {!crises && 'Loading map information!'}
-        {crises && (crises.map( crisis => 
+        {crises && crises.map( (crisis) => 
           <Marker
             key={crisis.id}
             latitude={Number(crisis.latitude)}
             longitude={Number(crisis.longitude)}
+            offsetLeft={-8}
+            offsetTop={-8}
           >
-            <>
-              {console.log('crisis: ', crisis)}
-              {console.log('crisis.latitude: ', crisis.latitude)}
-              {console.log('crisis.longitude: ', crisis.longitude)}
-            </>
-            <button
-              className="mapButton"
-              // onClick={(e) => {
-              //   e.preventDefault()
-              //   setSelectedMemory(memory)
-              // }}
-            >
-
-              <img
-                className="map-pin"
-                src={'../../images/mapbox-icon.png'}
-                alt="location pin"
-              />
-
-            </button>
-            
+            <div className="pulsatingDot"></div>
           </Marker>
-        ))}
+        )}
       </ReactMapGL>
 
     </div>
