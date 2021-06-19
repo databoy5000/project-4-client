@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-// import { Marker } from 'react-map-gl'
 
 import { getUserCrisis } from '../lib/api'
 import { crisesPath } from '../lib/api'
