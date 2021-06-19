@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Marker } from 'react-map-gl'
+// import { Marker } from 'react-map-gl'
 
 import { getUserCrisis } from '../lib/api'
 import { crisesPath } from '../lib/api'
@@ -10,18 +10,24 @@ import MapGL from '../mapbox/MapGL'
 
 function HSDashboard() {
 
-  
   const history = useHistory()
 
   const [ userCrises, setUserCrises ] = useState(null)
 
-
-
   useEffect( () => {
     const getData = async () => {
-      const res = await getUserCrisis(getPayLoad().sub)
-      console.log('res: ', res.data)
-      setUserCrises(res.data)
+      const userId = getPayLoad().sub
+      const res = await getUserCrisis(userId)
+
+      // * make empty array false
+      const crisesArray = () => {
+        if (res.data && res.data.length < 1) {
+          return false
+        } else {
+          return res.data
+        }
+      }
+      setUserCrises(crisesArray())
     }
     getData()
   },[])
@@ -31,8 +37,8 @@ function HSDashboard() {
     history.push(`/${crisesPath}/${crisisId}`)
   }
 
-  // const handlePin = () => {
-
+  // const handlePinData = () => {
+  //   passData(userCrises)
   // }
 
 
@@ -40,7 +46,7 @@ function HSDashboard() {
     <>
       <div className="crisis-list">
 
-        <table className="table">
+        <table className="table hs-dashboard-table">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -75,41 +81,11 @@ function HSDashboard() {
             }
           </tbody>
         </table>
-
-        <MapGL
-          setMarkersPopups={
-            userCrises && userCrises.map( (crisis) => {
-              <Marker
-                key={crisis.id}
-                latitude={crisis.latitude}
-                longitude={crisis.longitude}
-              >
-                <>
-                  {console.log('crisis: ', crisis)}
-                  {console.log('crisis.latitude: ', crisis.latitude)}
-                  {console.log('crisis.longitude: ', crisis.longitude)}
-                </>
-                <button
-                  className="map-button"
-                  // onClick={(e) => {
-                  //   e.preventDefault()
-                  //   setSelectedMemory(memory)
-                  // }}
-                >
-
-                  <img
-                    height="40px"
-                    width="40px"
-                    src="https://i.imgur.com/6IzPeVa.png"
-                    alt="red location pin"
-                  />
-
-                </button>
-                
-              </Marker>
-            })
-          }
-        />
+        {!userCrises &&
+          <div className={ !userCrises ? 'div-no-data' : '' }>* No data to display *</div>
+        }
+        {console.log('---userCrises: ', userCrises)}
+        <MapGL crises={userCrises} />
 
       </div>
     </>

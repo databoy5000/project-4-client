@@ -1,4 +1,3 @@
-
 @import "~bootstrap/scss/bootstrap";
 
 .form-control {
@@ -7,4 +6,15 @@
 
 .crisis-row:hover {
   background-color: #D7DBDA;
+}
+
+.hs-dashboard-table {
+  margin-bottom: 10px;
+}
+
+.div-no-data {
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid #D7DBDA;
+  padding-bottom: 10px;;
 }
