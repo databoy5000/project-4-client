@@ -14,6 +14,7 @@ export function removeToken() {
 
 export function getPayLoad() {
   const token = getToken()
+  console.log('token: ', token)
   if (!token) return false
   const parts = token.split('.')
   if (parts.length < 3) return false

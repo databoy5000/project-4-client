@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 
-import { publicToken } from '../../lib/mapbox'
+import { publicToken } from '../lib/mapbox'
 
 function MapGL({ crises }) {
 
