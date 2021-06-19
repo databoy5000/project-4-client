@@ -21,7 +21,7 @@ function Register() {
     if (formData.userType === 'NGO') {
       formData.country = ''
     }
-    console.log('submitted formdata', formData)
+    // console.log('submitted formdata', formData)
     try {
       await registerUser(formData)
       history.push('/login')
@@ -31,7 +31,7 @@ function Register() {
     }
   }
 
-  console.log('formdata', formData)
+  // console.log('formdata', formData)
 
   return (
     <section>

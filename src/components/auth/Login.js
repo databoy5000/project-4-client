@@ -20,7 +20,7 @@ function Login() {
       setToken(res.data.token)
       history.push('/')
     } catch (err) {
-      console.log('err.response.data: ', err.response.data)
+      // console.log('err.response.data: ', err.response.data)
       setIsError(true)
     }
   }
@@ -30,7 +30,7 @@ function Login() {
 
   return (
     <section className="">
-      {console.log('formData: ', formData)}
+      {/* {console.log('formData: ', formData)} */}
       <form 
         className=""
         onSubmit={handleSubmit}

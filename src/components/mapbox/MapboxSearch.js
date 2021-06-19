@@ -42,43 +42,29 @@ function MapboxSearch({ onResult }) {
   }
 
   return (
+    <div className="d-flex justify-content-evenly">
+      {isMapBoxLoading && '... loading map!'}
+      {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
 
-    <section className="geocoder">
-      <div className="card">    
-        <div className="columns">
-          <div className="column">
-            <div className="column">
-              <div className="bd-notification is-info">
-
-                {isMapBoxLoading && '... loading map!'}
-                {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
-
-                <ReactMapGl 
-                  ref={mapRef}
-                  {...viewport} 
-                  mapboxApiAccessToken={publicToken}
-                  onViewportChange={handleViewportChange}
-                  onError={handleError}
-                  onLoading={handleLoading}
-                  onInit={handleLoaded}
-                >
-                  <Geocoder
-                    mapRef={mapRef}
-                    onViewportChange={handleViewportChange}
-                    mapboxApiAccessToken={publicToken}
-                    position="top-left"
-                    onResult={handleResult}
-                    onError={handleError}
-                  />
-                </ReactMapGl>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+      <ReactMapGl 
+        ref={mapRef}
+        {...viewport} 
+        mapboxApiAccessToken={publicToken}
+        onViewportChange={handleViewportChange}
+        onError={handleError}
+        onLoading={handleLoading}
+        onInit={handleLoaded}
+      >
+        <Geocoder
+          mapRef={mapRef}
+          onViewportChange={handleViewportChange}
+          mapboxApiAccessToken={publicToken}
+          position="top-left"
+          onResult={handleResult}
+          onError={handleError}
+        />
+      </ReactMapGl>
+    </div>
   )
 }
 
