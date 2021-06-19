@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import useForm from '../hooks/useForm'
 import { getDisasterTypes, createCrisis, getResourceNamesTypes } from '../lib/api'
@@ -9,7 +9,7 @@ import MapboxSearch from '../mapbox/MapboxSearch.js'
 
 function CrisisCreate() {
 
-  // const history = useHistory()
+  const history = useHistory()
   const [ disasterTypes, setDisasterTypes ] = useState(null)
   const [ humanResources, setHumanResources ] = useState(null)
   const [ materialResources, setMaterialResources ] = useState(null)
@@ -41,10 +41,10 @@ function CrisisCreate() {
   }, [])
 
   const handleNestedChange = (e) => {
-    for (let i = 0; i <= crisisForm.requests.length; i++) {
+    for (let i = 0; i <= formData.requests.length; i++) {
       if (formData.requests[i].resource === Number(e.target.id)) {
         const requestsCopy = [ ...formData.requests ]
-        requestsCopy[i].quantity = e.target.value
+        requestsCopy[i]  = { ...requestsCopy[i], quantity: e.target.value }
         setFormData({ ...formData, requests: requestsCopy })
         return
       }
@@ -61,10 +61,13 @@ function CrisisCreate() {
       const technicallyACountryName = hierarchyLastIndex.text
       return technicallyACountryName
     }
-    
+
+    const sanitisedLongitudeDecimal = Number(e.center[0].toFixed(6))
+    const sanitisedLatitudeDecimal = Number(e.center[1].toFixed(6))
+
     setFormData({ ...formData,
-      longitude: e.center[0],
-      latitude: e.center[1],
+      longitude: sanitisedLongitudeDecimal,
+      latitude: sanitisedLatitudeDecimal,
       placeName: e.text,
       country: getCountry(),
     })
@@ -77,10 +80,9 @@ function CrisisCreate() {
       const req = await createCrisis(formData)
       console.log('req: ', req)
 
-      // ! Send to user dashboard
-      // history.push('/dashboard')
+      history.push('/dashboard')
     } catch (err) {
-      setFormErrors(err.response.data)
+      setFormErrors({ ...formErrors, ...err.response.data })
     }
   }
 
@@ -97,7 +99,7 @@ function CrisisCreate() {
       }
 
       const requestsCopy = [ ...formErrors.requests ]
-      requestsCopy[currentIndex].quantity = ''
+      requestsCopy[currentIndex]  = { ...requestsCopy[currentIndex], quantity: '' }
       setFormErrors({ ...formErrors, requests: requestsCopy })
     }
   }
@@ -179,6 +181,7 @@ function CrisisCreate() {
                 <label className="col-sm-2 col-form-label">
                   {resource.resourceName}s:
                 </label>
+                {console.log('formErrors: ', formErrors)}
                 <input
                   className={`
                     form-control

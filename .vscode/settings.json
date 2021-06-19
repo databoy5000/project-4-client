@@ -1,11 +1,11 @@
 {
   "workbench.colorCustomizations": {
-    "statusBar.background": "#377058",
-    "titleBar.activeBackground": "#377058",
-    "titleBar.inactiveBackground": "#377058",
-    "statusBar.foreground": "#ffffff",
-    "titleBar.inactiveForeground": "#ffffff",
-    "titleBar.activeForeground": "#ffffff",
+    "statusBar.background": "#13e68e",
+    "titleBar.activeBackground": "#13e68e",
+    "titleBar.inactiveBackground": "#13e68e",
+    "statusBar.foreground": "#000000",
+    "titleBar.inactiveForeground": "#000000",
+    "titleBar.activeForeground": "#000000",
   },
   "window.title": "FRONTEND"
 }

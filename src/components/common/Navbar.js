@@ -6,7 +6,6 @@ function Navbar() {
   useLocation()
   const history = useHistory()
   const isLoggedIn = isAuthenticated()
-  console.log('isLoggedIn: ', isLoggedIn)
 
   const handleLogout = () => {
     removeToken()

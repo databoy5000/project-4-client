@@ -1,23 +1,21 @@
 import { useEffect, useState } from 'react'
 
-import { getPayLoad } from '../lib/auth'
+import { isNGO } from '../lib/auth'
 import HSDashboard from '../dashboards/HSDashboard'
 import NGODashboard from '../dashboards/NGODashboard'
 
 function Dashboard() {
 
-  const [ isHelpSeeker, setIsHelpSeeker ] = useState(false)
-  const [ isNGO, setIsNGO ] = useState(false)
-
-  const userTypes = ['Help-seeker', 'NGO']
-  const userType = getPayLoad().type
+  const [ isHelpSeekerUser, setIsHelpSeekerUser ] = useState(false)
+  const [ isNGOUser, setIsNGOUser ] = useState(false)
 
   useEffect( () => {
     const setDashboard = () => {
-      if (userType === userTypes[0]) {
-        setIsHelpSeeker(true)
-      } else if (userType === userTypes[1]) {
-        setIsNGO(true)
+      const checkNGOUser = isNGO()
+      if (!checkNGOUser) {
+        setIsHelpSeekerUser(true)
+      } else if (checkNGOUser) {
+        setIsNGOUser(true)
       }
     }
     setDashboard()
@@ -27,10 +25,10 @@ function Dashboard() {
 
   return (
     <>
-      {isHelpSeeker && <HSDashboard />}
-      {isNGO && <NGODashboard />}
+      {isHelpSeekerUser && <HSDashboard />}
+      {isNGOUser && <NGODashboard />}
       {
-        !isHelpSeeker && !NGODashboard &&
+        !isHelpSeekerUser && !NGODashboard &&
         <div>
           <h4>Oops... something went wrong!</h4>
         </div>
