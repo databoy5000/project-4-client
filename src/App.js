@@ -7,6 +7,7 @@ import { About } from './components/common/About'
 import Navbar from './components/common/Navbar'
 import CrisisCreate from './components/crises/CrisisCreate'
 import Dashboard from './components/common/Dashboard'
+import ResourcesCreate from './components/resources/ResourcesCreate'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" component={Login}/>
         <Route path="/createcrisis" component={CrisisCreate}/>
         <Route path="/dashboard" component={Dashboard}/>
+        <Route path="/createngoresources" component={ResourcesCreate}/>
       </Switch>
     </Router>
   ) 

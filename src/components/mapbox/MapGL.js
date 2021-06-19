@@ -51,8 +51,8 @@ function MapGL({ crises, selectedCrisisId }) {
 
   return (
     <div>
-      {/* {console.log('***crises: ', crises)}
-      {console.log('selectedCrisisId: ', selectedCrisisId)} */}
+      {console.log('***crises: ', crises)}
+      {console.log('selectedCrisisId: ', selectedCrisisId)}
       {isMapBoxLoading && '... loading map!'}
       {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
 
@@ -72,7 +72,7 @@ function MapGL({ crises, selectedCrisisId }) {
             key={crisis.id}
             latitude={Number(crisis.latitude)}
             longitude={Number(crisis.longitude)}
-            offsetLeft={-12}
+            offsetLeft={-10}
             offsetTop={-12}
           >
             <div

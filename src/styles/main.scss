@@ -1,5 +1,3 @@
-@import "~bootstrap/scss/bootstrap";
-
 .form-control {
   width: 40%;
 }
@@ -19,9 +17,8 @@
   padding-bottom: 10px;;
 }
 
-.map-pin {
-  width: 40px;
-  height: 40px;
+.bg-darker-colour {
+  background-color: rgb(226, 226, 217);
 }
 
 .pulsatingDot {
@@ -46,6 +43,16 @@
   width: 300%;
 }
 
+@keyframes pulseRing {
+  0% { transform: scale(.5); }
+  80%, 100% { opacity: 0; }
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 .selectedPin {
   background-color: var(--pulsating-dot, #1784dd);
   height: 25px;
@@ -56,12 +63,4 @@
   background-color: var(--pulsating-dot, #1784dd);
 }
 
-@keyframes pulseRing {
-  0% { transform: scale(.5); }
-  80%, 100% { opacity: 0; }
-}
-
-@keyframes pulseDot {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
+@import "~bootstrap/scss/bootstrap";
