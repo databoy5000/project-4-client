@@ -5,8 +5,6 @@ export const endUrl = `.json?access_token=${publicToken}`
 
 export function defaultViewport(crisesData) {
 
-  console.log('DEFAULTVP crisesData: ', crisesData)
-
   if (crisesData.length === 1) {
     const crisis = crisesData[0]
     const latitude = Number(crisis.latitude)

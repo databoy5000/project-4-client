@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { getSingleCrisis, getUserNGOResources } from '../lib/api'
-import ResourcesShow from '../resources/ResourcesShow'
+import RequestsResourcesShow from '../resources/RequestsResourcesShow'
 import MapGL from '../mapbox/MapGL'
 import { isCreator } from '../lib/auth'
 
 function CrisisShowNGO() {
+
+  console.log('inside crisis NGO show')
 
   // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
@@ -24,6 +26,8 @@ function CrisisShowNGO() {
   const [ crisis, setCrisis ] = useState(false)
   const [ isError, setIsError ] = useState(false)
 
+  const [ ngoUserResources, setNGOUserResources ] = useState(false)
+
   const [ isOwner, setIsOwner ] = useState(false)
 
   useEffect( () => {
@@ -35,6 +39,7 @@ function CrisisShowNGO() {
 
         const ngoResourcesRes = await getUserNGOResources()
         const ngoResources = makeFalseEmptyArray(ngoResourcesRes.data)
+        setNGOUserResources(ngoResources)
   
         const setProps = () => {
           const filterCheck = crisis.requests.every( (request, index) => {
@@ -81,6 +86,8 @@ function CrisisShowNGO() {
 
   return (
     <div>
+      {console.log('crisis: ', crisis)}
+      {console.log('ngoResources: ', ngoUserResources)}
       {isError && 'Oops, something went wrong!'}
       {!crisis ?
         'Loading...'
@@ -92,7 +99,9 @@ function CrisisShowNGO() {
           <p>Country: {crisis.country}</p>
           <p>Description: {crisis.disasterDescription}</p>
           
-          <ResourcesShow header={headerString} resourcesData={crisis.requests} />
+          {crisis && ngoUserResources &&
+            <RequestsResourcesShow header={headerString} requestsData={crisis.requests} resourcesData={ngoUserResources} />
+          }
 
           <MapGL crisesData={crisis} selectedCrisisId={false} />
           

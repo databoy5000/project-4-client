@@ -6,24 +6,15 @@ import { publicToken, defaultViewport } from '../lib/mapbox'
 
 function MapGL({ crisesData, selectedCrisisId }) {
 
-  console.log('MAPGL crisesData: ', crisesData)
-
   function makeSingleObjectArray(data) {
-    console.log('inside makeSingle....')
-
-    console.log('data: ', data)
-    console.log('typeof data: ', typeof data)
 
     if (typeof data === 'undefined' || data === null) {
-      console.log('its undefined')
       return false
     }
 
     if (data.id) {
-      console.log('in IF')
       return new Array(data)
     } else {
-      console.log('inside ELSE')
       return data
     }
   }
@@ -74,11 +65,8 @@ function MapGL({ crisesData, selectedCrisisId }) {
 
   return (
     <div>
-      {/* {console.log('***crises: ', crises)}
-      {console.log('selectedCrisisId: ', selectedCrisisId)} */}
       {isMapBoxLoading && '... loading map!'}
       {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
-      {console.log('MAPGL render crises: ', crises)}
       <ReactMapGL 
         ref={mapRef}
         {...viewport} 
@@ -99,11 +87,6 @@ function MapGL({ crisesData, selectedCrisisId }) {
             offsetLeft={-10}
             offsetTop={-12}
           >
-            {console.log('---MARKER crisis: ', crisis)}
-            {console.log('---MARKER crisis: ', Number(crisis.latitude))}
-            {console.log('---MARKER crisis: ', Number(crisis.longitude))}
-            {console.log('Number(selectedCrisisId) === crisis.id: ', Number(selectedCrisisId) === crisis.id)}
-            {/* {console.log('MapGL RETURN crisis.dotColour: ', crisis.dotColour)} */}
             <div
               id={`${
                 Number(selectedCrisisId) === crisis.id ?
