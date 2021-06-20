@@ -6,7 +6,7 @@ import ResourcesShow from '../resources/ResourcesShow'
 import MapGL from '../mapbox/MapGL'
 import { isCreator } from '../lib/auth'
 
-function CrisisShow() {
+function CrisisShowNGO() {
 
   // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
@@ -108,4 +108,4 @@ function CrisisShow() {
   )
 }
 
-export default CrisisShow
+export default CrisisShowNGO

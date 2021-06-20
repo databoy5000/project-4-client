@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { getAllCrises, getUserNGOResources } from '../lib/api'
+import { getAllCrises, getUserNGOResources, ngoPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import MapGL from '../mapbox/MapGL'
 import ResourcesShow from '../resources/ResourcesShow'
@@ -90,7 +90,7 @@ function NGODashboard() {
         }
 
         // * set new props to crisis/crises
-        if (crises) {
+        if (crises && sanitizedNGOResources) {
           const stageOneUpdatedCrisis = setCanHelpProp(crises)
           const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
           setCrises(stageTwoUpdatedCrisis)
@@ -120,7 +120,7 @@ function NGODashboard() {
   }
 
   const handleClick = (crisisId) => {
-    history.push(`/${crisesPath}/${crisisId}`)
+    history.push(`/${ngoPath}/${crisesPath}/${crisisId}`)
   }
 
   const handlePin = (e) => {
@@ -128,11 +128,14 @@ function NGODashboard() {
   }
 
   const handleEdit = () => {
-    history.push('/editcrisis')
+    history.push('/ngo/editngoresources')
   }
 
   return (
     <>
+      {console.log('isError: ', isError)}
+      {console.log('displayCrises: ', displayCrises)}
+
       {isError && 'Oops, something went wrong...'}
       {typeof displayCrises !== 'boolean' && !displayCrises && 'Loading...'}
       {typeof isNGOResources === 'boolean' &&

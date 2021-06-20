@@ -1,11 +1,12 @@
-import React from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import { isAuthenticated, removeToken } from '../lib/auth'
+import { isAuthenticated, isNGO, removeToken } from '../lib/auth'
 
 function Navbar() {
   useLocation()
   const history = useHistory()
   const isLoggedIn = isAuthenticated()
+
+  const isNGOUser = isNGO()
 
   const handleLogout = () => {
     removeToken()
@@ -30,8 +31,16 @@ function Navbar() {
             :
             <>
               <div>
-                <Link className="btn text-light btn-outline-light m-2" to="/dashboard">My Dashboard</Link>
-                <Link className="btn text-light btn-outline-light m-2" to="/createcrisis">New Crisis</Link>
+                {isNGOUser &&
+                  <Link className="btn text-light btn-outline-light m-2" to="/ngo/dashboard">My Dashboard</Link>
+                }
+                {!isNGOUser &&
+                  <>
+                    <Link className="btn text-light btn-outline-light m-2" to="/hs/dashboard">My Dashboard</Link>
+                    <Link className="btn text-light btn-outline-light m-2" to="/hs/createcrisis">New Crisis</Link>
+                  </>
+                }
+
                 <button className="btn text-light btn-outline-light m-2" onClick={handleLogout}>Log out</button>
               </div>
             </>

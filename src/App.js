@@ -7,8 +7,10 @@ import { About } from './components/common/About'
 import Navbar from './components/common/Navbar'
 import CrisisCreate from './components/crises/CrisisCreate'
 import CrisisEdit from './components/crises/CrisisEdit'
-import CrisisShow from './components/crises/CrisisShow'
-import Dashboard from './components/common/Dashboard'
+import CrisisShowNGO from './components/crises/CrisisShowNGO'
+import CrisisShowHS from './components/crises/CrisisShowHS'
+import NGODashboard from './components/dashboards/NGODashboard'
+import HSDashboard from './components/dashboards/HSDashboard'
 import ResourcesEdit from './components/resources/ResourcesEdit'
 
 function App() {
@@ -20,11 +22,13 @@ function App() {
         <Route path="/about" component={About}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
-        <Route path="/createcrisis" component={CrisisCreate}/>
-        <Route path="/editcrisis" component={CrisisEdit}/>
-        <Route path="/crises/:crisisId" component={CrisisShow}/>
-        <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/editngoresources" component={ResourcesEdit}/>
+        <Route path="/hs/dashboard" component={HSDashboard}/>
+        <Route path="/hs/crises/:crisisId" component={CrisisShowHS}/>
+        <Route path="/hs/createcrisis" component={CrisisCreate}/>
+        <Route path="/hs/editcrisis" component={CrisisEdit}/>
+        <Route path="/ngo/dashboard" component={NGODashboard}/>
+        <Route path="/ngo/crises/:crisisId" component={CrisisShowNGO}/>
+        <Route path="/ngo/editngoresources" component={ResourcesEdit}/>
       </Switch>
     </Router>
   ) 

@@ -30,6 +30,8 @@ function Login() {
 
   return (
     <section className="">
+      {/* {console.log('formData: ', formData)}
+      {console.log('formErrors: ', formErrors)} */}
       <form 
         className=""
         onSubmit={handleSubmit}

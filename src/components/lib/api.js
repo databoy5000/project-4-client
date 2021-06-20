@@ -10,6 +10,8 @@ export const loginPath = 'login'
 export const typesPath = 'types'
 export const authPath = 'auth'
 export const ngoResourcesPath = 'ngo_resources'
+export const hsPath = 'hs'
+export const ngoPath = 'ngo'
 
 function headers() {
   return {

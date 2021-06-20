@@ -47,9 +47,7 @@ function ResourcesCreate() {
 
     console.log('submitted form', formData)
     try {
-      const req = await createNGOResources(formData)
-      console.log('req', req)
-      // history.push('/dashboard')
+      await createNGOResources(formData)
       window.location.reload()
     } catch (err) {
       console.log(err.response.data)

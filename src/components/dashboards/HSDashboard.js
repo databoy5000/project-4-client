@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { getUserCrisis } from '../lib/api'
+import { getUserCrisis, hsPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import { getPayLoad } from '../lib/auth'
 import MapGL from '../mapbox/MapGL'
@@ -27,14 +27,31 @@ function HSDashboard() {
           return res.data
         }
       }
-      setUserCrises(crisesArray())
+
+      const setDotColoursProp = (crises) => {
+        return crises.map( (crisis) => {
+          if (crisis.canHelp) {
+            crisis.dotColour = 'green-dot'
+          } else {
+            crisis.dotColour = 'red-dot'
+          }
+          return crisis
+        })
+      }
+
+      const stageOneUpdatedCrisis = crisesArray()
+
+      if (stageOneUpdatedCrisis) {
+        const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
+        setUserCrises(stageTwoUpdatedCrisis)
+      } else setUserCrises(stageOneUpdatedCrisis)
     }
     getData()
   },[])
 
 
   const handleClick = (crisisId) => {
-    history.push(`/${crisesPath}/${crisisId}`)
+    history.push(`/${hsPath}/${crisesPath}/${crisisId}`)
   }
 
   const handlePin = (e) => {
@@ -87,7 +104,8 @@ function HSDashboard() {
         {!userCrises &&
           <div className={ !userCrises ? 'div-no-data' : '' }>* No data to display *</div>
         }
-        <MapGL crises={userCrises} selectedCrisisId={selectedCrisisId} />
+        
+        <MapGL crisesData={userCrises} selectedCrisisId={selectedCrisisId} />
 
       </div>
     </>
