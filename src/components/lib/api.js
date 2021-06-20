@@ -61,8 +61,8 @@ export function createNGOResources(formdata) {
   return axios.post(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, formdata, headers())
 }
 
-export function editNGOResources(formdata) {
-  return axios.put(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, formdata, headers())
+export function editNGOResources(formdata, resourceId) {
+  return axios.put(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/${resourceId}/`, formdata, headers())
 }
 
 // * --- Authentication
