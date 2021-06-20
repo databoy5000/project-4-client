@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { getSingleCrisis, getUserNGOResources } from '../lib/api'
+import { getSingleCrisis } from '../lib/api'
 import ResourcesShow from '../resources/ResourcesShow'
 import MapGL from '../mapbox/MapGL'
 import { isCreator } from '../lib/auth'
 
 function CrisisShowHS() {
-
-  // * make empty arrays 'false'
-  function makeFalseEmptyArray(data) {
-    if (data && data.length < 1) {
-      return false
-    } else {
-      return data
-    }
-  }
 
   const { crisisId } = useParams()
   const history = useHistory()
@@ -32,40 +23,11 @@ function CrisisShowHS() {
       try {
         const res = await getSingleCrisis(crisisId)
         const crisis = res.data
+        crisis.dotColour = 'red-dot'
+        console.log('crisis: ', crisis)
 
-        const ngoResourcesRes = await getUserNGOResources()
-        const ngoResources = makeFalseEmptyArray(ngoResourcesRes.data)
-  
-        const setProps = () => {
-          const filterCheck = crisis.requests.every( (request, index) => {
-
-            const crisisResource = request.resource.id
-            const ngoResource = ngoResources[index].resource.id
-
-            const crisisResourceQuantity = request.quantity
-            const ngoResourceQuantity = ngoResources[index].quantity
-
-            return (
-              crisisResource === ngoResource &&
-              crisisResourceQuantity <= ngoResourceQuantity
-            )
-          })
-
-          if (filterCheck) {
-            crisis.canHelp = true
-            crisis.dotColour = 'green-dot'
-          } else {
-            crisis.canHelp = false
-            crisis.dotColour = 'red-dot'
-          }
-
-          return crisis
-        }
-
-        const updatedCrisis = setProps()
-
-        setIsOwner(isCreator(updatedCrisis.owner.id))
-        setCrisis(updatedCrisis)
+        setCrisis(crisis)
+        setIsOwner(isCreator(crisis.owner.id))
 
       } catch (err) {
         console.log('err.response.data: ', err.response.data)
@@ -76,7 +38,7 @@ function CrisisShowHS() {
   },[crisisId])
 
   const handleEdit = () => {
-    history.push('/editcrisis')
+    history.push('/hs/editcrisis')
   }
 
   return (

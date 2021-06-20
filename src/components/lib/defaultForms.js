@@ -5,6 +5,7 @@ export const crisisForm = {
   latitude: '',
   placeName: '',
   country: '',
+  placeType: '',
   disasterDescription: '',
   requests: [
     {
@@ -58,6 +59,7 @@ export const crisisErrorForm = {
   placeName: '',
   country: '',
   disasterDescription: '',
+  placeType: '',
   requests: [
     {
       quantity: '',

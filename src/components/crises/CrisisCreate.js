@@ -51,8 +51,6 @@ function CrisisCreate() {
   }
 
   const handleResult = (e) => {
-
-    console.log('e: ', e)
     
     function getCountry() {
       if (e.place_type[0] === 'country') {
@@ -71,7 +69,7 @@ function CrisisCreate() {
       latitude: sanitisedLatitudeDecimal,
       placeName: e.text,
       country: getCountry(),
-      placeType: e.place_type,
+      placeType: e.place_type[0],
     })
   }
 
@@ -82,7 +80,7 @@ function CrisisCreate() {
       const req = await createCrisis(formData)
       console.log('req: ', req)
 
-      history.push('/dashboard')
+      history.push('/hs/dashboard')
     } catch (err) {
       setFormErrors({ ...formErrors, ...err.response.data })
     }
@@ -108,6 +106,8 @@ function CrisisCreate() {
 
   return (
     <div>
+      {console.log('formData: ', formData)}
+      {console.log('formErrors100: ', formErrors)}
       <form
         onSubmit={handleSubmit}
       >

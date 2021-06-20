@@ -19,8 +19,6 @@ function headers() {
   }
 }
 
-console.log(headers())
-
 // * --- Crises
 export function getAllCrises() {
   return axios.get(`${baseUrl}/${crisesPath}/`)
