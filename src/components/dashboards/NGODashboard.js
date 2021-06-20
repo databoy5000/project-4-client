@@ -74,7 +74,7 @@ function NGODashboard() {
         const filterCanHelp = updatedCrisis.filter( (crisis) => crisis.canHelp)
         setFilteredCrises(filterCanHelp)
       } catch (err) {
-        console.log('err.response.data: ', err.response.data)
+        console.log('err.response.data: ', err.response)
         setIsError(true)
       }
     }
