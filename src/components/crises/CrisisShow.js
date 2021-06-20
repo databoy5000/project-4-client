@@ -7,10 +7,6 @@ import MapGL from '../mapbox/MapGL'
 
 function CrisisShow() {
 
-  const { crisisId } = useParams()
-  const history = useHistory()
-
-
   // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
     if (data && data.length < 1) {
@@ -19,6 +15,9 @@ function CrisisShow() {
       return data
     }
   }
+
+  const { crisisId } = useParams()
+  const history = useHistory()
 
   const headerString = 'Resources Needed to Solve this Crisis'
   const [ crisis, setCrisis ] = useState(false)
@@ -49,10 +48,13 @@ function CrisisShow() {
             )
           })
 
-          if (filterCheck) crisis.canHelp = true
-          else crisis.canHelp = false
-
-          crisis.dotColour = 'blue-dot'
+          if (filterCheck) {
+            crisis.canHelp = true
+            crisis.dotColour = 'green-dot'
+          } else {
+            crisis.canHelp = false
+            crisis.dotColour = 'red-dot'
+          }
 
           return crisis
         }

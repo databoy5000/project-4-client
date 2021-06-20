@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 
-import { publicToken } from '../lib/mapbox'
+import { publicToken, defaultViewport } from '../lib/mapbox'
 
 
 function MapGL({ crisesData, selectedCrisisId }) {
@@ -11,13 +11,8 @@ function MapGL({ crisesData, selectedCrisisId }) {
   const [ isMapBoxError, setIsMapboxError ] = useState(false)
   const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
 
-  const [ viewport, setViewport ] = useState({
-    latitude: 55,
-    longitude: 10,
-    width: window.innerWidth,
-    height: '300px',
-    zoom: 2,
-  })
+  // console.log(' MapGL - defaultViewport(crisesData): ', defaultViewport(crisesData))
+  const [ viewport, setViewport ] = useState(defaultViewport(crisesData))
 
   const handleViewportChange = useCallback(
     (viewport) => setViewport(viewport),
@@ -33,11 +28,7 @@ function MapGL({ crisesData, selectedCrisisId }) {
   }
 
   useEffect( () => {
-    if (typeof crisesData === 'object') {
-      setCrises([crisesData])
-    } else if (crisesData.length > 1) {
-      setCrises(crisesData)
-    }
+    setCrises(crisesData)
   },[crisesData])
 
   useEffect( () => {
@@ -73,9 +64,10 @@ function MapGL({ crisesData, selectedCrisisId }) {
         onLoading={handleLoading}
         onInit={handleLoaded}
       >
-        {!crises && 'Loading map...'}
-        {console.log('**crises**: ', crises)}
-        {crises && (crises.map( (crisis) =>
+        {/* {!crises && 'Loading map...'} */}
+        {/* {console.log('MapGL RETURN crises: ', typeof crises, crises.length, crises)} */}
+
+        {(crises && crises.length >= 1) && (crises.map( (crisis) =>
           <Marker
             key={crisis.id}
             latitude={Number(crisis.latitude)}
@@ -83,7 +75,8 @@ function MapGL({ crisesData, selectedCrisisId }) {
             offsetLeft={-10}
             offsetTop={-12}
           >
-            {console.log('crisis.dotColour: ', crisis.dotColour)}
+            {/* {console.log('---MARKER crisis: ', crisis)} */}
+            {/* {console.log('MapGL RETURN crisis.dotColour: ', crisis.dotColour)} */}
             <div
               id={`${
                 Number(selectedCrisisId) === crisis.id ?

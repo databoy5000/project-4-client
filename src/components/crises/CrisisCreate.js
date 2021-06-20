@@ -51,6 +51,8 @@ function CrisisCreate() {
   }
 
   const handleResult = (e) => {
+
+    console.log('e: ', e)
     
     function getCountry() {
       if (e.place_type[0] === 'country') {
@@ -69,6 +71,7 @@ function CrisisCreate() {
       latitude: sanitisedLatitudeDecimal,
       placeName: e.text,
       country: getCountry(),
+      placeType: e.place_type,
     })
   }
 
@@ -190,7 +193,7 @@ function CrisisCreate() {
                         <label className="col-sm-2 col-form-label">
                           {resource.resourceName}s:
                         </label>
-                        {console.log('formErrors: ', formErrors)}
+
                         <input
                           className={`
                             form-control fw-lighter fst-italic

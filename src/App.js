@@ -9,7 +9,6 @@ import CrisisCreate from './components/crises/CrisisCreate'
 import CrisisEdit from './components/crises/CrisisEdit'
 import CrisisShow from './components/crises/CrisisShow'
 import Dashboard from './components/common/Dashboard'
-import ResourcesCreate from './components/resources/ResourcesCreate'
 import ResourcesEdit from './components/resources/ResourcesEdit'
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
         <Route path="/editcrisis" component={CrisisEdit}/>
         <Route path="/crises/:crisisId" component={CrisisShow}/>
         <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/createngoresources" component={ResourcesCreate}/>
         <Route path="/editngoresources" component={ResourcesEdit}/>
       </Switch>
     </Router>
