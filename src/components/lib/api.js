@@ -3,7 +3,7 @@ import { getToken } from './auth'
 
 export const baseUrl = '/api'
 export const crisesPath = 'crises'
-export const showPath = 'show'
+export const crisisPath = 'crisis'
 export const resourcesPath = 'resources'
 export const registerPath = 'register'
 export const loginPath = 'login'
@@ -23,7 +23,7 @@ export function getAllCrises() {
 }
 
 export function getSingleCrisis(crisisId) {
-  return axios.get(`${baseUrl}/${crisesPath}/${showPath}/${crisisId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}`)
 }
 
 export function getUserCrisis(userId) {
@@ -35,11 +35,11 @@ export function createCrisis(formdata) {
 }
 
 export function editCrisis(crisisId, formdata) {
-  return axios.put(`${baseUrl}/${crisesPath}/${crisisId}/`, formdata, headers())
+  return axios.put(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`, formdata, headers())
 }
 
 export function deleteCrisis(crisisId) {
-  return axios.delete(`${baseUrl}/${crisesPath}/${crisisId}/`, headers())
+  return axios.delete(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`, headers())
 }
 
 // * --- Resources

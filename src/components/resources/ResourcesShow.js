@@ -6,14 +6,13 @@ function ResourcesShow({ header, resourcesData }) {
   const [ materialResources, setMaterialResources ] = useState(null)
 
   useEffect(() => {
-    console.log('resourcesData: ', resourcesData)
     const humanResources = resourcesData
       .filter((resource) => resource.resource.resourceType === 'Human')
     const materialResources = resourcesData
       .filter((resource) => resource.resource.resourceType === 'Material')
 
-    console.log('humanResources: ', humanResources)
-    console.log('materialResources: ', materialResources)
+    // console.log('humanResources: ', humanResources)
+    // console.log('materialResources: ', materialResources)
 
     setHumanResources(humanResources)
     setMaterialResources(materialResources)

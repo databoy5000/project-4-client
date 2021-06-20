@@ -1,39 +1,44 @@
-import { WebMercatorViewport } from 'react-map-gl'
-
 export const apiUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
 export const publicToken = 'pk.eyJ1IjoicmFwaGNoYXIiLCJhIjoiY2txMHMwajBpMDdxZzJucDhpdGRxMnUzdSJ9.5QE1OTa_Uw-1S3_5oQpcTw'
 export const endUrl = `.json?access_token=${publicToken}`
 // export const mapboxStyleUrl = ''
 
-export function subSetViewport(crisisObject) {
-  const centerCoordinates = crisisObject.location.coordinates
-  const boundaryBox = crisisObject.location.boundaryBox
-  const placeType = crisisObject.location.placeType
+export function defaultViewport(crisesData) {
 
-  if (boundaryBox && boundaryBox.length === 4) {
-    const bboxFormat = [[boundaryBox[0], boundaryBox[1], boundaryBox[2], boundaryBox[3]]]
+  if (crisesData.length === 1) {
+    const crisis = crisesData[0]
+    const latitude = crisis.latitude
+    const longitude = crisis.longitude
+    const placeType = crisis.placeType
 
-    const { latitude, longitude, zoom } = new WebMercatorViewport({ width: 500, height: 500 })
-      .fitBounds(bboxFormat, {
-        padding: -50,
-        offset: [0, -100],
-      })
+    // * zoomValue = 10 in case none of the below placeTypes are passed into the function
+    let zoomValue = 10
+  
+    if (placeType === 'country') zoomValue = 6
+    if (placeType === 'region') zoomValue = 7
+    if (placeType === 'postcode') zoomValue = 8
+    if (placeType === 'district') zoomValue = 9
+    if (placeType === 'place') zoomValue = 10
+    if (placeType === 'locality') zoomValue = 11
+    if (placeType === 'neighbourhood') zoomValue = 12
+    if (placeType === 'address') zoomValue = 13
+    if (placeType === 'poi') zoomValue = 14
 
-    return [[longitude, latitude], zoom]
+    return {
+      latitude: latitude,
+      longitude: longitude,
+      width: window.innerWidth,
+      height: '300px',
+      zoom: zoomValue,
+    }
 
   } else {
-    let zoom = 10
-
-    if (placeType === 'country') zoom = 6
-    if (placeType === 'region') zoom = 7
-    if (placeType === 'postcode') zoom = 8
-    if (placeType === 'district') zoom = 9
-    if (placeType === 'place') zoom = 10
-    if (placeType === 'locality') zoom = 11
-    if (placeType === 'neighbourhood') zoom = 12
-    if (placeType === 'address') zoom = 13
-    if (placeType === 'poi') zoom = 14
-
-    return [centerCoordinates, zoom]
+    return {
+      latitude: 55,
+      longitude: 10,
+      width: window.innerWidth,
+      height: '300px',
+      zoom: 0,
+    }
   }
 }

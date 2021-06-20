@@ -5,6 +5,7 @@ import { getAllCrises, getUserNGOResources } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import MapGL from '../mapbox/MapGL'
 import ResourcesShow from '../resources/ResourcesShow'
+import ResourcesCreate from '../resources/ResourcesCreate'
 
 function NGODashboard() {
 
@@ -23,9 +24,12 @@ function NGODashboard() {
 
   const [ crises, setCrises ] = useState([])
   const [ filteredCrises, setFilteredCrises ] = useState([])
-  const [ displayCrises, setDisplayCrises ] = useState([])
+  const [ displayCrises, setDisplayCrises ] = useState(null)
+
   const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
+  
   const [ ngoResources, setNGOResources ] = useState(false)
+  const [ isNGOResources, setIsNGOResources ] = useState(null)
 
   const [ isError, setIsError ] = useState(false)
 
@@ -37,12 +41,15 @@ function NGODashboard() {
         const crises = makeFalseEmptyArray(crisesRes.data)
 
         const ngoResourcesRes = await getUserNGOResources()
-        console.log('ngoResourcesRes: ', ngoResourcesRes)
         const sanitizedNGOResources = makeFalseEmptyArray(ngoResourcesRes.data)
-        console.log('sanitizedNGOResources: ', sanitizedNGOResources)
-        setNGOResources(sanitizedNGOResources)
 
-  
+        if (!sanitizedNGOResources) {
+          setIsNGOResources(false)
+        } else {
+          setNGOResources(sanitizedNGOResources)
+          setIsNGOResources(true)
+        }
+        
         const setCanHelpProp = (crises) => {
           return crises.map( (crisis) => {
             const requests = crisis.requests
@@ -71,8 +78,6 @@ function NGODashboard() {
           })
         }
 
-        const stageOneUpdatedCrisis = setCanHelpProp(crises)
-
         const setDotColoursProp = (crises) => {
           return crises.map( (crisis) => {
             if (crisis.canHelp) {
@@ -84,12 +89,19 @@ function NGODashboard() {
           })
         }
 
-        const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
-        setCrises(stageTwoUpdatedCrisis)
-        setDisplayCrises(stageTwoUpdatedCrisis)
-
-        const filterCanHelp = stageTwoUpdatedCrisis.filter( (crisis) => crisis.canHelp)
-        setFilteredCrises(filterCanHelp)
+        // * set new props to crisis/crises
+        if (crises) {
+          const stageOneUpdatedCrisis = setCanHelpProp(crises)
+          const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
+          setCrises(stageTwoUpdatedCrisis)
+          setDisplayCrises(stageTwoUpdatedCrisis)
+  
+          // ! check whats returned when crises === 1 && canHelp === false
+          const filterCanHelp = stageTwoUpdatedCrisis.filter( (crisis) => crisis.canHelp)
+          setFilteredCrises(filterCanHelp)
+        } else {
+          setDisplayCrises(false)
+        }
 
       } catch (err) {
         console.log('err.response.data: ', err.response)
@@ -121,12 +133,15 @@ function NGODashboard() {
 
   return (
     <>
-      {/* {console.log('displayCrises: ', displayCrises)} */}
       {isError && 'Oops, something went wrong...'}
-      {!displayCrises && 'Loading...'}
+      {typeof displayCrises !== 'boolean' && 'Loading...'}
+      {typeof isNGOResources === 'boolean' &&
+        !isNGOResources &&
+        <ResourcesCreate />
+      }
       
+      {isNGOResources &&
       <div className="ngo-dashboard-div">
-
         <div>
           <p>Show crises:</p>
           <input
@@ -210,8 +225,9 @@ function NGODashboard() {
             }
           </tbody>
         </table>
-        {!displayCrises &&
-          <div className={ !displayCrises ? 'div-no-data' : '' }>* No data to display *</div>
+        {typeof displayCrises === 'boolean' &&
+          !displayCrises &&
+          <div className="div-no-data">* No data to display *</div>
         }
 
         {ngoResources &&
@@ -223,6 +239,8 @@ function NGODashboard() {
         </button>
 
       </div>
+      }
+
     </>
   )
 
