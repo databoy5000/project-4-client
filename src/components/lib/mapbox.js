@@ -5,10 +5,12 @@ export const endUrl = `.json?access_token=${publicToken}`
 
 export function defaultViewport(crisesData) {
 
+  console.log('DEFAULTVP crisesData: ', crisesData)
+
   if (crisesData.length === 1) {
     const crisis = crisesData[0]
-    const latitude = crisis.latitude
-    const longitude = crisis.longitude
+    const latitude = Number(crisis.latitude)
+    const longitude = Number(crisis.longitude)
     const placeType = crisis.placeType
 
     // * zoomValue = 10 in case none of the below placeTypes are passed into the function
