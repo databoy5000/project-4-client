@@ -19,15 +19,15 @@ function headers() {
 
 // * --- Crises
 export function getAllCrises() {
-  return axios.get(`${baseUrl}/${crisesPath}`)
+  return axios.get(`${baseUrl}/${crisesPath}/`)
 }
 
 export function getSingleCrisis(crisisId) {
-  return axios.get(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`)
 }
 
 export function getUserCrisis(userId) {
-  return axios.get(`${baseUrl}/${crisesPath}/${userId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${userId}/`)
 }
 
 export function createCrisis(formdata) {

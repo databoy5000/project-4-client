@@ -9,6 +9,11 @@ function MapGL({ crisesData, selectedCrisisId }) {
   console.log('MAPGL crisesData: ', crisesData)
 
   function makeSingleObjectArray(data) {
+    
+    if (typeof data === 'undefined' || data === null) {
+      return false
+    }
+
     if (data.id) {
       return new Array(data)
     } else return data
