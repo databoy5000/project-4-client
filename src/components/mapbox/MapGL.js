@@ -6,13 +6,24 @@ import { publicToken, defaultViewport } from '../lib/mapbox'
 
 function MapGL({ crisesData, selectedCrisisId }) {
 
+  console.log('MAPGL crisesData: ', crisesData)
+
+  function makeSingleObjectArray(data) {
+    if (data.id) {
+      return new Array(data)
+    } else return data
+  }
+
+
   const mapRef = useRef()
   const [ crises, setCrises ] = useState(false)
   const [ isMapBoxError, setIsMapboxError ] = useState(false)
   const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
 
-  // console.log(' MapGL - defaultViewport(crisesData): ', defaultViewport(crisesData))
-  const [ viewport, setViewport ] = useState(defaultViewport(crisesData))
+  const [ viewport, setViewport ] = useState(
+    defaultViewport(
+      makeSingleObjectArray(crisesData)
+    ))
 
   const handleViewportChange = useCallback(
     (viewport) => setViewport(viewport),
@@ -28,7 +39,7 @@ function MapGL({ crisesData, selectedCrisisId }) {
   }
 
   useEffect( () => {
-    setCrises(crisesData)
+    setCrises(makeSingleObjectArray(crisesData))
   },[crisesData])
 
   useEffect( () => {
@@ -54,7 +65,7 @@ function MapGL({ crisesData, selectedCrisisId }) {
       {console.log('selectedCrisisId: ', selectedCrisisId)} */}
       {isMapBoxLoading && '... loading map!'}
       {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
-
+      {console.log('MAPGL render crises: ', crises)}
       <ReactMapGL 
         ref={mapRef}
         {...viewport} 

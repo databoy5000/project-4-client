@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { getSingleCrisis, getUserNGOResources } from '../lib/api'
 import ResourcesShow from '../resources/ResourcesShow'
 import MapGL from '../mapbox/MapGL'
+import { isCreator } from '../lib/auth'
 
 function CrisisShow() {
 
@@ -22,6 +23,8 @@ function CrisisShow() {
   const headerString = 'Resources Needed to Solve this Crisis'
   const [ crisis, setCrisis ] = useState(false)
   const [ isError, setIsError ] = useState(false)
+
+  const [ isOwner, setIsOwner ] = useState(false)
 
   useEffect( () => {
 
@@ -60,6 +63,8 @@ function CrisisShow() {
         }
 
         const updatedCrisis = setProps()
+
+        setIsOwner(isCreator(updatedCrisis.owner.id))
         setCrisis(updatedCrisis)
 
       } catch (err) {
@@ -71,25 +76,32 @@ function CrisisShow() {
   },[crisisId])
 
   const handleEdit = () => {
-    history.push('/editngoresources')
+    history.push('/editcrisis')
   }
 
   return (
     <div>
-      {console.log('crisis: ', crisis)}
       {isError && 'Oops, something went wrong!'}
       {!crisis ?
         'Loading...'
         :
         <>
+          <p>Disaster type: {crisis.disasterType}</p>
+          <p>Status: {`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
+          <p>Location: {crisis.placeName}</p>
+          <p>Country: {crisis.country}</p>
+          <p>Description: {crisis.disasterDescription}</p>
           
           <ResourcesShow header={headerString} resourcesData={crisis.requests} />
 
           <MapGL crisesData={crisis} selectedCrisisId={false} />
           
-          <button onClick={handleEdit}>
-            Edit NGO Resources
-          </button>
+          {isOwner && 
+            <button onClick={handleEdit}>
+              Edit Crisis
+            </button>
+          }
+
         </>
       }
     </div>

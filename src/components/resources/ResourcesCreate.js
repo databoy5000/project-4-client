@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import useForm from '../hooks/useForm'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import { createNGOResources, getResourceNamesTypes } from '../lib/api'
 import { ngoResourcesErrorForm, ngoResourcesForm } from '../lib/defaultForms'
 
 function ResourcesCreate() {
 
-  const history = useHistory()
+  // const history = useHistory()
   const [ humanResources, setHumanResources ] = useState(null)
   const [ materialResources, setMaterialResources ] = useState(null)
 
@@ -49,7 +49,8 @@ function ResourcesCreate() {
     try {
       const req = await createNGOResources(formData)
       console.log('req', req)
-      history.push('/dashboard')
+      // history.push('/dashboard')
+      window.location.reload()
     } catch (err) {
       console.log(err.response.data)
       setFormErrors({ ...formErrors, resources: err.response.data })
