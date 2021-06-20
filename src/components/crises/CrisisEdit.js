@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import useForm from '../hooks/useForm'
 import { editCrisis } from '../lib/api'
@@ -7,22 +7,22 @@ import MapboxSearch from '../mapbox/MapboxSearch'
 
 function CrisisEdit() {
   const history = useHistory()
-  const [ disasterTypes, setDisasterTypes ] = useState(null)
-  const [ humanResources, setHumanResources ] = useState(null)
-  const [ materialResources, setMaterialResources ] = useState(null)
+  // const [ disasterTypes, setDisasterTypes ] = useState(null)
+  // const [ humanResources, setHumanResources ] = useState(null)
+  // const [ materialResources, setMaterialResources ] = useState(null)
 
   const { formData, setFormData, formErrors, setFormErrors, handleChange } = useForm(crisisForm, crisisErrorForm)
 
-  const handleNestedChange = (e) => {
-    for (let i = 0; i <= formData.requests.length; i++) {
-      if (formData.requests[i].resource === Number(e.target.id)) {
-        const requestsCopy = [ ...formData.requests ]
-        requestsCopy[i]  = { ...requestsCopy[i], quantity: e.target.value }
-        setFormData({ ...formData, requests: requestsCopy })
-        return
-      }
-    }
-  }
+  // const handleNestedChange = (e) => {
+  //   for (let i = 0; i <= formData.requests.length; i++) {
+  //     if (formData.requests[i].resource === Number(e.target.id)) {
+  //       const requestsCopy = [ ...formData.requests ]
+  //       requestsCopy[i]  = { ...requestsCopy[i], quantity: e.target.value }
+  //       setFormData({ ...formData, requests: requestsCopy })
+  //       return
+  //     }
+  //   }
+  // }
 
   const handleResult = e => {
     console.log('e: ', e)
@@ -105,11 +105,11 @@ function CrisisEdit() {
                     onBlur={handleFormError}
                   >
                     <option value="">--------</option>
-                    {disasterTypes &&
+                    {/* {disasterTypes &&
                       disasterTypes.map((disasterType) => (
                         <option key={disasterType} value={disasterType}>{disasterType}</option>
                       ))
-                    }
+                    } */}
                   </select>
                   <p className="invalid-feedback">Select a disaster type.</p>
                 </div>
@@ -161,7 +161,7 @@ function CrisisEdit() {
                 <div className="col-4">
                   <div className="form-group border m-4 p-3 shadow">
                     <h4>Human resources:</h4>
-                    {humanResources && humanResources.map( (resource, index) => (
+                    {/* {humanResources && humanResources.map( (resource, index) => (
                       <div className={resource.resourceType} key={resource.id}>
                         <label className="col-sm-2 col-form-label">
                           {resource.resourceName}s:
@@ -208,7 +208,7 @@ function CrisisEdit() {
                           {formErrors.requests[index + 5].quantity}
                         </p>
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                 </div>
                 <div className="col-2"></div>

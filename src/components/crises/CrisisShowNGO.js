@@ -8,8 +8,6 @@ import { isCreator } from '../lib/auth'
 
 function CrisisShowNGO() {
 
-  console.log('inside crisis NGO show')
-
   // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
     if (data && data.length < 1) {
@@ -86,8 +84,6 @@ function CrisisShowNGO() {
 
   return (
     <div>
-      {console.log('crisis: ', crisis)}
-      {console.log('ngoResources: ', ngoUserResources)}
       {isError && 'Oops, something went wrong!'}
       {!crisis ?
         'Loading...'

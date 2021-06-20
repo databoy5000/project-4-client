@@ -133,9 +133,6 @@ function NGODashboard() {
 
   return (
     <>
-      {console.log('isError: ', isError)}
-      {console.log('displayCrises: ', displayCrises)}
-
       {isError && 'Oops, something went wrong...'}
       {typeof displayCrises !== 'boolean' && !displayCrises && 'Loading...'}
       {typeof isNGOResources === 'boolean' &&
