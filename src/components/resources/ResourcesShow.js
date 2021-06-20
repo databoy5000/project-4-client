@@ -23,7 +23,6 @@ function ResourcesShow({ header, resourcesData }) {
 
   return (
     <div>
-      {!resourcesData && 'Loading...'}
       <div className="container border bg-light shadow-sm mt-5">
         <div className="row justify-content-center">
 
