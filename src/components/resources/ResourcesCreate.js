@@ -92,7 +92,7 @@ function ResourcesCreate() {
                         </label>
                         <input
                           className={`
-                          form-control fw-lighter fst-italic
+                          form-control fw-light fst-italic
                           ${formErrors.resources[index].quantity ? 'is-invalid' : ''}
                           `}
                           type="number"
@@ -117,7 +117,7 @@ function ResourcesCreate() {
                         <label className="col-sm-2 col-form-label">{resource.resourceName}:</label>
                         <input
                           className={`
-                            form-control fw-lighter fst-italic
+                            form-control fw-light fst-italic
                             ${formErrors.resources[index + 5].quantity ? 'is-invalid' : ''}
                           `}
                           type="number"

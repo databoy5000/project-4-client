@@ -19,17 +19,19 @@ function headers() {
   }
 }
 
+console.log(headers())
+
 // * --- Crises
 export function getAllCrises() {
-  return axios.get(`${baseUrl}/${crisesPath}`)
+  return axios.get(`${baseUrl}/${crisesPath}/`)
 }
 
 export function getSingleCrisis(crisisId) {
-  return axios.get(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`)
 }
 
 export function getUserCrisis(userId) {
-  return axios.get(`${baseUrl}/${crisesPath}/${userId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${userId}/`)
 }
 
 export function createCrisis(formdata) {
@@ -53,12 +55,16 @@ export function getResourceNamesTypes() {
   return axios.get(`${baseUrl}/${crisesPath}/${resourcesPath}/`)
 }
 
+export function getUserNGOResources() {
+  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, headers())
+}
+
 export function createNGOResources(formdata) {
   return axios.post(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, formdata, headers())
 }
 
-export function getUserNGOResources() {
-  return axios.get(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/`, headers())
+export function editNGOResources(formdata, resourceId) {
+  return axios.put(`${baseUrl}/${crisesPath}/${ngoResourcesPath}/${resourceId}/`, formdata, headers())
 }
 
 // * --- Authentication

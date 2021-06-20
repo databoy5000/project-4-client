@@ -7,7 +7,6 @@ import { publicToken, defaultViewport } from '../lib/mapbox'
 function MapGL({ crisesData, selectedCrisisId }) {
 
   function makeSingleObjectArray(data) {
-
     if (typeof data === 'undefined' || data === null) {
       return false
     }
