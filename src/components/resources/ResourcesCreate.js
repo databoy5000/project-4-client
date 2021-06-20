@@ -70,18 +70,15 @@ function ResourcesCreate() {
 
   return (
     <div>
-      {console.log('form errors', formErrors)}
       <form
-        className=""
         onSubmit={handleSubmit}
       >
-        <div className="container border bg-light shadow-sm mt-5">
+        <div className="container border bg-light shadow-sm mt-5 mb-5">
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">
               <h2 className="text-center text-uppercase text-wrap text-success m-3">
-                Tell us about the resources you posess
+                Tell us about the resources you possess
               </h2>
-              <div></div>
             </div>
             <div className="col-12">
               <div className="row">
@@ -141,8 +138,7 @@ function ResourcesCreate() {
                 <div className="col-2"></div>
               </div>
             </div>
-            <div className="d-grid gap-2 col-6 mx-auto m-3">
-              <div></div>
+            <div className="d-grid gap-2 col-6 mx-auto m-4">
               <button className="btn btn-success" type="submit">
                 Save your resources
               </button>

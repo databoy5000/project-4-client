@@ -12,9 +12,9 @@ function Home() {
   const [selectedCrisis, setSelectedCrisis] = React.useState(null)
   const [crises, setCrises] = React.useState(null)
 
-  const navHeight = 70
-  const inputHeight = 150
-  const headerHeight = 50
+  const navHeight = 100
+  const inputHeight = 170
+  const headerHeight = 70
   
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight - (navHeight + inputHeight + headerHeight)
@@ -71,15 +71,15 @@ function Home() {
   return (
     <section>
       <div>
-        <h1>WoRCO</h1>
-        <h3>World Response Crises Organisation</h3>
+        <h1 className="text-center m-3">WoRCO</h1>
+        <h3 className="text-center m-3">World Response Crises Organisation</h3>
       </div>
       {isLoading && <p>...map is loading</p>}
       <div>
         <input 
-          className="form-control"
+          className="form-control fw-light fst-italic"
           type="text"
-          placeholder="Search a crisis..."
+          placeholder="Search a crisis by location, disaster type or keyword"
           onChange={handleSearch}
           value={searchTerm || ''}
         />

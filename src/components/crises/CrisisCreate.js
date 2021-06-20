@@ -6,7 +6,6 @@ import { getDisasterTypes, createCrisis, getResourceNamesTypes } from '../lib/ap
 import { crisisErrorForm, crisisForm } from '../lib/defaultForms'
 import MapboxSearch from '../mapbox/MapboxSearch.js'
 
-
 function CrisisCreate() {
 
   const history = useHistory()
@@ -104,136 +103,151 @@ function CrisisCreate() {
     }
   }
 
-
   return (
-    <>
+    <div>
       <form
-        className=""
         onSubmit={handleSubmit}
       >
-        <div className="form-group row">
-          <label className="col-sm-2 col-form-label">
-            Disaster type:
-          </label>
-          <select
-            className={`
-              form-control
-              ${formErrors.disasterType ? 'is-invalid' : ''}
-            `}
-            name="disasterType"
-            onChange={handleChange}
-            onBlur={handleFormError}
-          >
-            <option value="">--------</option>
-            {disasterTypes &&
-              disasterTypes.map((disasterType) => (
-                <option key={disasterType} value={disasterType}>{disasterType}</option>
-              ))
-            }
-          </select>
-          <p className="invalid-feedback">Select a disaster type.</p>
-        </div>
-
-        <div className="form-group row">
-          <label className="col-sm-2 col-form-label">Disaster location:</label>
-          <input
-            className={`
-              form-control
-              ${formErrors.latitude || formErrors.longitude ? 'is-invalid' : ''}
-            `}
-            type="text"
-            placeholder="Enter disaster area on map"
-            name="placeName"
-            onBlur={handleFormError}
-            value={formData.placeName || ''}
-            onSubmit={handleResult}
-            disabled
-          />
-          <p className="invalid-feedback">
-            {formErrors.longitude || formErrors.latitude ? 'A location is required' : ''}
-          </p>
-        </div>
-
-        <div className="form-group row">
-          <label className="col-sm-2 col-form-label">Disaster description:</label>
-          <textarea
-            className={`
-              form-control
-              ${formErrors.disasterDescription ? 'is-invalid' : ''}
-            `}
-            type="text"
-            placeholder="Description"
-            name="disasterDescription"
-            onChange={handleChange}
-            onBlur={handleFormError}
-          />
-          <p className="invalid-feedback">
-            {formErrors.disasterDescription}
-          </p>
-        </div>
-        
-        <h2>Tell NGOs how many of each resources you need!</h2>
-
-        <div className="form-group row">
-          {humanResources &&
-            humanResources.map( (resource, index) => (
-              <div className={resource.resourceType} key={resource.id}>
-                <label className="col-sm-2 col-form-label">
-                  {resource.resourceName}s:
-                </label>
-                <input
-                  className={`
-                    form-control
-                    ${formErrors.requests[index].quantity ? 'is-invalid' : ''}
-                  `}
-                  type="number"
-                  id={resource.id}
-                  name="request"
-                  placeholder="Enter number"
-                  onChange={handleNestedChange}
-                  onBlur={(e) => handleFormError(e, index, resource.resourceType)}
-                />
-                <p className="invalid-feedback">
-                  {formErrors.requests[index].quantity}
-                </p>
+        <div className="container border bg-light shadow-sm mt-5 mb-5">
+          <div className="row justify-content-center">
+            <div className="d-grid gap-2 col-8 mx-auto">
+              <h2 className="text-center text-uppercase text-wrap text-danger m-3">
+                Alert us about your crisis
+              </h2>
+              <div className="form-group border m-4 p-3 shadow">
+                <div className="mb-3">
+                  <label className="col-form-label">
+                    Disaster type:
+                  </label>
+                  <select
+                    className={`
+                      form-control
+                      ${formErrors.disasterType ? 'is-invalid' : ''}
+                    `}
+                    name="disasterType"
+                    onChange={handleChange}
+                    onBlur={handleFormError}
+                  >
+                    <option value="">--------</option>
+                    {disasterTypes &&
+                      disasterTypes.map((disasterType) => (
+                        <option key={disasterType} value={disasterType}>{disasterType}</option>
+                      ))
+                    }
+                  </select>
+                  <p className="invalid-feedback">Select a disaster type.</p>
+                </div>
+                <div className="mb-4">
+                  <label className="col-form-label">Disaster location:</label>
+                  <input
+                    className={`
+                      form-control
+                      ${formErrors.latitude || formErrors.longitude ? 'is-invalid' : ''}
+                    `}
+                    type="text"
+                    placeholder="Enter disaster area on map"
+                    name="placeName"
+                    onBlur={handleFormError}
+                    value={formData.placeName || ''}
+                    onSubmit={handleResult}
+                    disabled
+                  />
+                  <p className="invalid-feedback">
+                    {formErrors.longitude || formErrors.latitude ? 'A location is required' : ''}
+                  </p>
+                </div>
+                <MapboxSearch onResult={handleResult}/>
+                <div className="mt-3 mb-3">
+                  <label className="col-form-label">Disaster description:</label>
+                  <textarea
+                    className={`
+                      form-control
+                      ${formErrors.disasterDescription ? 'is-invalid' : ''}
+                    `}
+                    type="text"
+                    placeholder="Description"
+                    name="disasterDescription"
+                    onChange={handleChange}
+                    onBlur={handleFormError}
+                  />
+                  <p className="invalid-feedback">
+                    {formErrors.disasterDescription}
+                  </p>
+                </div>
               </div>
-            ))
-          }
-        </div>
-
-        <div className="form-group row">
-          {materialResources &&
-            materialResources.map( (resource, index) => (
-              <div className={resource.resourceType} key={resource.id}>
-                <label className="col-sm-2 col-form-label">{resource.resourceName}</label>
-                <input
-                  className={`
-                    form-control
-                    ${formErrors.requests[index + 5].quantity ? 'is-invalid' : ''}
-                  `}
-                  type="number"
-                  id={resource.id}
-                  name="request"
-                  placeholder="Enter number"
-                  onChange={handleNestedChange}
-                  onBlur={(e) => handleFormError(e, index, resource.resourceType)}
-                />
-                <p className="invalid-feedback">
-                  {formErrors.requests[index + 5].quantity}
-                </p>
+              <h5 className="text-center text-uppercase text-wrap text-danger m-3">
+                Tell NGOs how many of each resource you need
+              </h5>
+            </div>
+            <div className="col-12">
+              <div className="row">
+                <div className="col-2"></div>
+                <div className="col-4">
+                  <div className="form-group border m-4 p-3 shadow">
+                    <h4>Human resources:</h4>
+                    {humanResources && humanResources.map( (resource, index) => (
+                      <div className={resource.resourceType} key={resource.id}>
+                        <label className="col-sm-2 col-form-label">
+                          {resource.resourceName}s:
+                        </label>
+                        {console.log('formErrors: ', formErrors)}
+                        <input
+                          className={`
+                            form-control fw-lighter fst-italic
+                            ${formErrors.requests[index].quantity ? 'is-invalid' : ''}
+                          `}
+                          type="number"
+                          id={resource.id}
+                          name="request"
+                          placeholder="Enter number"
+                          onChange={handleNestedChange}
+                          onBlur={(e) => handleFormError(e, index, resource.resourceType)}
+                        />
+                        <p className="invalid-feedback">
+                          {formErrors.requests[index].quantity}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="col-4">
+                  <div className="form-group border m-4 p-3 shadow">
+                    <h4>Material resources:</h4>
+                    {materialResources && materialResources.map( (resource, index) => (
+                      <div className={resource.resourceType} key={resource.id}>
+                        <label className="col-sm-2 col-form-label">{resource.resourceName}:</label>
+                        <input
+                          className={`
+                            form-control fw-lighter fst-italic
+                            ${formErrors.requests[index + 5].quantity ? 'is-invalid' : ''}
+                          `}
+                          type="number"
+                          id={resource.id}
+                          name="request"
+                          placeholder="Enter number"
+                          onChange={handleNestedChange}
+                          onBlur={(e) => handleFormError(e, index, resource.resourceType)}
+                        />
+                        <p className="invalid-feedback">
+                          {formErrors.requests[index + 5].quantity}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="col-2"></div>
               </div>
-            ))
-          }
+            </div>
+          </div>
+          <div className="d-grid gap-2 col-6 mx-auto m-4">
+            <button className="btn btn-danger" type="submit">
+              Send alert
+            </button>
+          </div>
         </div>
-
-        <MapboxSearch onResult={handleResult}/>
-
-        <button type="submit">
-          Now let the world know you&apos;re f#*!ed!
-        </button>
-
       </form>
-    </>  )
+    </div>  
+  )
 }
 
 export default CrisisCreate
