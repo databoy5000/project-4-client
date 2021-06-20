@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useForm from '../hooks/useForm'
 import { useHistory } from 'react-router-dom'
 import { createNGOResources, getResourceNamesTypes } from '../lib/api'

@@ -6,8 +6,11 @@ import Login from './components/auth/Login'
 import { About } from './components/common/About'
 import Navbar from './components/common/Navbar'
 import CrisisCreate from './components/crises/CrisisCreate'
+import CrisisEdit from './components/crises/CrisisEdit'
+import CrisisShow from './components/crises/CrisisShow'
 import Dashboard from './components/common/Dashboard'
 import ResourcesCreate from './components/resources/ResourcesCreate'
+import ResourcesEdit from './components/resources/ResourcesEdit'
 
 function App() {
   return (
@@ -19,8 +22,11 @@ function App() {
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
         <Route path="/createcrisis" component={CrisisCreate}/>
+        <Route path="/editcrisis" component={CrisisEdit}/>
+        <Route path="/crises/:crisisId" component={CrisisShow}/>
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/createngoresources" component={ResourcesCreate}/>
+        <Route path="/editngoresources" component={ResourcesEdit}/>
       </Switch>
     </Router>
   ) 

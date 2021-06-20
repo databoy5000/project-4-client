@@ -4,10 +4,10 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 import { publicToken } from '../lib/mapbox'
 
 
-function MapGL({ crises, selectedCrisisId }) {
+function MapGL({ crisesData, selectedCrisisId }) {
 
   const mapRef = useRef()
-
+  const [ crises, setCrises ] = useState(false)
   const [ isMapBoxError, setIsMapboxError ] = useState(false)
   const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
 
@@ -33,6 +33,14 @@ function MapGL({ crises, selectedCrisisId }) {
   }
 
   useEffect( () => {
+    if (typeof crisesData === 'object') {
+      setCrises([crisesData])
+    } else if (crisesData.length > 1) {
+      setCrises(crisesData)
+    }
+  },[crisesData])
+
+  useEffect( () => {
     window.addEventListener('resize', handleResize)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[crises])
@@ -51,8 +59,8 @@ function MapGL({ crises, selectedCrisisId }) {
 
   return (
     <div>
-      {console.log('***crises: ', crises)}
-      {console.log('selectedCrisisId: ', selectedCrisisId)}
+      {/* {console.log('***crises: ', crises)}
+      {console.log('selectedCrisisId: ', selectedCrisisId)} */}
       {isMapBoxLoading && '... loading map!'}
       {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
 
@@ -65,9 +73,9 @@ function MapGL({ crises, selectedCrisisId }) {
         onLoading={handleLoading}
         onInit={handleLoaded}
       >
-
-        {!crises && 'Loading map information!'}
-        {crises && crises.map( (crisis) => 
+        {!crises && 'Loading map...'}
+        {console.log('**crises**: ', crises)}
+        {crises && (crises.map( (crisis) =>
           <Marker
             key={crisis.id}
             latitude={Number(crisis.latitude)}
@@ -75,18 +83,18 @@ function MapGL({ crises, selectedCrisisId }) {
             offsetLeft={-10}
             offsetTop={-12}
           >
+            {console.log('crisis.dotColour: ', crisis.dotColour)}
             <div
-              className={`pulsatingDot
-                ${selectedCrisisId &&
-                  Number(selectedCrisisId) === crisis.id ?
-      'selectedPin'
-      :
-      ''
-    }`
-              }
+              id={`${
+                Number(selectedCrisisId) === crisis.id ?
+                  'blue-dot'
+                  :
+                  crisis.dotColour
+              }`}
+              className="pulsatingDot"
             />
           </Marker>
-        )}
+        ))}
       </ReactMapGL>
 
     </div>

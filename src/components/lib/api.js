@@ -3,6 +3,7 @@ import { getToken } from './auth'
 
 export const baseUrl = '/api'
 export const crisesPath = 'crises'
+export const showPath = 'show'
 export const resourcesPath = 'resources'
 export const registerPath = 'register'
 export const loginPath = 'login'
@@ -16,15 +17,13 @@ function headers() {
   }
 }
 
-console.log(headers())
-
 // * --- Crises
 export function getAllCrises() {
   return axios.get(`${baseUrl}/${crisesPath}`)
 }
 
 export function getSingleCrisis(crisisId) {
-  return axios.get(`${baseUrl}/${crisesPath}/${crisisId}`)
+  return axios.get(`${baseUrl}/${crisesPath}/${showPath}/${crisisId}`)
 }
 
 export function getUserCrisis(userId) {
