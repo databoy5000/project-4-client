@@ -34,50 +34,39 @@ function NGODashboard() {
   const [ isError, setIsError ] = useState(false)
 
   useEffect( () => {
-
     const getData = async () => {
       try {
         const crisesRes = await getAllCrises()
         const crises = makeFalseEmptyArray(crisesRes.data)
-
         const ngoResourcesRes = await getUserNGOResources()
         const sanitizedNGOResources = makeFalseEmptyArray(ngoResourcesRes.data)
-
         if (!sanitizedNGOResources) {
           setIsNGOResources(false)
         } else {
           setNGOResources(sanitizedNGOResources)
           setIsNGOResources(true)
         }
-        
         const setCanHelpProp = (crises) => {
           return crises.map( (crisis) => {
             const requests = crisis.requests
             const filterCheck = requests.every( (request, index) => {
-
               const crisisResource = request.resource.id
               const ngoResource = sanitizedNGOResources[index].resource.id
-
               const crisisResourceQuantity = request.quantity
               const ngoResourceQuantity = sanitizedNGOResources[index].quantity
-
               return (
                 crisisResource === ngoResource &&
                 crisisResourceQuantity <= ngoResourceQuantity
               )
-
             })
-
             if (filterCheck) {
               crisis.canHelp = true
             } else {
               crisis.canHelp = false
             }
-
             return crisis
           })
         }
-
         const setDotColoursProp = (crises) => {
           return crises.map( (crisis) => {
             if (crisis.canHelp) {
@@ -88,21 +77,18 @@ function NGODashboard() {
             return crisis
           })
         }
-
         // * set new props to crisis/crises
         if (crises && sanitizedNGOResources) {
           const stageOneUpdatedCrisis = setCanHelpProp(crises)
           const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
           setCrises(stageTwoUpdatedCrisis)
           setDisplayCrises(stageTwoUpdatedCrisis)
-  
           // ! check whats returned when crises === 1 && canHelp === false
           const filterCanHelp = stageTwoUpdatedCrisis.filter( (crisis) => crisis.canHelp)
           setFilteredCrises(filterCanHelp)
         } else {
           setDisplayCrises(false)
         }
-
       } catch (err) {
         console.log('error response: ', err)
         setIsError(true)
@@ -157,7 +143,6 @@ function NGODashboard() {
                   onChange={handleChange}
                   checked={displayCrises === crises}
                 /> Show all crises
-
                 <input
                   type="radio"
                   name="filterCheck"
@@ -166,7 +151,6 @@ function NGODashboard() {
                   onChange={handleChange}
                   checked={displayCrises === filteredCrises}
                 /> Scope crises we can help with
-
               </div>
 
               <h4>Map Legend</h4>
@@ -236,23 +220,23 @@ function NGODashboard() {
                     }
                   </tbody>
                 </table>
-
                 {typeof displayCrises === 'boolean' &&
                   !displayCrises &&
                   <div className="div-no-data">* No crises to display *</div>
                 }
-
                 {ngoResources &&
-                  <ResourcesShow header={headerString} resourcesData={ngoResources} />
+                  <div className="row justify-content-center">
+                    <ResourcesShow header={headerString} resourcesData={ngoResources} />
+                    <div className="d-grid gap-2 col-6 mx-auto m-4">
+                      <button className="btn btn-success" onClick={handleEdit}>
+                        Edit your resources
+                      </button>
+                    </div>
+                  </div>
                 }
-                
-                <button onClick={handleEdit}>
-                  Edit NGO Resources
-                </button>
               </div>
             </div>
           }
-
         </div>
       }
     </>
