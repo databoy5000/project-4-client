@@ -130,39 +130,83 @@ function NGODashboard() {
         <div className="ngo-dashboard-div">
           {displayCrises &&
             <div className="radio-legend-map">
-              <div className="filter-radio">
-                <p>Show crises:</p>
-                <input
-                  type="radio"
-                  name="filterCheck"
-                  className="form-check-input"
-                  id={showCrises[0]}
-                  onChange={handleChange}
-                  checked={displayCrises === crises}
-                /> Show all crises
-                <input
-                  type="radio"
-                  name="filterCheck"
-                  className="form-check-input"
-                  id={showCrises[1]}
-                  onChange={handleChange}
-                  checked={displayCrises === filteredCrises}
-                /> Scope crises we can help with
+              <div className="container">
+                <div className="row justify-content-center">
+                  <h2 className="text-center text-uppercase text-wrap m-3">
+                    Help is needed
+                  </h2>
+                  <div className="filter-radio text-center">
+                    <input
+                      type="radio"
+                      name="filterCheck"
+                      className="form-check-input"
+                      id={showCrises[0]}
+                      onChange={handleChange}
+                      checked={displayCrises === crises}
+                    /> 
+                    <label className="form-check-label">
+                      Show all crises
+                    </label>
+                    <div></div>
+                    <input
+                      type="radio"
+                      name="filterCheck"
+                      className="form-check-input"
+                      id={showCrises[1]}
+                      onChange={handleChange}
+                      checked={displayCrises === filteredCrises}
+                    /> 
+                    <label className="form-check-label">
+                      Scope crises you can help with
+                    </label>
+                  </div>
+                  <div className="col">
+                    <div className="form-group border m-4 p-3 shadow">
+                      <div className="row">
+                        <div className="col-1">
+                          <div className="pulsatingDot" id='red-dot'/>
+                        </div>
+                        <div className="col ms-2">
+                          <label className="form-check-label text-danger">
+                            Crises you cannot solve
+                          </label>
+                        </div>
+                      </div>
+                      {/* <p className="text-danger"></p> */}
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group border m-4 p-3 shadow">
+                      <div className="row">
+                        <div className="col-1">
+                          <div className="pulsatingDot" id='green-dot'/>
+                        </div>
+                        <div className="col ms-2">
+                          <label className="form-check-label text-success">
+                            Crises you can solve
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group border m-4 p-3 shadow">
+                      <div className="row">
+                        <div className="col-1">
+                          <div className="pulsatingDot" id='blue-dot'/>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col">
+                          <label className="form-check-label text-primary">
+                            Selected crises
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <h4>Map Legend</h4>
-              <div>
-                <div className="pulsatingDot" id='red-dot'/>
-                <p>Crises you cannot solve</p>
-              </div>
-              <div>
-                <div className="pulsatingDot" id='green-dot'/>
-                <p>Crises you can solve</p> 
-              </div>
-              <div>
-                <div className="pulsatingDot" id='blue-dot'/>
-                <p>Crises you have selected</p>
-              </div>
             </div>
           }
 
@@ -208,7 +252,7 @@ function NGODashboard() {
                           <td id={crisis.id}>{crisis.canHelp ? 'Yes' : 'No'}</td>
                           <td id={crisis.id}>{crisis.isSolve ? 'Ongoing' : 'Classified'}</td>
                           <td>
-                            <button onClick={ () => handleClick(crisis.id)}>
+                            <button className="btn btn-outline-dark" onClick={ () => handleClick(crisis.id)}>
                               See Details
                             </button>
                           </td>

@@ -22,13 +22,13 @@ function ResourcesShow({ header, resourcesData }) {
 
   return (
     <div>
-      <div className="container border bg-light shadow-sm mt-5">
+      <div className="container border bg-light shadow-sm mt-5 mb-5">
         <div className="row justify-content-center">
 
           <div className="d-grid gap-2 col-8 mx-auto">
-            <h2 className="text-center text-uppercase text-wrap text-success m-3">
+            <h3 className="text-center text-uppercase text-wrap m-3">
               {header}
-            </h2>
+            </h3>
           </div>
 
           <div className="col-12">

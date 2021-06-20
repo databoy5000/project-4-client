@@ -63,7 +63,7 @@ function MapGL({ crisesData, selectedCrisisId }) {
   }
 
   return (
-    <div>
+    <div className="shadow-sm">
       {isMapBoxLoading && '... loading map!'}
       {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
       <ReactMapGL 
@@ -98,7 +98,6 @@ function MapGL({ crisesData, selectedCrisisId }) {
           </Marker>
         ))}
       </ReactMapGL>
-
     </div>
   )
 }

@@ -92,7 +92,7 @@ function HSDashboard() {
                   <td id={crisis.id}>{crisis.country}</td>
                   <td id={crisis.id}>{crisis.isSolved ? 'Classified' : 'Ongoing' }</td>
                   <td>
-                    <button onClick={ () => handleClick(crisis.id)}>
+                    <button className="btn btn-danger" onClick={ () => handleClick(crisis.id)}>
                       See Details
                     </button>
                   </td>
