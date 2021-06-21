@@ -63,7 +63,6 @@ function MapGL({ crisesData, selectedCrisisId }) {
         onLoading={handleLoading}
         onInit={handleLoaded}
       >
-
         {(crises && crises.length >= 1) && (crises.map( (crisis) =>
           <Marker
             key={crisis.id}
@@ -82,8 +81,6 @@ function MapGL({ crisesData, selectedCrisisId }) {
               }`}
               className="pulsatingDot"
             />
-
-            
           </Marker>
         ))}
       </ReactMapGL>

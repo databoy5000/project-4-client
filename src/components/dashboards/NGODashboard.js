@@ -3,13 +3,40 @@ import { useHistory } from 'react-router-dom'
 
 import { getAllCrises, getUserNGOResources, ngoPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
-import MapGL from '../mapbox/MapGL'
+import MapGLHomepage from '../mapbox/MapGLHomepage'
 import ResourcesShow from '../resources/ResourcesShow'
 import ResourcesCreate from '../resources/ResourcesCreate'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function NGODashboard() {
+
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight / 2
+
+  const [viewport, setViewport] = useState({
+    latitude: 30,
+    longitude: 0,
+    width: viewportWidth,
+    height: viewportHeight,
+    zoom: 1.85,
+  })
+
+  function handleResize() {
+    const newWidth = window.innerWidth
+    const newHeight = window.innerHeight / 2
+    setViewport({ ...viewport, 
+      width: newWidth, 
+      height: newHeight, 
+    })
+    console.log('newWidth', newWidth)
+    console.log('newHeight', newHeight)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
@@ -129,7 +156,6 @@ function NGODashboard() {
         !isNGOResources &&
         <ResourcesCreate />
       }
-      
       {isNGOResources &&
         <div className="ngo-dashboard-div">
           {displayCrises &&
@@ -210,18 +236,15 @@ function NGODashboard() {
                   </div>
                 </div>
               </div>
-
             </div>
           }
-
           {displayCrises !== null &&
             <div className="map-table-ngores">
-
-              <MapGL
+              <MapGLHomepage
                 crisesData={displayCrises}
                 selectedCrisisId={selectedCrisisId}
+                homepageViewport={viewport}
               />
-
               <div className="table-div">
                 <table className="table hs-dashboard-table">
                   <thead>
@@ -235,7 +258,6 @@ function NGODashboard() {
                       <th scope="col">Detailed View</th>
                     </tr>
                   </thead>
-
                   <tbody>
                     {displayCrises &&
                       displayCrises.map( (crisis, index) => (
@@ -286,7 +308,6 @@ function NGODashboard() {
       }
     </>
   )
-
 }
 
 export default NGODashboard

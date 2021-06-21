@@ -8,7 +8,6 @@ import MapGLHomepage from '../mapbox/MapGLHomepage'
 function Home() {
   
   const [searchTerm, setSearchTerm] = useState('')
-  
   const [ crises, setCrises ] = useState(null)
   // const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
 
@@ -97,7 +96,6 @@ function Home() {
             <h1 className="text-center m-3">WoRCO</h1>
             <h3 className="text-center m-3">World Response Crises Organisation</h3>
           </div>
-          
           <div>
             <input 
               className="form-control fw-light fst-italic"
@@ -107,11 +105,11 @@ function Home() {
               value={searchTerm || ''}
             />
           </div>
-
           <MapGLHomepage crisesData={filteredCrises} homepageViewport={viewport} />
         </div>
       }
     </section>
   )
 }
+
 export default Home

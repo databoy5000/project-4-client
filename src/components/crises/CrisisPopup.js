@@ -24,9 +24,6 @@ function CrisisPopup({ crisesData, selectedCrisisId }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[selectedCrisisId])
 
-
-
-
   const handleRedirect = () => {
     history.push(`${hsPath}/${crisesPath}/${currentCrisis.id}/`)
   }
@@ -39,35 +36,39 @@ function CrisisPopup({ crisesData, selectedCrisisId }) {
     <div>
       {selectedCrisis &&
         <Popup
+          className="shadow"
           latitude={Number(currentCrisis.latitude)}
           longitude={Number(currentCrisis.longitude)}
         >
-          <div>
+          <div className="form-group text-center p-1">
             <div onClick={handleRedirect}>
-              <p>Disaster: {currentCrisis.disasterType}</p>
-              <p>Country: {currentCrisis.country}</p>
-              <p>Location: {currentCrisis.placeName}</p>
-              <p>Logged by: {currentCrisis.username}</p>
-
+              <label className="badge bg-danger fs-5">Disaster: {currentCrisis.disasterType}</label> 
+              <p></p>
+              <label className="badge bg-secondary fs-6">Country:</label> 
+              <p className="fs-6">{currentCrisis.country}</p>
+              <label className="badge bg-secondary fs-6">Location:</label> 
+              <p className="fs-6">{currentCrisis.placeName}</p>
+              <label className="badge bg-secondary fs-6">Logged by:</label> 
+              <p className="fs-6">{currentCrisis.owner.username}</p>
               <img
-                width="250px"
-                height="150px"
-                src={'fake url'}
+                width="100px"
+                height="100px"
+                src={currentCrisis.owner.profilePictureUrl}
                 alt={currentCrisis.country}
               />
-            
               <br></br>
             </div>
-            <button
-              onClick={handleClose}
-            >
-              Close
-            </button>
+            <div className="mx-auto mt-1">
+              <button 
+                className="btn btn-dark"
+                onClick={handleClose}
+              >
+                Close
+              </button>
+            </div>
           </div>
-
         </Popup>
       }
-
     </div>
   )
 }

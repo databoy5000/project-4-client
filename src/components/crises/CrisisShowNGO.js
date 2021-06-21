@@ -3,12 +3,39 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { getSingleCrisis, getUserNGOResources } from '../lib/api'
 import RequestsResourcesShow from '../resources/RequestsResourcesShow'
-import MapGL from '../mapbox/MapGL'
+import MapGLHomepage from '../mapbox/MapGLHomepage'
 import { isCreator } from '../lib/auth'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function CrisisShowNGO() {
+
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight / 2
+
+  const [viewport, setViewport] = useState({
+    latitude: 30,
+    longitude: 0,
+    width: viewportWidth,
+    height: viewportHeight,
+    zoom: 1.85,
+  })
+
+  function handleResize() {
+    const newWidth = window.innerWidth
+    const newHeight = window.innerHeight / 2
+    setViewport({ ...viewport, 
+      width: newWidth, 
+      height: newHeight, 
+    })
+    console.log('newWidth', newWidth)
+    console.log('newHeight', newHeight)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
@@ -91,17 +118,45 @@ function CrisisShowNGO() {
       {isLoading && <Loading/>}
       {crisis &&
         <div>
-          <p>Disaster type: {crisis.disasterType}</p>
-          <p>Status: {`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
-          <p>Location: {crisis.placeName}</p>
-          <p>Country: {crisis.country}</p>
-          <p>Description: {crisis.disasterDescription}</p>
+          <h2 className="text-center text-uppercase text-wrap text-danger m-3">
+            Crisis at: {crisis.placeName}
+          </h2>
+          <MapGLHomepage 
+            crisesData={crisis} 
+            selectedCrisisId={false}
+            homepageViewport={viewport} />
+          <div className="container mt-3">
+            <div className="row justify-content-center">
+              <div className="d-grid gap-2 col-6 mx-auto">
+                <div className="form-group border m-4 p-3 shadow text-center">
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Disaster type:</label> 
+                    <p className="fs-5">{crisis.disasterType}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Status:</label> 
+                    <p className="fs-5">{`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Location:</label> 
+                    <p className="fs-5">{crisis.placeName}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Country:</label> 
+                    <p className="fs-5">{crisis.country}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Description:</label> 
+                    <p className="fs-5">{crisis.disasterDescription}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           
           {crisis && ngoUserResources &&
             <RequestsResourcesShow header={headerString} requestsData={crisis.requests} resourcesData={ngoUserResources} />
           }
-
-          <MapGL crisesData={crisis} selectedCrisisId={false} />
           
           {isOwner && 
             <button onClick={handleEdit}>

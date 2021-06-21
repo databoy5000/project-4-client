@@ -4,13 +4,24 @@ import { useHistory } from 'react-router-dom'
 import { getUserCrisis, hsPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import { getPayLoad } from '../lib/auth'
-import MapGL from '../mapbox/MapGL'
+import MapGLHomepage from '../mapbox/MapGLHomepage'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function HSDashboard() {
 
   const history = useHistory()
+
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight / 2
+
+  const [viewport, setViewport] = useState({
+    latitude: 30,
+    longitude: 0,
+    width: viewportWidth,
+    height: viewportHeight,
+    zoom: 1.85,
+  })
 
   const [ userCrises, setUserCrises ] = useState(null)
   const [ selectedCrisisId, setSelectedCrisisId ] = useState(null)
@@ -57,6 +68,21 @@ function HSDashboard() {
     getData()
   },[])
 
+  function handleResize() {
+    const newWidth = window.innerWidth
+    const newHeight = window.innerHeight / 2
+    setViewport({ ...viewport, 
+      width: newWidth, 
+      height: newHeight, 
+    })
+    console.log('newWidth', newWidth)
+    console.log('newHeight', newHeight)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleClick = (crisisId) => {
     history.push(`/${hsPath}/${crisesPath}/${crisisId}`)
@@ -65,11 +91,13 @@ function HSDashboard() {
   const handlePin = (e) => {
     setSelectedCrisisId(e.target.id)
   }
-
+  
   return (
     <>
       {isError && <Error/>}
       {isLoading && <Loading/>}
+      <h2 className="text-center text-uppercase text-wrap m-3">My crises</h2>
+      <MapGLHomepage crisesData={userCrises} selectedCrisisId={selectedCrisisId} homepageViewport={viewport} />
       <div className="crisis-list">
         <table className="table hs-dashboard-table">
           <thead>
@@ -82,7 +110,6 @@ function HSDashboard() {
               <th scope="col">Detailed View</th>
             </tr>
           </thead>
-
           <tbody>
             {userCrises &&
               userCrises.map( (crisis, index) => (
@@ -114,9 +141,6 @@ function HSDashboard() {
         {!userCrises &&
           <div className={ !userCrises ? 'div-no-data' : '' }>* No data to display *</div>
         }
-        
-        <MapGL crisesData={userCrises} selectedCrisisId={selectedCrisisId} />
-
       </div>
     </>
   )
