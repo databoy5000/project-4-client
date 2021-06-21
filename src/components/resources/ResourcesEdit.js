@@ -7,7 +7,9 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function ResourcesEdit() {
+
   const history = useHistory()
+
   const [ humanResources, setHumanResources ] = useState(null)
   const [ materialResources, setMaterialResources ] = useState(null)
   const { formData, setFormData } = useForm(editNGOResourcesForm, ngoResourcesErrorForm)
@@ -52,11 +54,11 @@ function ResourcesEdit() {
   const handleNestedChange = e => {
     for (let i = 0; i < formData.resources.length; i++) {
       if (formData.resources[i].resource === Number(e.target.id)) {
-        const availableCopy = [ ...formData.resources ]
-        availableCopy[i] = { ...availableCopy[i],
+        const resourceCopy = [ ...formData.resources ]
+        resourceCopy[i] = { ...resourceCopy[i],
           quantity: e.target.value,
         }
-        setFormData({ ...FormData, resources: availableCopy })
+        setFormData({ ...FormData, resources: resourceCopy })
         return
       }
     }

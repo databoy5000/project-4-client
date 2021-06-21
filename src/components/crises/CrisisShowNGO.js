@@ -40,7 +40,12 @@ function CrisisShowNGO() {
 
         const ngoResourcesRes = await getUserNGOResources()
         const ngoResources = makeFalseEmptyArray(ngoResourcesRes.data)
-        setNGOUserResources(ngoResources)
+
+        const sortedNGOResources = ngoResources.sort( (a, b) => {
+          return a.resource.id - b.resource.id
+        })
+
+        setNGOUserResources(sortedNGOResources)
   
         const setProps = () => {
           const filterCheck = crisis.requests.every( (request, index) => {

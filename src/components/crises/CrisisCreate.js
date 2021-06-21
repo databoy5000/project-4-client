@@ -40,7 +40,7 @@ function CrisisCreate() {
   }, [])
 
   const handleNestedChange = (e) => {
-    for (let i = 0; i <= formData.requests.length; i++) {
+    for (let i = 0; i < formData.requests.length; i++) {
       if (formData.requests[i].resource === Number(e.target.id)) {
         const requestsCopy = [ ...formData.requests ]
         requestsCopy[i]  = { ...requestsCopy[i], quantity: e.target.value }

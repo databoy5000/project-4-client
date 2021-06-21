@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import { crisesPath, hsPath } from '../lib/api'
 import { useHistory } from 'react-router'
 
-function CrisisPopup({ crisesData, selectedCrisisId }) {
+function CrisisPopup({ crisesData, selectedCrisisId, passState }) {
 
   const history = useHistory()
   const [ currentCrisis, setCurrentCrisis ] = useState(false)
-  const [ selectedCrisis, setSelectedCrisis ] = useState(false)
+  const [ subSelectedCrisisId, setSubSelectedCrisisId ] = useState(false)
 
   useEffect( () => {
 
@@ -19,25 +19,22 @@ function CrisisPopup({ crisesData, selectedCrisisId }) {
       setCurrentCrisis(filteredCrisis[0])
     }
 
-    setSelectedCrisis(selectedCrisisId)
+    setSubSelectedCrisisId(selectedCrisisId)
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[selectedCrisisId])
-
-
-
 
   const handleRedirect = () => {
     history.push(`${hsPath}/${crisesPath}/${currentCrisis.id}/`)
   }
 
   const handleClose = () => {
-    setSelectedCrisis(false)
+    passState(false)
   }
 
   return (
     <div>
-      {selectedCrisis &&
+      {subSelectedCrisisId &&
         <Popup
           latitude={Number(currentCrisis.latitude)}
           longitude={Number(currentCrisis.longitude)}

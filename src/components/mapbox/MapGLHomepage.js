@@ -2,10 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 
 import { publicToken, defaultViewport } from '../lib/mapbox'
-import CrisisPopup from '../crises/CrisisPopup'
+import CrisisPopup from './CrisisPopup'
 
 
-function MapGL({ crisesData, homepageViewport }) {
+function MapGLHomepage({ crisesData, homepageViewport }) {
 
   function makeSingleObjectArray(crisesData) {
     if (typeof crisesData === 'undefined' || crisesData === null) {
@@ -61,6 +61,10 @@ function MapGL({ crisesData, homepageViewport }) {
     setSelectedCrisisId(e.target.id)
   }
 
+  const handleCrisisSelect = () => {
+    setSelectedCrisisId(false)
+  }
+
   return (
     <div>
       {/* {console.log('selectedCrisisId: ', selectedCrisisId)} */}
@@ -84,19 +88,21 @@ function MapGL({ crisesData, homepageViewport }) {
             offsetLeft={-10}
             offsetTop={-12}
           >
+            
             <div
-              id={crisis.id}
               className="pulsatingDot red-dot"
+              id={crisis.id}
               onClick={handleSelectedPin}
             />
+
           </Marker>
         ))}
 
-        <CrisisPopup crisesData={crises} selectedCrisisId={selectedCrisisId} />
+        <CrisisPopup crisesData={crises} selectedCrisisId={selectedCrisisId} passState={handleCrisisSelect} />
       </ReactMapGL>
 
     </div>
   )
 }
 
-export default MapGL
+export default MapGLHomepage
