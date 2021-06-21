@@ -25,6 +25,15 @@
   display: none;
 }
 
+.marker-div {
+  width: 25px;
+  height: 25px;
+}
+
+.progress {
+  cursor: progress;
+}
+
 .pulsatingDot {
   animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
   border-radius: 50%;
@@ -35,6 +44,7 @@
 
 .red-dot, .red-dot:before {
   background-color: var(--pulsating-dot, #d83643);
+  cursor: pointer;
 }
 
 #green-dot, #green-dot:before {

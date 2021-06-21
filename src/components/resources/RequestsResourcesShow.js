@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 function ResourcesShow({ header, requestsData, resourcesData }) {
+
   const humanResources = requestsData
     .filter((resource) => resource.resource.resourceType === 'Human')
   const materialResources = requestsData

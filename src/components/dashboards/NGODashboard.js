@@ -49,7 +49,7 @@ function NGODashboard() {
 
   const history = useHistory()
   const showCrises = ['All', 'Filtered']
-  const headerString = 'Your NGO Resources'
+  const headerString = 'My NGO Resources'
 
   const [ crises, setCrises ] = useState([])
   const [ filteredCrises, setFilteredCrises ] = useState([])
@@ -70,10 +70,14 @@ function NGODashboard() {
         const crises = makeFalseEmptyArray(crisesRes.data)
         const ngoResourcesRes = await getUserNGOResources()
         const sanitizedNGOResources = makeFalseEmptyArray(ngoResourcesRes.data)
+
         if (!sanitizedNGOResources) {
           setIsNGOResources(false)
         } else {
-          setNGOResources(sanitizedNGOResources)
+          const sortedNGOResources = sanitizedNGOResources.sort( (a, b) => {
+            return a.resource.id - b.resource.id
+          })
+          setNGOResources(sortedNGOResources)
           setIsNGOResources(true)
         }
         const setCanHelpProp = (crises) => {
@@ -296,7 +300,7 @@ function NGODashboard() {
                     <ResourcesShow header={headerString} resourcesData={ngoResources} />
                     <div className="d-grid gap-2 col-6 mx-auto m-4">
                       <button className="btn btn-success" onClick={handleEdit}>
-                        Edit your resources
+                        Edit my resources
                       </button>
                     </div>
                   </div>

@@ -9,7 +9,6 @@ function Home() {
   
   const [searchTerm, setSearchTerm] = useState('')
   const [ crises, setCrises ] = useState(null)
-  // const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
 
   const navHeight = 100
   const inputHeight = 70
@@ -67,13 +66,6 @@ function Home() {
     setSearchTerm(e.target.value)
   }
 
-  const getHeight = (e) => {
-    console.log('e: ', e)
-  }
-
-  // const handlePin = (e) => {
-  //   setSelectedCrisisId(e.target.id)
-  // }
     
   const filteredCrises = crises?.filter(crisis => {
     return (
@@ -92,7 +84,7 @@ function Home() {
       {isLoading && <p>...map is loading</p>}
       {crises && 
         <div className="map-homepage">
-          <div onClick={getHeight}>
+          <div>
             <h1 className="text-center m-3">WoRCO</h1>
             <h3 className="text-center m-3">World Response Crises Organisation</h3>
           </div>

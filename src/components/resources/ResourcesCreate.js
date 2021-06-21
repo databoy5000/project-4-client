@@ -32,7 +32,7 @@ function ResourcesCreate() {
   }, [])
 
   const handleNestedChange = e => {
-    for (let i = 0; i <= formData.resources.length; i++) {
+    for (let i = 0; i < formData.resources.length; i++) {
       if (formData.resources[i].resource === Number(e.target.id)) {
         const availableCopy = [ ...formData.resources ]
         availableCopy[i] = { ...availableCopy[i], quantity: e.target.value }

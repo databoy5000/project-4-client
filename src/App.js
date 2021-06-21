@@ -23,9 +23,9 @@ function App() {
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
         <Route path="/hs/dashboard" component={HSDashboard}/>
+        <Route path="/hs/crises/:crisisId/edit" component={CrisisEdit}/>
         <Route path="/hs/crises/:crisisId" component={CrisisShowHS}/>
         <Route path="/hs/createcrisis" component={CrisisCreate}/>
-        <Route path="/hs/editcrisis" component={CrisisEdit}/>
         <Route path="/ngo/dashboard" component={NGODashboard}/>
         <Route path="/ngo/crises/:crisisId" component={CrisisShowNGO}/>
         <Route path="/ngo/editngoresources" component={ResourcesEdit}/>

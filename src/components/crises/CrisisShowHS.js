@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { getSingleCrisis } from '../lib/api'
+import { crisesPath, editPath, getSingleCrisis, hsPath } from '../lib/api'
 import ResourcesShow from '../resources/ResourcesShow'
 import MapGLHomepage from '../mapbox/MapGLHomepage'
 import { isCreator } from '../lib/auth'
@@ -38,7 +38,6 @@ function CrisisShowHS() {
         const res = await getSingleCrisis(crisisId)
         const crisis = res.data
         crisis.dotColour = 'red-dot'
-        console.log('crisis: ', crisis)
 
         setCrisis(crisis)
         setIsOwner(isCreator(crisis.owner.id))
@@ -67,8 +66,8 @@ function CrisisShowHS() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleEdit = () => {
-    history.push('/hs/editcrisis')
+  const handleRedirect = () => {
+    history.push(`/${hsPath}/${crisesPath}/${crisisId}/${editPath}`)
   }
 
   return (
@@ -115,7 +114,7 @@ function CrisisShowHS() {
           <ResourcesShow header={headerString} resourcesData={crisis.requests} />
           {isOwner && 
           <div className="d-grid gap-2 col-6 mx-auto m-4">
-            <button className="btn btn-danger" onClick={handleEdit}>
+            <button className="btn btn-danger" onClick={handleRedirect}>
               Edit Crisis
             </button>
           </div>
