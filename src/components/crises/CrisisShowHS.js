@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { crisesPath, editPath, getSingleCrisis, hsPath } from '../lib/api'
 import ResourcesShow from '../resources/ResourcesShow'
-import MapGL from '../mapbox/MapGL'
+import MapGLHomepage from '../mapbox/MapGLHomepage'
 import { isCreator } from '../lib/auth'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
@@ -12,6 +12,17 @@ function CrisisShowHS() {
 
   const { crisisId } = useParams()
   const history = useHistory()
+
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight / 2
+
+  const [viewport, setViewport] = useState({
+    latitude: 30,
+    longitude: 0,
+    width: viewportWidth,
+    height: viewportHeight,
+    zoom: 1.85,
+  })
 
   const headerString = 'Resources Needed to Solve this Crisis'
   const [ crisis, setCrisis ] = useState(false)
@@ -43,6 +54,22 @@ function CrisisShowHS() {
     getData()
   },[crisisId])
 
+  function handleResize() {
+    const newWidth = window.innerWidth
+    const newHeight = window.innerHeight / 2
+    setViewport({ ...viewport, 
+      width: newWidth, 
+      height: newHeight, 
+    })
+    console.log('newWidth', newWidth)
+    console.log('newHeight', newHeight)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleRedirect = () => {
     history.push(`/${hsPath}/${crisesPath}/${crisisId}/${editPath}`)
   }
@@ -56,7 +83,10 @@ function CrisisShowHS() {
           <h2 className="text-center text-uppercase text-wrap text-danger m-3">
             Crisis at: {crisis.placeName}
           </h2>
-          <MapGL crisesData={crisis} selectedCrisisId={false} />
+          <MapGLHomepage 
+            crisesData={crisis} 
+            selectedCrisisId={false} 
+            homepageViewport={viewport} />
           <div className="container mt-3">
             <div className="row justify-content-center">
               <div className="d-grid gap-2 col-6 mx-auto">
@@ -85,9 +115,7 @@ function CrisisShowHS() {
               </div>
             </div>
           </div>
-          
           <ResourcesShow header={headerString} resourcesData={crisis.requests} />
-          
           {isOwner && 
           <div className="d-grid gap-2 col-6 mx-auto m-4">
             <button className="btn btn-danger" onClick={handleRedirect}>
