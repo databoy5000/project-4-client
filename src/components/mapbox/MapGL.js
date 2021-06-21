@@ -4,7 +4,7 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 import { publicToken, defaultViewport } from '../lib/mapbox'
 
 
-function MapGL({ crisesData, selectedCrisisId }) {
+function MapGL({ crisesData, selectedCrisisId, homepageViewport }) {
 
   function makeSingleObjectArray(crisesData) {
     if (typeof crisesData === 'undefined' || crisesData === null) {
@@ -25,12 +25,17 @@ function MapGL({ crisesData, selectedCrisisId }) {
 
   const [ viewport, setViewport ] = useState(
     defaultViewport(
-      makeSingleObjectArray(crisesData)
+      makeSingleObjectArray(crisesData),
+      homepageViewport
     ))
 
   useEffect( () => {
     setCrises(makeSingleObjectArray(crisesData))
   },[crisesData])
+
+  useEffect( () => {
+    setViewport(homepageViewport)
+  },[homepageViewport])
 
 
   const handleViewportChange = useCallback(

@@ -2,7 +2,7 @@ import React from 'react'
 import useForm from '../hooks/useForm'
 import { useHistory } from 'react-router'
 import { loginUser } from '../lib/api'
-import { setToken } from '../lib/auth'
+import { isNGO, setToken } from '../lib/auth'
 
 function Login() {
   const history = useHistory()
@@ -18,7 +18,13 @@ function Login() {
     try {
       const res = await loginUser(formData)
       setToken(res.data.token)
-      history.push('/')
+
+      if (isNGO()) {
+        history.push('/ngo/dashboard/')
+      } else {
+        history.push('/hs/dashboard/')
+      }
+
     } catch (err) {
       // console.log('err.response.data: ', err.response.data)
       setIsError(true)

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import { getAllCrises, getUserNGOResources, ngoPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
-import MapGLHomepage from '../mapbox/MapGLHomepage'
+import MapGL from '../mapbox/MapGL'
 import ResourcesShow from '../resources/ResourcesShow'
 import ResourcesCreate from '../resources/ResourcesCreate'
 import Error from '../common/Error'
@@ -12,7 +12,7 @@ import Loading from '../common/Loading'
 function NGODashboard() {
 
   const viewportWidth = window.innerWidth
-  const viewportHeight = window.innerHeight / 2
+  const viewportHeight = (window.innerHeight / 2)
 
   const [viewport, setViewport] = useState({
     latitude: 30,
@@ -29,8 +29,6 @@ function NGODashboard() {
       width: newWidth, 
       height: newHeight, 
     })
-    console.log('newWidth', newWidth)
-    console.log('newHeight', newHeight)
   }
 
   useEffect(() => {
@@ -155,6 +153,7 @@ function NGODashboard() {
     <>
       {isError && <Error/>}
       {isLoading && <Loading/>}
+      {console.log('selectedCrisisId: ', selectedCrisisId)}
       {typeof displayCrises !== 'boolean' && !displayCrises && 'Loading...'}
       {typeof isNGOResources === 'boolean' &&
         !isNGOResources &&
@@ -244,7 +243,7 @@ function NGODashboard() {
           }
           {displayCrises !== null &&
             <div className="map-table-ngores">
-              <MapGLHomepage
+              <MapGL
                 crisesData={displayCrises}
                 selectedCrisisId={selectedCrisisId}
                 homepageViewport={viewport}

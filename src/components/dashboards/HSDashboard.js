@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { getUserCrisis, hsPath } from '../lib/api'
+import { getUserCrisis } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import { getPayLoad } from '../lib/auth'
-import MapGLHomepage from '../mapbox/MapGLHomepage'
+import MapGL from '../mapbox/MapGL'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 
@@ -75,8 +75,6 @@ function HSDashboard() {
       width: newWidth, 
       height: newHeight, 
     })
-    console.log('newWidth', newWidth)
-    console.log('newHeight', newHeight)
   }
 
   useEffect(() => {
@@ -85,7 +83,7 @@ function HSDashboard() {
   }, [])
 
   const handleClick = (crisisId) => {
-    history.push(`/${hsPath}/${crisesPath}/${crisisId}`)
+    history.push(`/${crisesPath}/${crisisId}`)
   }
 
   const handlePin = (e) => {
@@ -97,7 +95,11 @@ function HSDashboard() {
       {isError && <Error/>}
       {isLoading && <Loading/>}
       <h2 className="text-center text-uppercase text-wrap m-3">My crises</h2>
-      <MapGLHomepage crisesData={userCrises} selectedCrisisId={selectedCrisisId} homepageViewport={viewport} />
+      <MapGL
+        crisesData={userCrises}
+        selectedCrisisId={selectedCrisisId}
+        homepageViewport={viewport}
+      />
       <div className="crisis-list">
         <table className="table hs-dashboard-table">
           <thead>

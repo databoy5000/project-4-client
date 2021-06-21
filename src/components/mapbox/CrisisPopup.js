@@ -1,7 +1,7 @@
 import { Popup } from 'react-map-gl'
 import { useEffect, useState } from 'react'
 
-import { crisesPath, hsPath } from '../lib/api'
+import { crisesPath } from '../lib/api'
 import { useHistory } from 'react-router'
 
 function CrisisPopup({ crisesData, selectedCrisisId, passState }) {
@@ -25,7 +25,7 @@ function CrisisPopup({ crisesData, selectedCrisisId, passState }) {
   },[selectedCrisisId])
 
   const handleRedirect = () => {
-    history.push(`${hsPath}/${crisesPath}/${currentCrisis.id}/`)
+    history.push(`/${crisesPath}/${currentCrisis.id}/`)
   }
 
   const handleClose = () => {

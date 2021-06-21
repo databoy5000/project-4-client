@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" component={Login}/>
         <SecureRoute Route path="/hs/dashboard" component={HSDashboard}/>
         <SecureRoute Route path="/hs/crises/:crisisId/edit" component={CrisisEdit}/>
-        <Route path="/hs/crises/:crisisId" component={CrisisShowHS}/>
+        <Route path="/crises/:crisisId" component={CrisisShowHS}/>
         <SecureRoute Route path="/hs/createcrisis" component={CrisisCreate}/>
         <NGOSecureRoute Route path="/ngo/dashboard" component={NGODashboard}/>
         <NGOSecureRoute Route path="/ngo/crises/:crisisId" component={CrisisShowNGO}/>

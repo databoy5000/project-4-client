@@ -2,6 +2,7 @@ import useForm from '../hooks/useForm'
 import { registerUser } from '../lib/api'
 import { useHistory } from 'react-router-dom'
 import ImageUpload from '../hooks/imageUpload'
+import { isNGO, setToken } from '../lib/auth'
 
 function Register() {
   const history = useHistory()
@@ -27,8 +28,15 @@ function Register() {
     }
     try {
       console.log('submitted formdata', formData)
-      await registerUser(formData)
-      history.push('/login')
+      const res = await registerUser(formData)
+      setToken(res.data.token)
+
+      if (isNGO()) {
+        history.push('/ngo/dashboard/')
+      } else {
+        history.push('/hs/dashboard/')
+      }
+      
     } catch (err) {
       console.log(err.response.data)
       setFormErrors(err.response.data)
