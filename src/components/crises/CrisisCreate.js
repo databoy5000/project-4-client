@@ -77,9 +77,7 @@ function CrisisCreate() {
     e.preventDefault()
 
     try {
-      const req = await createCrisis(formData)
-      console.log('req: ', req)
-
+      await createCrisis(formData)
       history.push('/hs/dashboard')
     } catch (err) {
       setFormErrors({ ...formErrors, ...err.response.data })
