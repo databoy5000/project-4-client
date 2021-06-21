@@ -87,7 +87,6 @@ function MapGL({ crisesData, selectedCrisisId }) {
           </Marker>
         ))}
       </ReactMapGL>
-
     </div>
   )
 }

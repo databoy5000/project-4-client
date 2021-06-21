@@ -50,20 +50,47 @@ function CrisisShowHS() {
       {isLoading && <Loading/>}
       {crisis &&
         <>
-          <p>Disaster type: {crisis.disasterType}</p>
-          <p>Status: {`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
-          <p>Location: {crisis.placeName}</p>
-          <p>Country: {crisis.country}</p>
-          <p>Description: {crisis.disasterDescription}</p>
+          <h2 className="text-center text-uppercase text-wrap text-danger m-3">
+            Crisis at: {crisis.placeName}
+          </h2>
+          <MapGL crisesData={crisis} selectedCrisisId={false} />
+          <div className="container mt-3">
+            <div className="row justify-content-center">
+              <div className="d-grid gap-2 col-6 mx-auto">
+                <div className="form-group border m-4 p-3 shadow text-center">
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Disaster type:</label> 
+                    <p className="fs-5">{crisis.disasterType}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Status:</label> 
+                    <p className="fs-5">{`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Location:</label> 
+                    <p className="fs-5">{crisis.placeName}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Country:</label> 
+                    <p className="fs-5">{crisis.country}</p>
+                  </div>
+                  <div className="row">
+                    <label className="badge bg-secondary fs-5">Description:</label> 
+                    <p className="fs-5">{crisis.disasterDescription}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           
           <ResourcesShow header={headerString} resourcesData={crisis.requests} />
-
-          <MapGL crisesData={crisis} selectedCrisisId={false} />
           
           {isOwner && 
-            <button onClick={handleEdit}>
+          <div className="d-grid gap-2 col-6 mx-auto m-4">
+            <button className="btn btn-danger" onClick={handleEdit}>
               Edit Crisis
             </button>
+          </div>
           }
         </>
       }
