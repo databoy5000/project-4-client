@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 import useForm from '../hooks/useForm'
-import { getSingleCrisis, getDisasterTypes, editRequest } from '../lib/api'
+import { getSingleCrisis, getDisasterTypes, editRequest, editCrisis } from '../lib/api'
 import { crisisErrorForm, crisisForm } from '../lib/defaultForms'
 import MapboxSearch from '../mapbox/MapboxSearch'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 
+
 function CrisisEdit() {
 
-  // const history = useHistory()
+  const history = useHistory()
+  const { crisisId } = useParams()
+
   const [ disasterTypes, setDisasterTypes ] = useState(null)
   const [ humanResources, setHumanResources ] = useState(null)
   const [ materialResources, setMaterialResources ] = useState(null)
-
-  const { crisisId } = useParams()
 
   const [ isCrisis, setIsCrisis ] = useState(false)
   const [ initialRequests, setInitialRequests ] = useState(null)
@@ -33,6 +34,10 @@ function CrisisEdit() {
 
         const crisisRes = await getSingleCrisis(crisisId)
         const crisisData = crisisRes.data
+
+        crisisData.requests.sort( (a, b) => {
+          return a.resource.id - b.resource.id
+        })
 
         const refactorCrisisForm = (crisisData) => {
           delete crisisData.owner
@@ -124,30 +129,26 @@ function CrisisEdit() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('---submitting')
 
-    console.log('initialRequests: ', initialRequests)
-    console.log('currentRequests: ', currentRequests)
+    // * Updating crisis
+    try {
+      await editCrisis(crisisId, formData)
+      history.push('/hs/dashboard')
+    } catch (err) {
+      setIsError(true)
+    }
 
-
-
-    // const formDataCopy = { ...formData }
-    // const { requests, ...crisisFormSubmission } = formDataCopy
-
-    // const requestForms = requests.map( (request) => {
-    //   delete request.requestId
-    //   return request
-    // })
-
+    // * Updating crisis requests
     currentRequests.forEach( async (request, index) => {
+      const requestId = initialRequests[index].requestId
       const initialQuantity = initialRequests[index].quantity
       const updatedQuantity = request.quantity
       if (initialQuantity !== updatedQuantity) {
-        console.log('Updating request: ', request)
-        console.log('crisisId: ', crisisId)
         try {
-          const req = await editRequest(updatedQuantity, crisisId)
-          console.log('req: ', req)
+          await editRequest(requestId, {
+            ...request ,
+            quantity: updatedQuantity,
+          })
         } catch (err) {
           console.log('err: ', err)
           setIsError(true)
@@ -155,15 +156,6 @@ function CrisisEdit() {
       }
     })
 
-
-
-    // try {
-    //   const req = await editCrisis(formData)
-    //   console.log('req: ', req)
-    //   // history.push('/dashboard')
-    // } catch (err) {
-    //   setIsError(true)
-    // }
   }
 
   return (
@@ -172,8 +164,6 @@ function CrisisEdit() {
       {isLoading && <Loading/>}
       {isCrisis &&
         <form onSubmit={handleSubmit}>
-          {console.log('formData: ', formData)}
-          {console.log('currentRequests: ', currentRequests)}
           <div className="container border bg-light shadow-sm mt-5 mb-5">
             <div className="row justify-content-center">
               <div className="d-grid gap-2 col-8 mx-auto">
@@ -248,6 +238,7 @@ function CrisisEdit() {
                       name="disasterDescription"
                       defaultValue={formData.disasterDescription}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                 </div>
@@ -273,6 +264,7 @@ function CrisisEdit() {
                             placeholder="Enter number"
                             defaultValue={resourceObject.quantity}
                             onChange={handleRequests}
+                            required
                           />
                         </div>
                       ))}
@@ -294,6 +286,7 @@ function CrisisEdit() {
                             placeholder="Enter number"
                             defaultValue={resourceObject.quantity}
                             onChange={handleRequests}
+                            required
                           />
                         </div>
                       ))}

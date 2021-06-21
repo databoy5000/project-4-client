@@ -14,7 +14,7 @@ export function SecureRoute({ component: Component, ...rest }) {
 export function NGOSecureRoute({ component: Component, ...rest }) {
   if (!isNGO()) {
     return (
-      <Redirect to="/"/>
+      <Redirect to="/login"/>
     )
   }
   return <Route {...rest} component={Component}/>

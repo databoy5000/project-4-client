@@ -12,6 +12,8 @@ import CrisisShowHS from './components/crises/CrisisShowHS'
 import NGODashboard from './components/dashboards/NGODashboard'
 import HSDashboard from './components/dashboards/HSDashboard'
 import ResourcesEdit from './components/resources/ResourcesEdit'
+import Error from './components/common/Error'
+import { SecureRoute, NGOSecureRoute } from './components/common/SecureRoute'
 
 function App() {
   return (
@@ -22,13 +24,14 @@ function App() {
         <Route path="/about" component={About}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
-        <Route path="/hs/dashboard" component={HSDashboard}/>
-        <Route path="/hs/crises/:crisisId/edit" component={CrisisEdit}/>
+        <SecureRoute Route path="/hs/dashboard" component={HSDashboard}/>
+        <SecureRoute Route path="/hs/crises/:crisisId/edit" component={CrisisEdit}/>
         <Route path="/hs/crises/:crisisId" component={CrisisShowHS}/>
-        <Route path="/hs/createcrisis" component={CrisisCreate}/>
-        <Route path="/ngo/dashboard" component={NGODashboard}/>
-        <Route path="/ngo/crises/:crisisId" component={CrisisShowNGO}/>
-        <Route path="/ngo/editngoresources" component={ResourcesEdit}/>
+        <SecureRoute Route path="/hs/createcrisis" component={CrisisCreate}/>
+        <NGOSecureRoute Route path="/ngo/dashboard" component={NGODashboard}/>
+        <NGOSecureRoute Route path="/ngo/crises/:crisisId" component={CrisisShowNGO}/>
+        <NGOSecureRoute Route path="/ngo/editngoresources" component={ResourcesEdit}/>
+        <Route path="/*" component={Error} />
       </Switch>
     </Router>
   ) 

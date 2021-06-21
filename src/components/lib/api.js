@@ -13,6 +13,7 @@ export const ngoResourcesPath = 'ngo_resources'
 export const hsPath = 'hs'
 export const ngoPath = 'ngo'
 export const editPath = 'edit'
+export const requestPath = 'request'
 
 function headers() {
   return {
@@ -41,8 +42,8 @@ export function editCrisis(crisisId, formdata) {
   return axios.put(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`, formdata, headers())
 }
 
-export function editRequest(crisisId, formdata) {
-  return axios.put(`${baseUrl}/${crisesPath}/${crisisId}/`, formdata, headers())
+export function editRequest(requestId, formdata) {
+  return axios.put(`${baseUrl}/${crisesPath}/${requestPath}/${requestId}/`, formdata, headers())
 }
 
 export function deleteCrisis(crisisId) {

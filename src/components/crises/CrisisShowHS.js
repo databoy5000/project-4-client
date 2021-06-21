@@ -28,6 +28,10 @@ function CrisisShowHS() {
         const crisis = res.data
         crisis.dotColour = 'red-dot'
 
+        crisis.requests.sort( (a, b) => {
+          return a.resource.id - b.resource.id
+        })
+
         setCrisis(crisis)
         setIsOwner(isCreator(crisis.owner.id))
 
