@@ -173,3 +173,58 @@ export const ngoResourcesErrorForm = {
     }
   ],
 }
+
+export const editNGOResourcesForm = {
+  resources: [
+    {
+      id: '',
+      resource: 1,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 2,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 3,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 4,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 5,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 6,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 7,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 8,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 9,
+      quantity: '',
+    },
+    {
+      id: '',
+      resource: 10,
+      quantity: '',
+    }
+  ],
+}

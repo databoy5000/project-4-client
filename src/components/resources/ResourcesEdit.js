@@ -2,41 +2,60 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import useForm from '../hooks/useForm'
 import { editNGOResources, getUserNGOResources } from '../lib/api'
-import { ngoResourcesErrorForm, ngoResourcesForm } from '../lib/defaultForms'
+import { ngoResourcesErrorForm, editNGOResourcesForm } from '../lib/defaultForms'
+import Error from '../common/Error'
+import Loading from '../common/Loading'
 
 function ResourcesEdit() {
   const history = useHistory()
   const [ humanResources, setHumanResources ] = useState(null)
   const [ materialResources, setMaterialResources ] = useState(null)
-  const { formData, setFormData, formErrors, setFormErrors } = useForm(ngoResourcesForm, ngoResourcesErrorForm)
+  const { formData, setFormData } = useForm(editNGOResourcesForm, ngoResourcesErrorForm)
 
+  const [ isError, setIsError ] = useState(false)
+  const isLoading = !humanResources && !materialResources && !isError
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const resResources = await getUserNGOResources()
-        console.log('resResources', resResources)
-        const humanResources = resResources.data
+        const res = await getUserNGOResources()
+        const resResources = res.data
+
+        resResources.sort( (a, b) => {
+          return a.resource.id - b.resource.id
+        })
+
+        const updatedResources = resResources.map( (resResource) => {
+          const matchedResource = editNGOResourcesForm.resources.filter( (formResource) => {
+            return formResource.resource === resResource.resource.id
+          })
+          return { ...matchedResource[0], id: resResource.id }
+        })
+
+        const humanResources = resResources
           .filter((element) => element.resource.resourceType === 'Human')
-        const materialResources = resResources.data
+        const materialResources = resResources
           .filter((element) => element.resource.resourceType === 'Material')
 
-        console.log('humanResources: ', humanResources)
-        console.log('materialResources: ', materialResources)
+        setFormData({ ...formData, resources: updatedResources })
         setHumanResources(humanResources)
         setMaterialResources(materialResources)
       } catch (err) {
-        setFormErrors(err.response.data.errors)
+        console.log('err: ', err)
+        setIsError(true)
       }
     }
     getData()
-  }, [setFormData, setFormErrors])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleNestedChange = e => {
-    for (let i = 0; i <= formData.resources.length; i++) {
+    for (let i = 0; i < formData.resources.length; i++) {
       if (formData.resources[i].resource === Number(e.target.id)) {
         const availableCopy = [ ...formData.resources ]
-        availableCopy[i] = { ...availableCopy[i], quantity: e.target.value }
+        availableCopy[i] = { ...availableCopy[i],
+          quantity: e.target.value,
+        }
         setFormData({ ...FormData, resources: availableCopy })
         return
       }
@@ -45,42 +64,35 @@ function ResourcesEdit() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('updated form', formData)
 
     try {
 
-      for (let i = 0; i <= formData.resources.length; i++) {
-        const quantityToUpdate = formData.resources[i].quantity
+      for (let i = 0; i < formData.resources.length; i++) {
+        const ngoResourceId = formData.resources[i].id
         const resourceId = formData.resources[i].resource
+        const quantityToUpdate = formData.resources[i].quantity
+
+        const reqObject = {
+          resource: resourceId,
+          quantity: quantityToUpdate,
+        }
+
         if (quantityToUpdate !== '') {
-          const req = await editNGOResources(formData, resourceId)
-          console.log('req: ', req)
+          await editNGOResources(reqObject, ngoResourceId)
         }
       }
 
-      // const req = await editNGOResources(formData)
-      // console.log('req', req)
-      history.push('/dashboard')
+      history.push('/ngo/dashboard')
     } catch (err) {
-      console.log(err.response.data)
-      setFormErrors({ ...formErrors, resources: err.response.data })
+      console.log('err: ', err)
+      setIsError(true)
     }
-  }
-
-  const handleFormError = (e, index, resourceType) => {
-    let currentIndex = index
-
-    if (resourceType === 'Material') {
-      currentIndex = index + 5
-    }
-
-    const availableCopy = [ ...formErrors.resources ]
-    availableCopy[currentIndex] = { ...availableCopy[currentIndex], quantity: '' }
-    setFormErrors({ ...formErrors, resources: availableCopy })
   }
 
   return (
     <div>
+      {isError && <Error/>}
+      {isLoading && <Loading/>}
       <form
         onSubmit={handleSubmit}
       >
@@ -88,7 +100,7 @@ function ResourcesEdit() {
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">
               <h2 className="text-center text-uppercase text-wrap text-success m-3">
-                Update the resources you possess
+                Update my NGO resources
               </h2>
             </div>
             <div className="col-12">
@@ -97,29 +109,21 @@ function ResourcesEdit() {
                 <div className="col-4">
                   <div className="form-group border m-4 p-3 shadow">
                     <h4>Human resources:</h4>
-                    {humanResources && humanResources.map((element, index) => (
-                      <div key={element.resource.id}>
-                        {console.log('element: ', element)}
+                    {humanResources && humanResources.map((element) => (
+                      <div key={element.id}>
                         <label className="col-sm-2 col-form-label">
                           {element.resource.resourceName}s:
                         </label>
                         <input
-                          className={`
-                          form-control fw-light fst-italic
-                          ${formErrors.resources[index].quantity ? 'is-invalid' : ''}
-                          `}
+                          className="form-control fw-light fst-italic"
                           type="number"
                           id={element.resource.id}
                           name={element.resource.resourceName}
                           placeholder="Enter number"
-                          // value={formData.resources[index].quantity}
                           defaultValue={element.quantity}
                           onChange={handleNestedChange}
-                          onBlur={(e) => handleFormError(e, index, element.resource.resourceType)}
+                          required
                         />
-                        <p className="invalid-feedback">
-                          {formErrors.resources[index].quantity}
-                        </p>
                       </div>
                     ))}
                   </div>
@@ -127,26 +131,19 @@ function ResourcesEdit() {
                 <div className="col-4">
                   <div className="form-group border m-4 p-3 shadow">
                     <h4>Material resources:</h4>
-                    {materialResources && materialResources.map((element, index) => (
-                      <div className={element.resource.resourceType} key={element.resource.id}>
+                    {materialResources && materialResources.map((element) => (
+                      <div className={element.resource.resourceType} key={element.id}>
                         <label className="col-sm-2 col-form-label">{element.resource.resourceName}:</label>
                         <input
-                          className={`
-                            form-control fw-light fst-italic
-                            ${formErrors.resources[index + 5].quantity ? 'is-invalid' : ''}
-                          `}
+                          className="form-control fw-light fst-italic"
                           type="number"
                           id={element.resource.id}
                           name="request"
                           placeholder="Enter number"
-                          // value={element.quantity}
                           defaultValue={element.quantity}
                           onChange={handleNestedChange}
-                          onBlur={(e) => handleFormError(e, index, element.resource.resourceType)}
+                          required
                         />
-                        <p className="invalid-feedback">
-                          {formErrors.resources[index + 5].quantity}
-                        </p>
                       </div>
                     ))}
                   </div>
@@ -156,7 +153,7 @@ function ResourcesEdit() {
             </div>
             <div className="d-grid gap-2 col-6 mx-auto m-4">
               <button className="btn btn-success" type="submit">
-                Update your resources
+                Update my resources
               </button>
             </div>
           </div>
