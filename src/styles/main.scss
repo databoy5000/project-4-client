@@ -21,12 +21,20 @@
   background-color: rgb(226, 226, 217);
 }
 
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
 .pulsatingDot {
   animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
   border-radius: 50%;
   box-sizing: border-box;
   height: 15px;
   width: 15px;
+}
+
+.red-dot, .red-dot:before {
+  background-color: var(--pulsating-dot, #d83643);
 }
 
 #green-dot, #green-dot:before {

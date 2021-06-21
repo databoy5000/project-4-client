@@ -1,28 +1,28 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import ReactMapGl, { Marker, Popup } from 'react-map-gl'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import Error from './Error'
 import { baseUrl, crisesPath } from '../lib/api'
-import { publicToken } from '../lib/mapbox'
+import MapGLHomepage from '../mapbox/MapGLHomepage'
 
 function Home() {
   
-  const [searchTerm, setSearchTerm] = React.useState('')
-  const [selectedCrisis, setSelectedCrisis] = React.useState(null)
-  const [crises, setCrises] = React.useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  
+  const [ crises, setCrises ] = useState(null)
+  // const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
 
   const navHeight = 100
-  const inputHeight = 170
-  const headerHeight = 70
-  
+  const inputHeight = 70
+  const headerHeight = 66
+
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight - (navHeight + inputHeight + headerHeight)
 
-  const [isError, setIsError] = React.useState(false)
+  const [isError, setIsError] = useState(false)
   const isLoading = !crises && !isError
 
-  const [viewport, setViewport] = React.useState({
+  const [viewport, setViewport] = useState({
     latitude: 30,
     longitude: 0,
     width: viewportWidth,
@@ -32,17 +32,25 @@ function Home() {
 
   function handleResize() {
     const newWidth = window.innerWidth
-    const newHeight = window.innerHeight - (navHeight + inputHeight)
-    // console.log(window.innerHeight, window.innerWidth)
+    const newHeight = window.innerHeight - (navHeight + inputHeight + headerHeight)
     setViewport({ ...viewport, width: newWidth, height: newHeight })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/crises`)
-        setCrises(res.data)
-        handleResize()
+        const crisesRes = await axios.get(`${baseUrl}/${crisesPath}`)
+
+        const setDotColoursProp = (crises) => {
+          return crises.map( (crisis) => {
+            crisis.dotColour = 'red-dot'
+            return crisis
+          })
+        }
+
+        const updatedCrises = setDotColoursProp(crisesRes.data)
+        setCrises(updatedCrises)
+
       } catch (err) {
         setIsError(true)
       }
@@ -51,7 +59,7 @@ function Home() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', handleResize)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -59,74 +67,50 @@ function Home() {
   const handleSearch = e => {
     setSearchTerm(e.target.value)
   }
+
+  const getHeight = (e) => {
+    console.log('e: ', e)
+  }
+
+  // const handlePin = (e) => {
+  //   setSelectedCrisisId(e.target.id)
+  // }
     
   const filteredCrises = crises?.filter(crisis => {
     return (
       crisis.placeName.toLowerCase().includes(searchTerm) ||
+      crisis.country.toLowerCase().includes(searchTerm) ||
+      crisis.placeType.toLowerCase().includes(searchTerm) ||
       crisis.disasterType.toLowerCase().includes(searchTerm) ||
-      crisis.disasterDescription.toLowerCase().includes(searchTerm)
+      crisis.disasterDescription.toLowerCase().includes(searchTerm) ||
+      crisis.owner.username.toLowerCase().includes(searchTerm)
     )
   })
 
   return (
     <section>
-      <div>
-        <h1 className="text-center m-3">WoRCO</h1>
-        <h3 className="text-center m-3">World Response Crises Organisation</h3>
-      </div>
+      {isError && <Error />}
       {isLoading && <p>...map is loading</p>}
-      <div>
-        <input 
-          className="form-control fw-light fst-italic"
-          type="text"
-          placeholder="Search a crisis by location, disaster type or keyword"
-          onChange={handleSearch}
-          value={searchTerm || ''}
-        />
-      </div>
-      <div 
-        onClick={handleResize}
-      >
-        <ReactMapGl
-          {...viewport}
-          mapboxApiAccessToken={publicToken}
-          onViewportChange={viewport => {
-            setViewport(viewport)
-          }}
-        >
-          {filteredCrises && filteredCrises.map(crisis =>
-            <Marker
-              key={crisis.id}
-              longitude={Number(crisis.longitude)}
-              latitude={Number(crisis.latitude)}
-            >
-              <button
-                onClick={e => {
-                  e.preventDefault()
-                  setSelectedCrisis(crisis)
-                }}
-              >
-                <img 
-                  height="50px"
-                  width="40px"
-                  src="https://i.imgur.com/BiPApuW.jpg"
-                  alt="3rd red marker"
-                />
-              </button>
-            </Marker>
-          )}
-          {selectedCrisis && (
-            <Popup
-              longitude={Number(selectedCrisis.longitude)}
-              latitude={Number(selectedCrisis.latitude)}
-            >
-              <h3>{selectedCrisis.location.country}</h3>
-              <h5>{selectedCrisis.disasterType}</h5>
-              <Link to={`${baseUrl}/${crisesPath}/${selectedCrisis.id}`}>Go to crisis page</Link>
-            </Popup>
-          )}
-        </ReactMapGl>
-      </div>
+      {crises && 
+        <div className="map-homepage">
+          <div onClick={getHeight}>
+            <h1 className="text-center m-3">WoRCO</h1>
+            <h3 className="text-center m-3">World Response Crises Organisation</h3>
+          </div>
+          
+          <div>
+            <input 
+              className="form-control fw-light fst-italic"
+              type="text"
+              placeholder="Search a crisis by location, disaster type or keyword"
+              onChange={handleSearch}
+              value={searchTerm || ''}
+            />
+          </div>
+
+          <MapGLHomepage crisesData={filteredCrises} homepageViewport={viewport} />
+        </div>
+      }
     </section>
   )
 }

@@ -43,8 +43,8 @@ function MapboxSearch({ onResult }) {
 
   return (
     <div className="d-flex justify-content-evenly">
-      {isMapBoxLoading && '... loading map!'}
-      {isMapBoxError && '... Oopsies, the map could not load! Check your connexion and reload the page.'}
+      {isMapBoxLoading && <p>... loading map!</p>}
+      {isMapBoxError && <p>... the map could not load! Check your connexion and/or reload the page.</p>}
 
       <ReactMapGl 
         ref={mapRef}

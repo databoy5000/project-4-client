@@ -5,6 +5,8 @@ import { getSingleCrisis, getUserNGOResources } from '../lib/api'
 import RequestsResourcesShow from '../resources/RequestsResourcesShow'
 import MapGL from '../mapbox/MapGL'
 import { isCreator } from '../lib/auth'
+import Error from '../common/Error'
+import Loading from '../common/Loading'
 
 function CrisisShowNGO() {
 
@@ -23,6 +25,7 @@ function CrisisShowNGO() {
   const headerString = 'Resources Needed to Solve this Crisis'
   const [ crisis, setCrisis ] = useState(false)
   const [ isError, setIsError ] = useState(false)
+  const isLoading = !crisis && !isError
 
   const [ ngoUserResources, setNGOUserResources ] = useState(false)
 
@@ -84,11 +87,10 @@ function CrisisShowNGO() {
 
   return (
     <div>
-      {isError && 'Oops, something went wrong!'}
-      {!crisis ?
-        'Loading...'
-        :
-        <>
+      {isError && <Error/>}
+      {isLoading && <Loading/>}
+      {crisis &&
+        <div>
           <p>Disaster type: {crisis.disasterType}</p>
           <p>Status: {`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
           <p>Location: {crisis.placeName}</p>
@@ -106,8 +108,7 @@ function CrisisShowNGO() {
               Edit Crisis
             </button>
           }
-
-        </>
+        </div>
       }
     </div>
   )

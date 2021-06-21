@@ -79,8 +79,6 @@ function ResourcesEdit() {
     setFormErrors({ ...formErrors, resources: availableCopy })
   }
 
-  console.log('formData', formData)
-
   return (
     <div>
       <form

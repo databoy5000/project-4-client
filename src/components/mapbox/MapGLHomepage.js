@@ -2,9 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 
 import { publicToken, defaultViewport } from '../lib/mapbox'
+import CrisisPopup from '../crises/CrisisPopup'
 
 
-function MapGL({ crisesData, selectedCrisisId }) {
+function MapGL({ crisesData, homepageViewport }) {
 
   function makeSingleObjectArray(crisesData) {
     if (typeof crisesData === 'undefined' || crisesData === null) {
@@ -23,15 +24,21 @@ function MapGL({ crisesData, selectedCrisisId }) {
   const [ isMapBoxError, setIsMapboxError ] = useState(false)
   const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
 
+  const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
+
   const [ viewport, setViewport ] = useState(
     defaultViewport(
-      makeSingleObjectArray(crisesData)
+      makeSingleObjectArray(crisesData),
+      homepageViewport
     ))
 
   useEffect( () => {
     setCrises(makeSingleObjectArray(crisesData))
   },[crisesData])
 
+  useEffect( () => {
+    setViewport(homepageViewport)
+  },[homepageViewport])
 
   const handleViewportChange = useCallback(
     (viewport) => setViewport(viewport),
@@ -50,8 +57,13 @@ function MapGL({ crisesData, selectedCrisisId }) {
     setIsMapboxLoading(false)
   }
 
+  const handleSelectedPin = (e) => {
+    setSelectedCrisisId(e.target.id)
+  }
+
   return (
     <div>
+      {/* {console.log('selectedCrisisId: ', selectedCrisisId)} */}
       {isMapBoxLoading && <p>...loading map!</p>}
       {isMapBoxError && <p>... the map could not load! Check your connexion and/or reload the page.</p>}
       <ReactMapGL 
@@ -71,21 +83,16 @@ function MapGL({ crisesData, selectedCrisisId }) {
             longitude={Number(crisis.longitude)}
             offsetLeft={-10}
             offsetTop={-12}
-            id={crisis.id}
           >
             <div
-              id={`${
-                (Number(selectedCrisisId) === crisis.id ?
-                  'blue-dot'
-                  :
-                  crisis.dotColour)
-              }`}
-              className="pulsatingDot"
+              id={crisis.id}
+              className="pulsatingDot red-dot"
+              onClick={handleSelectedPin}
             />
-
-            
           </Marker>
         ))}
+
+        <CrisisPopup crisesData={crises} selectedCrisisId={selectedCrisisId} />
       </ReactMapGL>
 
     </div>

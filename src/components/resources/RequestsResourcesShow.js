@@ -2,10 +2,14 @@ import { useEffect } from 'react'
 
 function ResourcesShow({ header, requestsData, resourcesData }) {
 
+  
+
   const humanResources = requestsData
     .filter((resource) => resource.resource.resourceType === 'Human')
   const materialResources = requestsData
     .filter((resource) => resource.resource.resourceType === 'Material')
+
+  const isError = !humanResources && !resourcesData && !resourcesData
 
   useEffect(() => {
 
@@ -14,9 +18,7 @@ function ResourcesShow({ header, requestsData, resourcesData }) {
 
   return (
     <div>
-      {!humanResources && ! humanResources && !resourcesData &&
-        'Loading...'
-      }
+      {isError && <p>...something went wrong!</p>}
       <div className="container border bg-light shadow-sm mt-5">
         <div className="row justify-content-center">
 

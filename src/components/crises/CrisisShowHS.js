@@ -5,6 +5,8 @@ import { getSingleCrisis } from '../lib/api'
 import ResourcesShow from '../resources/ResourcesShow'
 import MapGL from '../mapbox/MapGL'
 import { isCreator } from '../lib/auth'
+import Error from '../common/Error'
+import Loading from '../common/Loading'
 
 function CrisisShowHS() {
 
@@ -14,6 +16,7 @@ function CrisisShowHS() {
   const headerString = 'Resources Needed to Solve this Crisis'
   const [ crisis, setCrisis ] = useState(false)
   const [ isError, setIsError ] = useState(false)
+  const isLoading = !crisis && !isError
 
   const [ isOwner, setIsOwner ] = useState(false)
 
@@ -43,10 +46,9 @@ function CrisisShowHS() {
 
   return (
     <div>
-      {isError && 'Oops, something went wrong!'}
-      {!crisis ?
-        'Loading...'
-        :
+      {isError && <Error/>}
+      {isLoading && <Loading/>}
+      {crisis &&
         <>
           <p>Disaster type: {crisis.disasterType}</p>
           <p>Status: {`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
@@ -63,7 +65,6 @@ function CrisisShowHS() {
               Edit Crisis
             </button>
           }
-
         </>
       }
     </div>

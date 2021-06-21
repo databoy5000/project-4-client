@@ -6,6 +6,8 @@ import { crisesPath } from '../lib/api'
 import MapGL from '../mapbox/MapGL'
 import ResourcesShow from '../resources/ResourcesShow'
 import ResourcesCreate from '../resources/ResourcesCreate'
+import Error from '../common/Error'
+import Loading from '../common/Loading'
 
 function NGODashboard() {
 
@@ -32,6 +34,7 @@ function NGODashboard() {
   const [ isNGOResources, setIsNGOResources ] = useState(null)
 
   const [ isError, setIsError ] = useState(false)
+  const isLoading = !crises && !isError
 
   useEffect( () => {
 
@@ -133,7 +136,8 @@ function NGODashboard() {
 
   return (
     <>
-      {isError && 'Oops, something went wrong...'}
+      {isError && <Error/>}
+      {isLoading && <Loading/>}
       {typeof displayCrises !== 'boolean' && !displayCrises && 'Loading...'}
       {typeof isNGOResources === 'boolean' &&
         !isNGOResources &&

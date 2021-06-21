@@ -3,9 +3,9 @@ export const publicToken = 'pk.eyJ1IjoicmFwaGNoYXIiLCJhIjoiY2txMHMwajBpMDdxZzJuc
 export const endUrl = `.json?access_token=${publicToken}`
 // export const mapboxStyleUrl = ''
 
-export function defaultViewport(crisesData) {
+export function defaultViewport(crisesData, homepageViewPort = false) {
 
-  if (crisesData.length === 1) {
+  if (crisesData.length === 1 && !homepageViewPort) {
     const crisis = crisesData[0]
     const latitude = Number(crisis.latitude)
     const longitude = Number(crisis.longitude)
@@ -32,6 +32,8 @@ export function defaultViewport(crisesData) {
       zoom: zoomValue,
     }
 
+  } else if (homepageViewPort) {
+    return homepageViewPort
   } else {
     return {
       latitude: 55,

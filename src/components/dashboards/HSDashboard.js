@@ -5,7 +5,8 @@ import { getUserCrisis, hsPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import { getPayLoad } from '../lib/auth'
 import MapGL from '../mapbox/MapGL'
-
+import Error from '../common/Error'
+import Loading from '../common/Loading'
 
 function HSDashboard() {
 
@@ -13,38 +14,45 @@ function HSDashboard() {
 
   const [ userCrises, setUserCrises ] = useState(null)
   const [ selectedCrisisId, setSelectedCrisisId ] = useState(null)
+  const [ isError, setIsError ] = useState(false)
+  const isLoading = !userCrises && !isError
 
   useEffect( () => {
     const getData = async () => {
-      const userId = getPayLoad().sub
-      const res = await getUserCrisis(userId)
 
-      // * make empty array false
-      const crisesArray = () => {
-        if (res.data && res.data.length < 1) {
-          return false
-        } else {
-          return res.data
-        }
-      }
-
-      const setDotColoursProp = (crises) => {
-        return crises.map( (crisis) => {
-          if (crisis.canHelp) {
-            crisis.dotColour = 'green-dot'
+      try {
+        const userId = getPayLoad().sub
+        const res = await getUserCrisis(userId)
+  
+        // * make empty array false
+        const crisesArray = () => {
+          if (res.data && res.data.length < 1) {
+            return false
           } else {
-            crisis.dotColour = 'red-dot'
+            return res.data
           }
-          return crisis
-        })
+        }
+  
+        const setDotColoursProp = (crises) => {
+          return crises.map( (crisis) => {
+            if (crisis.canHelp) {
+              crisis.dotColour = 'green-dot'
+            } else {
+              crisis.dotColour = 'red-dot'
+            }
+            return crisis
+          })
+        }
+  
+        const stageOneUpdatedCrisis = crisesArray()
+  
+        if (stageOneUpdatedCrisis) {
+          const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
+          setUserCrises(stageTwoUpdatedCrisis)
+        } else setUserCrises(stageOneUpdatedCrisis)
+      } catch (err) {
+        setIsError(true)
       }
-
-      const stageOneUpdatedCrisis = crisesArray()
-
-      if (stageOneUpdatedCrisis) {
-        const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
-        setUserCrises(stageTwoUpdatedCrisis)
-      } else setUserCrises(stageOneUpdatedCrisis)
     }
     getData()
   },[])
@@ -60,6 +68,8 @@ function HSDashboard() {
 
   return (
     <>
+      {isError && <Error/>}
+      {isLoading && <Loading/>}
       <div className="crisis-list">
         <table className="table hs-dashboard-table">
           <thead>
