@@ -16,6 +16,14 @@ function Register() {
     passwordConfirmation: '',
   })
 
+  const handleFormError = (e) => {
+    if (e.target.name === 'country') {
+      setFormErrors({ ...formErrors, country: '' }) 
+    } else {
+      setFormErrors({ ...formErrors, [e.target.name]: '' }) 
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -26,8 +34,9 @@ function Register() {
     if (formData.profilePictureUrl === '') {
       formData.profilePictureUrl = 'https://i.imgur.com/6da62wI.png?1'
     }
+
     try {
-      console.log('submitted formdata', formData)
+
       const res = await registerUser(formData)
       setToken(res.data.token)
 
@@ -38,8 +47,16 @@ function Register() {
       }
       
     } catch (err) {
-      console.log(err.response.data)
-      setFormErrors(err.response.data)
+
+      if (formData.userType === 'Help-seeker' && formData.country === '') {
+        setFormErrors({ ...formErrors,
+          ...err.response.data,
+          country: ['This field may not be blank.'],
+        })
+      } else {
+        setFormErrors({ ...formErrors, ...err.response.data })
+      }
+
     }
   }
 
@@ -62,11 +79,15 @@ function Register() {
                   <div className="form-check form-check-inline">
                     <input 
                       type="radio"
-                      className="form-check-input"
+                      className={`
+                        form-check-input
+                        ${formErrors.userType ? 'is-invalid' : ''}
+                      `}
                       name="userType"
                       value="Help-seeker"
                       onChange={handleChange}
                       checked={formData.userType === 'Help-seeker'}
+                      onBlur={handleFormError}
                     />
                     <label className="form-check-label">
                       Help-seeker
@@ -75,29 +96,40 @@ function Register() {
                   <div className="form-check form-check-inline">
                     <input 
                       type="radio"
-                      className="form-check-input"
+                      className={`
+                        form-check-input
+                        ${formErrors.userType ? 'is-invalid' : ''}
+                      `}
                       name="userType"
                       value="NGO"
                       onChange={handleChange}
                       checked={formData.userType === 'NGO'}
+                      onBlur={handleFormError}
                     />
                     <label className="form-check-label">
                       NGO
                     </label>
                   </div>
+                  {formErrors.userType && ( 
+                    <p className="custom-invalid">Choose your user type.</p>
+                  )}
                 </div>
                 {formData.userType === 'Help-seeker' ?
                   <div>
                     <label className="col-form-label">As a help-seeker, please enter your country:</label>
                     <input 
-                      className="form-control fw-light fst-italic" 
+                      className={`
+                      form-control fw-light fst-italic
+                        ${formErrors.country ? 'is-invalid' : ''}
+                      `}
                       name="country"
                       id="country"
                       placeholder="Country"
                       onChange={handleChange}
+                      onBlur={handleFormError}
                     />
                     {formErrors.country && ( 
-                      <p className="">{formErrors.country}</p>
+                      <p className="custom-invalid">{formErrors.country}</p>
                     )}
                   </div>
                   :
@@ -106,56 +138,75 @@ function Register() {
                 <div className="mb-3">
                   <label className="col-form-label" htmlFor="username">Username:</label>
                   <input 
-                    className="form-control fw-light fst-italic" 
+                    className={`
+                      form-control fw-light fst-italic
+                      ${formErrors.username ? 'is-invalid' : ''}
+                    `}
                     name="username"
                     id="username"
                     placeholder="Username"
                     onChange={handleChange}
+                    onBlur={handleFormError}
                   />
                   {formErrors.username && ( 
-                    <p>{formErrors.username}</p>
+                    <p className="custom-invalid">{formErrors.username}</p>
                   )}
                 </div>
                 <div className="mb-3">
                   <ImageUpload onUpload={handleImageUpload} />
-                  {formErrors.profilePictureUrl && ( 
-                    <p>{formErrors.profilePictureUrl}</p>
-                  )}
                 </div>
                 <div className="mb-3">
                   <label className="col-form-label">Email address:</label>
                   <input 
-                    className="form-control fw-light fst-italic" 
+                    className={`
+                      form-control fw-light fst-italic
+                      ${formErrors.email ? 'is-invalid' : ''}
+                    `}
                     name="email"
                     id="email"
                     placeholder="name@example.com"
                     onChange={handleChange}
+                    onBlur={handleFormError}
                   />
-                  {formErrors.email && <p className="">Email is required!</p>}
+                  {formErrors.email &&
+                    <p className="custom-invalid">{formErrors.email}</p>
+                  }
                 </div>
                 <div className="mb-3">
                   <label className="col-form-label">Password:</label>
                   <input 
-                    className="form-control fw-light fst-italic" 
+                    className={`
+                      form-control fw-light fst-italic
+                      ${formErrors.password ? 'is-invalid' : ''}
+                    `}
                     type="password"
                     name="password"
                     id="password"
                     placeholder="Password"
                     onChange={handleChange}
+                    onBlur={handleFormError}
                   />
-                  {formErrors.password && <p className="">Password is required!</p>}
+                  {formErrors.password &&
+                    <p className="custom-invalid">{formErrors.password}</p>
+                  }
                 </div>
                 <div className="mb-3">
                   <label className="col-form-label">Password confirmation:</label>
                   <input 
-                    className="form-control fw-light fst-italic" 
+                    className={`
+                      form-control fw-light fst-italic
+                      ${formErrors.passwordConfirmation ? 'is-invalid' : ''}
+                    `}
                     type="password"
                     name="passwordConfirmation"
                     id="passwordConfirmation"
                     placeholder="Password confirmation"
                     onChange={handleChange}
+                    onBlur={handleFormError}
                   />
-                  {formErrors.passwordConfirmation && <p className="">Does not match password!</p>}
+                  {formErrors.passwordConfirmation &&
+                    <p  className="custom-invalid">{formErrors.passwordConfirmation}</p>
+                  }
                 </div>
               </div>
             </div>
