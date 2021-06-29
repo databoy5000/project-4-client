@@ -30,7 +30,7 @@ function Login() {
       setIsError(true)
     }
   }
-  const handleFocus = () => {
+  const handleBlur = () => {
     setIsError(false)
   }
 
@@ -56,7 +56,7 @@ function Login() {
                     name="email"
                     placeholder="Email"
                     onChange={handleChange}
-                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                   />
                 </div>
                 <div>
@@ -67,9 +67,9 @@ function Login() {
                     name="password"
                     placeholder="Password"
                     onChange={handleChange}
-                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                   />
-                  {isError && <p className="">Incorrect details. Please try again!</p>}
+                  {isError && <p className="custom-invalid">Incorrect details. Please try again!</p>}
                 </div>
               </div>
             </div>
