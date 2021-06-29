@@ -248,6 +248,7 @@ function CrisisEdit() {
               </div>
               <div className="col-12">
                 <div className="row">
+                  <div className="col-2"></div>
                   <div className="col-4">
                     <div className="form-group border m-4 p-3 shadow">
                       <h4>Human resources:</h4>

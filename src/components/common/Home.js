@@ -85,8 +85,8 @@ function Home() {
       {crises && 
         <div className="map-homepage">
           <div>
-            <h1 className="text-center m-3">WoRCO</h1>
-            <h3 className="text-center m-3">World Response Crises Organisation</h3>
+            <h1 className="text-center m-3">WoCRO</h1>
+            <h3 className="text-center m-3">World Crises Response Organisation</h3>
           </div>
           <div>
             <input 
