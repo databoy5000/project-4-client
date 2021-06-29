@@ -15,11 +15,11 @@ export default function useForm(initialState, initialFormError) {
   }
 
   const handleMultiSelect = (selectedItems) => {
-    const values = selectedItems ? selectedItems.map( (item) => item.value) : []
+    const values = selectedItems ? selectedItems.map((item) => item.value) : []
     setFormData({ ...formData, categories: values })
   }
 
-  const handleImageUpload = file => {
+  const handleImageUpload = (file) => {
     setFormData({ ...formData, profilePictureUrl: file })
   }
 

@@ -1,8 +1,6 @@
 export const apiUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
 export const publicToken = 'pk.eyJ1IjoicmFwaGNoYXIiLCJhIjoiY2txMHMwajBpMDdxZzJucDhpdGRxMnUzdSJ9.5QE1OTa_Uw-1S3_5oQpcTw'
 export const endUrl = `.json?access_token=${publicToken}`
-// export const mapboxStyleUrl = ''
-
 export function defaultViewport(crisesData, homepageViewPort = false) {
 
   if (crisesData.length === 1 && !homepageViewPort) {
@@ -11,7 +9,6 @@ export function defaultViewport(crisesData, homepageViewPort = false) {
     const longitude = Number(crisis.longitude)
     const placeType = crisis.placeType
 
-    // * zoomValue = 10 in case none of the below placeTypes are passed into the function
     let zoomValue = 10
   
     if (placeType === 'country') zoomValue = 6

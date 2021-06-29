@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
-
 import { publicToken, defaultViewport } from '../lib/mapbox'
 import CrisisPopup from './CrisisPopup'
 
-
 function MapGLHomepage({ crisesData, homepageViewport }) {
-
   function makeSingleObjectArray(crisesData) {
     if (typeof crisesData === 'undefined' || crisesData === null) {
       return false
@@ -20,23 +17,23 @@ function MapGLHomepage({ crisesData, homepageViewport }) {
   }
 
   const mapRef = useRef()
-  const [ crises, setCrises ] = useState(false)
-  const [ isMapBoxError, setIsMapboxError ] = useState(false)
-  const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
+  const [crises, setCrises] = useState(false)
+  const [isMapBoxError, setIsMapboxError] = useState(false)
+  const [isMapBoxLoading, setIsMapboxLoading] = useState(false)
 
-  const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
+  const [selectedCrisisId, setSelectedCrisisId] = useState(false)
 
-  const [ viewport, setViewport ] = useState(
+  const [viewport, setViewport] = useState(
     defaultViewport(
       makeSingleObjectArray(crisesData),
       homepageViewport
     ))
 
-  useEffect( () => {
+  useEffect(() => {
     setCrises(makeSingleObjectArray(crisesData))
   },[crisesData])
 
-  useEffect( () => {
+  useEffect(() => {
     setViewport(homepageViewport)
   },[homepageViewport])
 
@@ -67,7 +64,6 @@ function MapGLHomepage({ crisesData, homepageViewport }) {
 
   return (
     <div>
-      {/* {console.log('selectedCrisisId: ', selectedCrisisId)} */}
       {isMapBoxLoading && <p>...loading map!</p>}
       {isMapBoxError && <p>... the map could not load! Check your connexion and/or reload the page.</p>}
       <ReactMapGL 
@@ -79,8 +75,7 @@ function MapGLHomepage({ crisesData, homepageViewport }) {
         onLoading={handleLoading}
         onInit={handleLoaded}
       >
-
-        {(crises && crises.length >= 1) && (crises.map( (crisis) =>
+        {(crises && crises.length >= 1) && (crises.map((crisis) =>
           <Marker
             key={crisis.id}
             latitude={Number(crisis.latitude)}
@@ -88,19 +83,19 @@ function MapGLHomepage({ crisesData, homepageViewport }) {
             offsetLeft={-10}
             offsetTop={-12}
           >
-            
             <div
               className="pulsatingDot red-dot"
               id={crisis.id}
               onClick={handleSelectedPin}
             />
-
           </Marker>
         ))}
-
-        <CrisisPopup crisesData={crises} selectedCrisisId={selectedCrisisId} passState={handleCrisisSelect} />
+        <CrisisPopup 
+          crisesData={crises} 
+          selectedCrisisId={selectedCrisisId} 
+          passState={handleCrisisSelect}
+        />
       </ReactMapGL>
-
     </div>
   )
 }

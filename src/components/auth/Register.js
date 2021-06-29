@@ -47,7 +47,6 @@ function Register() {
       }
       
     } catch (err) {
-
       if (formData.userType === 'Help-seeker' && formData.country === '') {
         setFormErrors({ ...formErrors,
           ...err.response.data,
@@ -56,16 +55,12 @@ function Register() {
       } else {
         setFormErrors({ ...formErrors, ...err.response.data })
       }
-
     }
   }
 
   return (
     <div>
-      <form
-        className=""
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <div className="container border bg-light shadow-sm mt-5 mb-5">
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">

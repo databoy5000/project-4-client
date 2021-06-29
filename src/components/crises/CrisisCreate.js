@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-
 import useForm from '../hooks/useForm'
 import { getDisasterTypes, createCrisis, getResourceNamesTypes } from '../lib/api'
 import { crisisErrorForm, crisisForm } from '../lib/defaultForms'
 import MapboxSearch from '../mapbox/MapboxSearch.js'
 
 function CrisisCreate() {
-
   const history = useHistory()
-  const [ disasterTypes, setDisasterTypes ] = useState(null)
-  const [ humanResources, setHumanResources ] = useState(null)
-  const [ materialResources, setMaterialResources ] = useState(null)
+  const [disasterTypes, setDisasterTypes] = useState(null)
+  const [humanResources, setHumanResources] = useState(null)
+  const [materialResources, setMaterialResources] = useState(null)
 
   const { formData, setFormData, formErrors, setFormErrors, handleChange } = useForm(crisisForm, crisisErrorForm)
 
@@ -24,9 +22,9 @@ function CrisisCreate() {
         const resResources = await getResourceNamesTypes()
 
         const humanResources = resResources.data
-          .filter( (resource) => resource.resourceType === 'Human')
+          .filter((resource) => resource.resourceType === 'Human')
         const materialResources = resResources.data
-          .filter( (resource) => resource.resourceType === 'Material')
+          .filter((resource) => resource.resourceType === 'Material')
 
         setHumanResources(humanResources)
         setMaterialResources(materialResources)
@@ -51,7 +49,6 @@ function CrisisCreate() {
   }
 
   const handleResult = (e) => {
-    
     function getCountry() {
       if (e.place_type[0] === 'country') {
         return e.text
@@ -60,7 +57,6 @@ function CrisisCreate() {
       const technicallyACountryName = hierarchyLastIndex.text
       return technicallyACountryName
     }
-
     const sanitisedLongitudeDecimal = Number(e.center[0].toFixed(6))
     const sanitisedLatitudeDecimal = Number(e.center[1].toFixed(6))
 
@@ -104,9 +100,7 @@ function CrisisCreate() {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <div className="container border bg-light shadow-sm mt-5 mb-5">
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">
@@ -184,12 +178,11 @@ function CrisisCreate() {
                 <div className="col-4">
                   <div className="form-group border m-4 p-3 shadow">
                     <h4>Human resources:</h4>
-                    {humanResources && humanResources.map( (resource, index) => (
+                    {humanResources && humanResources.map((resource, index) => (
                       <div className={resource.resourceType} key={resource.id}>
                         <label className="col-sm-2 col-form-label">
                           {resource.resourceName}s:
                         </label>
-
                         <input
                           className={`
                             form-control fw-lighter fst-italic
@@ -212,9 +205,11 @@ function CrisisCreate() {
                 <div className="col-4">
                   <div className="form-group border m-4 p-3 shadow">
                     <h4>Material resources:</h4>
-                    {materialResources && materialResources.map( (resource, index) => (
+                    {materialResources && materialResources.map((resource, index) => (
                       <div className={resource.resourceType} key={resource.id}>
-                        <label className="col-sm-2 col-form-label">{resource.resourceName}:</label>
+                        <label className="col-sm-2 col-form-label">
+                          {resource.resourceName}:
+                        </label>
                         <input
                           className={`
                             form-control fw-lighter fst-italic

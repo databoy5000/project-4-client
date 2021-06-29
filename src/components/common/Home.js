@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-
 import Error from './Error'
 import { baseUrl, crisesPath } from '../lib/api'
 import MapGLHomepage from '../mapbox/MapGLHomepage'
 
 function Home() {
-  
   const [searchTerm, setSearchTerm] = useState('')
-  const [ crises, setCrises ] = useState(null)
+  const [crises, setCrises] = useState(null)
 
   const navHeight = 100
   const inputHeight = 70
   const headerHeight = 66
-
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight - (navHeight + inputHeight + headerHeight)
 
@@ -38,17 +35,14 @@ function Home() {
     const getData = async () => {
       try {
         const crisesRes = await axios.get(`${baseUrl}/${crisesPath}`)
-
         const setDotColoursProp = (crises) => {
           return crises.map( (crisis) => {
             crisis.dotColour = 'red-dot'
             return crisis
           })
         }
-
         const updatedCrises = setDotColoursProp(crisesRes.data)
         setCrises(updatedCrises)
-
       } catch (err) {
         setIsError(true)
       }
@@ -66,7 +60,6 @@ function Home() {
     setSearchTerm(e.target.value)
   }
 
-    
   const filteredCrises = crises?.filter(crisis => {
     return (
       crisis.placeName.toLowerCase().includes(searchTerm) ||

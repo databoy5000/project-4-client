@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-
 import { getUserCrisis } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import { getPayLoad } from '../lib/auth'
@@ -9,7 +8,6 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function HSDashboard() {
-
   const history = useHistory()
 
   const viewportWidth = window.innerWidth
@@ -23,19 +21,18 @@ function HSDashboard() {
     zoom: 1.85,
   })
 
-  const [ userCrises, setUserCrises ] = useState(null)
-  const [ selectedCrisisId, setSelectedCrisisId ] = useState(null)
-  const [ isError, setIsError ] = useState(false)
+  const [userCrises, setUserCrises] = useState(null)
+  const [selectedCrisisId, setSelectedCrisisId] = useState(null)
+  const [isError, setIsError] = useState(false)
   const isLoading = !userCrises && !isError
 
-  useEffect( () => {
+  useEffect(() => {
     const getData = async () => {
 
       try {
         const userId = getPayLoad().sub
         const res = await getUserCrisis(userId)
-  
-        // * make empty array false
+        
         const crisesArray = () => {
           if (res.data && res.data.length < 1) {
             return false
@@ -43,7 +40,7 @@ function HSDashboard() {
             return res.data
           }
         }
-  
+
         const setDotColoursProp = (crises) => {
           return crises.map( (crisis) => {
             if (crisis.canHelp) {
@@ -66,7 +63,7 @@ function HSDashboard() {
       }
     }
     getData()
-  },[])
+  }, [])
 
   function handleResize() {
     const newWidth = window.innerWidth
@@ -94,7 +91,9 @@ function HSDashboard() {
     <>
       {isError && <Error/>}
       {isLoading && <Loading/>}
-      <h2 className="text-center text-uppercase text-wrap m-3">My crises</h2>
+      <h2 className="text-center text-uppercase text-wrap m-3">
+        My crises
+      </h2>
       <MapGL
         crisesData={userCrises}
         selectedCrisisId={selectedCrisisId}
@@ -114,7 +113,7 @@ function HSDashboard() {
           </thead>
           <tbody>
             {userCrises &&
-              userCrises.map( (crisis, index) => (
+              userCrises.map((crisis, index) => (
                 <tr
                   key={crisis.id}
                   className="crisis-row"
@@ -129,9 +128,12 @@ function HSDashboard() {
                   <td id={crisis.id}>{crisis.disasterType}</td>
                   <td id={crisis.id}>{crisis.placeName}</td>
                   <td id={crisis.id}>{crisis.country}</td>
-                  <td id={crisis.id}>{crisis.isSolved ? 'Classified' : 'Ongoing' }</td>
+                  <td id={crisis.id}>{crisis.isSolved ? 'Classified' : 'Ongoing'}</td>
                   <td>
-                    <button className="btn btn-danger" onClick={ () => handleClick(crisis.id)}>
+                    <button 
+                      className="btn btn-danger" 
+                      onClick={ () => handleClick(crisis.id)}
+                    >
                       See Details
                     </button>
                   </td>
@@ -141,7 +143,9 @@ function HSDashboard() {
           </tbody>
         </table>
         {!userCrises &&
-          <div className={ !userCrises ? 'div-no-data' : '' }>* No data to display *</div>
+          <div className={ !userCrises ? 'div-no-data' : '' }>
+            * No data to display *
+          </div>
         }
       </div>
     </>

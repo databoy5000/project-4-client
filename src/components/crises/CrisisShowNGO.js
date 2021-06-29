@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-
 import { getSingleCrisis, getUserNGOResources } from '../lib/api'
 import RequestsResourcesShow from '../resources/RequestsResourcesShow'
 import MapGLHomepage from '../mapbox/MapGLHomepage'
@@ -9,7 +8,6 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function CrisisShowNGO() {
-
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight / 2
 
@@ -28,8 +26,6 @@ function CrisisShowNGO() {
       width: newWidth, 
       height: newHeight, 
     })
-    console.log('newWidth', newWidth)
-    console.log('newHeight', newHeight)
   }
 
   useEffect(() => {
@@ -37,7 +33,6 @@ function CrisisShowNGO() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
     if (data && data.length < 1) {
       return false
@@ -50,16 +45,15 @@ function CrisisShowNGO() {
   const history = useHistory()
 
   const headerString = 'Resources Needed to Solve this Crisis'
-  const [ crisis, setCrisis ] = useState(false)
-  const [ isError, setIsError ] = useState(false)
+  const [crisis, setCrisis] = useState(false)
+  const [isError, setIsError] = useState(false)
   const isLoading = !crisis && !isError
 
-  const [ ngoUserResources, setNGOUserResources ] = useState(false)
+  const [ngoUserResources, setNGOUserResources] = useState(false)
 
-  const [ isOwner, setIsOwner ] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
 
-  useEffect( () => {
-
+  useEffect(() => {
     const getData = async () => {
       try {
         const res = await getSingleCrisis(crisisId)
@@ -68,14 +62,14 @@ function CrisisShowNGO() {
         const ngoResourcesRes = await getUserNGOResources()
         const ngoResources = makeFalseEmptyArray(ngoResourcesRes.data)
 
-        const sortedNGOResources = ngoResources.sort( (a, b) => {
+        const sortedNGOResources = ngoResources.sort((a, b) => {
           return a.resource.id - b.resource.id
         })
 
         setNGOUserResources(sortedNGOResources)
   
         const setProps = () => {
-          const filterCheck = crisis.requests.every( (request, index) => {
+          const filterCheck = crisis.requests.every((request, index) => {
 
             const crisisResource = request.resource.id
             const ngoResource = ngoResources[index].resource.id
@@ -106,7 +100,6 @@ function CrisisShowNGO() {
         setCrisis(updatedCrisis)
 
       } catch (err) {
-        console.log('err.response.data: ', err.response.data)
         setIsError(true)
       }
     }
@@ -129,40 +122,55 @@ function CrisisShowNGO() {
           <MapGLHomepage 
             crisesData={crisis} 
             selectedCrisisId={false}
-            homepageViewport={viewport} />
+            homepageViewport={viewport} 
+          />
           <div className="container mt-3">
             <div className="row justify-content-center">
               <div className="d-grid gap-2 col-6 mx-auto">
                 <div className="form-group border m-4 p-3 shadow text-center">
                   <div className="row">
-                    <label className="badge bg-secondary fs-5">Disaster type:</label> 
+                    <label className="badge bg-secondary fs-5">
+                      Disaster type:
+                    </label> 
                     <p className="fs-5">{crisis.disasterType}</p>
                   </div>
                   <div className="row">
-                    <label className="badge bg-secondary fs-5">Status:</label> 
-                    <p className="fs-5">{`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}</p>
+                    <label className="badge bg-secondary fs-5">
+                      Status:
+                    </label> 
+                    <p className="fs-5">
+                      {`${crisis.isSolved ? 'Classified' : 'Ongoing'}`}
+                    </p>
                   </div>
                   <div className="row">
-                    <label className="badge bg-secondary fs-5">Location:</label> 
+                    <label className="badge bg-secondary fs-5">
+                      Location:
+                    </label> 
                     <p className="fs-5">{crisis.placeName}</p>
                   </div>
                   <div className="row">
-                    <label className="badge bg-secondary fs-5">Country:</label> 
+                    <label className="badge bg-secondary fs-5">
+                      Country:
+                    </label> 
                     <p className="fs-5">{crisis.country}</p>
                   </div>
                   <div className="row">
-                    <label className="badge bg-secondary fs-5">Description:</label> 
+                    <label className="badge bg-secondary fs-5">
+                      Description:
+                    </label> 
                     <p className="fs-5">{crisis.disasterDescription}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
           {crisis && ngoUserResources &&
-            <RequestsResourcesShow header={headerString} requestsData={crisis.requests} resourcesData={ngoUserResources} />
+            <RequestsResourcesShow 
+              header={headerString} 
+              requestsData={crisis.requests} 
+              resourcesData={ngoUserResources}
+            />
           }
-          
           {isOwner && 
             <button onClick={handleEdit}>
               Edit Crisis

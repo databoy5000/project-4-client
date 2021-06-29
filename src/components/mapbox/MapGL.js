@@ -1,11 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
-
 import { publicToken, defaultViewport } from '../lib/mapbox'
 
-
 function MapGL({ crisesData, selectedCrisisId, homepageViewport }) {
-
   function makeSingleObjectArray(crisesData) {
     if (typeof crisesData === 'undefined' || crisesData === null) {
       return false
@@ -19,21 +16,21 @@ function MapGL({ crisesData, selectedCrisisId, homepageViewport }) {
   }
 
   const mapRef = useRef()
-  const [ crises, setCrises ] = useState(false)
-  const [ isMapBoxError, setIsMapboxError ] = useState(false)
-  const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
+  const [crises, setCrises] = useState(false)
+  const [isMapBoxError, setIsMapboxError] = useState(false)
+  const [isMapBoxLoading, setIsMapboxLoading] = useState(false)
 
-  const [ viewport, setViewport ] = useState(
+  const [viewport, setViewport] = useState(
     defaultViewport(
       makeSingleObjectArray(crisesData),
       homepageViewport
     ))
 
-  useEffect( () => {
+  useEffect(() => {
     setCrises(makeSingleObjectArray(crisesData))
   },[crisesData])
 
-  useEffect( () => {
+  useEffect(() => {
     setViewport(homepageViewport)
   },[homepageViewport])
 

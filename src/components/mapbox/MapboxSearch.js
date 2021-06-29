@@ -1,18 +1,14 @@
 import { useRef, useState, useCallback } from 'react'
 import ReactMapGl from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
-
 import { publicToken } from '../lib/mapbox'
 
 function MapboxSearch({ onResult }) {
-
   const mapRef = useRef()
+  const [isMapBoxError, setIsMapboxError] = useState(false)
+  const [isMapBoxLoading, setIsMapboxLoading] = useState(false)
 
-  const [ isMapBoxError, setIsMapboxError ] = useState(false)
-  const [ isMapBoxLoading, setIsMapboxLoading ] = useState(false)
-
-  //* Display map size, and position/zoom within the map
-  const [ viewport, setViewport ] = useState({
+  const [viewport, setViewport] = useState({
     latitude: 54.405,
     longitude: 9.431,
     width: '500px',
@@ -45,7 +41,6 @@ function MapboxSearch({ onResult }) {
     <div className="d-flex justify-content-evenly">
       {isMapBoxLoading && <p>... loading map!</p>}
       {isMapBoxError && <p>... the map could not load! Check your connexion and/or reload the page.</p>}
-
       <ReactMapGl 
         ref={mapRef}
         {...viewport} 
