@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 import useForm from '../hooks/useForm'
-// import { useHistory } from 'react-router-dom'
 import { createNGOResources, getResourceNamesTypes } from '../lib/api'
 import { ngoResourcesErrorForm, ngoResourcesForm } from '../lib/defaultForms'
 
 function ResourcesCreate() {
-
-  // const history = useHistory()
-  const [ humanResources, setHumanResources ] = useState(null)
-  const [ materialResources, setMaterialResources ] = useState(null)
+  const [humanResources, setHumanResources] = useState(null)
+  const [materialResources, setMaterialResources] = useState(null)
 
   const { formData, setFormData, formErrors, setFormErrors } = useForm(ngoResourcesForm, ngoResourcesErrorForm)
 
@@ -31,26 +28,26 @@ function ResourcesCreate() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleNestedChange = e => {
+  const handleNestedChange = (e) => {
     for (let i = 0; i < formData.resources.length; i++) {
       if (formData.resources[i].resource === Number(e.target.id)) {
         const availableCopy = [ ...formData.resources ]
         availableCopy[i] = { ...availableCopy[i], quantity: e.target.value }
+
         setFormData({ ...FormData, resources: availableCopy })
         return
       }
     }
   }
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log('submitted form', formData)
     try {
       await createNGOResources(formData)
       window.location.reload()
+
     } catch (err) {
-      console.log(err.response.data)
       setFormErrors({ ...formErrors, resources: err.response.data })
     }
   }
@@ -69,9 +66,7 @@ function ResourcesCreate() {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <div className="container border bg-light shadow-sm mt-5 mb-5">
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">

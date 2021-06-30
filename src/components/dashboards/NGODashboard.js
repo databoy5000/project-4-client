@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-
 import { getAllCrises, getUserNGOResources, ngoPath } from '../lib/api'
 import { crisesPath } from '../lib/api'
 import MapGL from '../mapbox/MapGL'
@@ -10,7 +9,6 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function NGODashboard() {
-
   const viewportWidth = window.innerWidth
   const viewportHeight = (window.innerHeight / 2)
 
@@ -36,7 +34,6 @@ function NGODashboard() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // * make empty arrays 'false'
   function makeFalseEmptyArray(data) {
     if (data && data.length < 1) {
       return false
@@ -49,19 +46,19 @@ function NGODashboard() {
   const showCrises = ['All', 'Filtered']
   const headerString = 'My NGO Resources'
 
-  const [ crises, setCrises ] = useState([])
-  const [ filteredCrises, setFilteredCrises ] = useState([])
-  const [ displayCrises, setDisplayCrises ] = useState(null)
+  const [crises, setCrises] = useState([])
+  const [filteredCrises, setFilteredCrises] = useState([])
+  const [displayCrises, setDisplayCrises] = useState(null)
 
-  const [ selectedCrisisId, setSelectedCrisisId ] = useState(false)
+  const [selectedCrisisId, setSelectedCrisisId] = useState(false)
   
-  const [ ngoResources, setNGOResources ] = useState(false)
-  const [ isNGOResources, setIsNGOResources ] = useState(null)
+  const [ngoResources, setNGOResources] = useState(false)
+  const [isNGOResources, setIsNGOResources] = useState(null)
 
-  const [ isError, setIsError ] = useState(false)
+  const [isError, setIsError] = useState(false)
   const isLoading = !crises && !isError
 
-  useEffect( () => {
+  useEffect(() => {
     const getData = async () => {
       try {
         const crisesRes = await getAllCrises()
@@ -72,14 +69,15 @@ function NGODashboard() {
         if (!sanitizedNGOResources) {
           setIsNGOResources(false)
         } else {
-          const sortedNGOResources = sanitizedNGOResources.sort( (a, b) => {
+          const sortedNGOResources = sanitizedNGOResources.sort((a, b) => {
             return a.resource.id - b.resource.id
           })
           setNGOResources(sortedNGOResources)
           setIsNGOResources(true)
         }
+
         const setCanHelpProp = (crises) => {
-          return crises.map( (crisis) => {
+          return crises.map((crisis) => {
             const requests = crisis.requests
             const filterCheck = requests.every( (request, index) => {
               const crisisResource = request.resource.id
@@ -99,6 +97,7 @@ function NGODashboard() {
             return crisis
           })
         }
+
         const setDotColoursProp = (crises) => {
           return crises.map( (crisis) => {
             if (crisis.canHelp) {
@@ -109,25 +108,24 @@ function NGODashboard() {
             return crisis
           })
         }
-        // * set new props to crisis/crises
+
         if (crises && sanitizedNGOResources) {
           const stageOneUpdatedCrisis = setCanHelpProp(crises)
           const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
           setCrises(stageTwoUpdatedCrisis)
           setDisplayCrises(stageTwoUpdatedCrisis)
-          // ! check whats returned when crises === 1 && canHelp === false
-          const filterCanHelp = stageTwoUpdatedCrisis.filter( (crisis) => crisis.canHelp)
+
+          const filterCanHelp = stageTwoUpdatedCrisis.filter((crisis) => crisis.canHelp)
           setFilteredCrises(filterCanHelp)
         } else {
           setDisplayCrises(false)
         }
       } catch (err) {
-        console.log('error response: ', err)
         setIsError(true)
       }
     }
     getData()
-  },[])
+  }, [])
 
   const handleChange = (e) => {
     if (e.target.id === showCrises[0]) {
@@ -153,7 +151,6 @@ function NGODashboard() {
     <>
       {isError && <Error/>}
       {isLoading && <Loading/>}
-      {console.log('selectedCrisisId: ', selectedCrisisId)}
       {typeof displayCrises !== 'boolean' && !displayCrises && 'Loading...'}
       {typeof isNGOResources === 'boolean' &&
         !isNGOResources &&
@@ -205,7 +202,6 @@ function NGODashboard() {
                           </label>
                         </div>
                       </div>
-                      {/* <p className="text-danger"></p> */}
                     </div>
                   </div>
                   <div className="col">
@@ -263,7 +259,7 @@ function NGODashboard() {
                   </thead>
                   <tbody>
                     {displayCrises &&
-                      displayCrises.map( (crisis, index) => (
+                      displayCrises.map((crisis, index) => (
                         <tr
                           key={crisis.id}
                           className="crisis-row"
@@ -281,7 +277,10 @@ function NGODashboard() {
                           <td id={crisis.id}>{crisis.canHelp ? 'Yes' : 'No'}</td>
                           <td id={crisis.id}>{crisis.isSolve ? 'Ongoing' : 'Classified'}</td>
                           <td>
-                            <button className="btn btn-outline-dark" onClick={ () => handleClick(crisis.id)}>
+                            <button 
+                              className="btn btn-outline-dark" 
+                              onClick={ () => handleClick(crisis.id)}
+                            >
                               See Details
                             </button>
                           </td>
@@ -292,13 +291,21 @@ function NGODashboard() {
                 </table>
                 {typeof displayCrises === 'boolean' &&
                   !displayCrises &&
-                  <div className="div-no-data">* No crises to display *</div>
+                  <div className="div-no-data">
+                    * No crises to display *
+                  </div>
                 }
                 {ngoResources &&
                   <div className="row justify-content-center">
-                    <ResourcesShow header={headerString} resourcesData={ngoResources} />
+                    <ResourcesShow 
+                      header={headerString} 
+                      resourcesData={ngoResources}
+                    />
                     <div className="d-grid gap-2 col-6 mx-auto m-4">
-                      <button className="btn btn-success" onClick={handleEdit}>
+                      <button 
+                        className="btn btn-success" 
+                        onClick={handleEdit}
+                      >
                         Edit my resources
                       </button>
                     </div>

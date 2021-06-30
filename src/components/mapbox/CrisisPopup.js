@@ -1,17 +1,14 @@
 import { Popup } from 'react-map-gl'
 import { useEffect, useState } from 'react'
-
 import { crisesPath } from '../lib/api'
 import { useHistory } from 'react-router'
 
 function CrisisPopup({ crisesData, selectedCrisisId, passState }) {
-
   const history = useHistory()
-  const [ currentCrisis, setCurrentCrisis ] = useState(false)
-  const [ subSelectedCrisisId, setSubSelectedCrisisId ] = useState(false)
+  const [currentCrisis, setCurrentCrisis] = useState(false)
+  const [subSelectedCrisisId, setSubSelectedCrisisId] = useState(false)
 
-  useEffect( () => {
-
+  useEffect(() => {
     if (selectedCrisisId) {
       const filteredCrisis = crisesData.filter( (crisis) => {
         return Number(selectedCrisisId) === Number(crisis.id)
@@ -20,9 +17,8 @@ function CrisisPopup({ crisesData, selectedCrisisId, passState }) {
     }
 
     setSubSelectedCrisisId(selectedCrisisId)
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[selectedCrisisId])
+  }, [selectedCrisisId])
 
   const handleRedirect = () => {
     history.push(`/${crisesPath}/${currentCrisis.id}/`)
@@ -42,7 +38,9 @@ function CrisisPopup({ crisesData, selectedCrisisId, passState }) {
         >
           <div className="form-group text-center p-1">
             <div onClick={handleRedirect}>
-              <label className="badge bg-danger fs-5">Disaster: {currentCrisis.disasterType}</label> 
+              <label className="badge bg-danger fs-5">
+                Disaster: {currentCrisis.disasterType}
+              </label> 
               <p></p>
               <label className="badge bg-secondary fs-6">Country:</label> 
               <p className="fs-6">{currentCrisis.country}</p>

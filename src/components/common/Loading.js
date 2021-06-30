@@ -1,8 +1,6 @@
 function Loading() {
   return (
-    <h2>
-      Loading the page!
-    </h2>
+    <h2>Loading the page!</h2>
   )
 }
 

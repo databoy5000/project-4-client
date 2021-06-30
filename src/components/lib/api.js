@@ -42,12 +42,12 @@ export function editCrisis(crisisId, formdata) {
   return axios.put(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`, formdata, headers())
 }
 
-export function editRequest(requestId, formdata) {
-  return axios.put(`${baseUrl}/${crisesPath}/${requestPath}/${requestId}/`, formdata, headers())
-}
-
 export function deleteCrisis(crisisId) {
   return axios.delete(`${baseUrl}/${crisesPath}/${crisisPath}/${crisisId}/`, headers())
+}
+
+export function editRequest(requestId, formdata) {
+  return axios.put(`${baseUrl}/${crisesPath}/${requestPath}/${requestId}/`, formdata, headers())
 }
 
 // * --- Resources

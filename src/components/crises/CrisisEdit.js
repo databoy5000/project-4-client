@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-
 import useForm from '../hooks/useForm'
 import { getSingleCrisis, getDisasterTypes, editRequest, editCrisis } from '../lib/api'
 import { crisisErrorForm, crisisForm } from '../lib/defaultForms'
@@ -8,42 +7,37 @@ import MapboxSearch from '../mapbox/MapboxSearch'
 import Error from '../common/Error'
 import Loading from '../common/Loading'
 
-
 function CrisisEdit() {
-
   const history = useHistory()
   const { crisisId } = useParams()
 
-  const [ disasterTypes, setDisasterTypes ] = useState(null)
-  const [ humanResources, setHumanResources ] = useState(null)
-  const [ materialResources, setMaterialResources ] = useState(null)
+  const [disasterTypes, setDisasterTypes] = useState(null)
+  const [humanResources, setHumanResources] = useState(null)
+  const [materialResources, setMaterialResources] = useState(null)
 
-  const [ isCrisis, setIsCrisis ] = useState(false)
-  const [ initialRequests, setInitialRequests ] = useState(null)
-  const [ currentRequests, setCurrentRequests ] = useState(null)
+  const [isCrisis, setIsCrisis] = useState(false)
+  const [initialRequests, setInitialRequests] = useState(null)
+  const [currentRequests, setCurrentRequests] = useState(null)
 
-  const [ isError, setIsError ] = useState(false)
+  const [isError, setIsError] = useState(false)
   const isLoading = !isCrisis && !isError
 
   const { formData, setFormData, handleChange } = useForm(crisisForm, crisisErrorForm)
 
-  useEffect( () => {
-
+  useEffect(() => {
     const getData = async () => {
       try {
-
         const crisisRes = await getSingleCrisis(crisisId)
         const crisisData = crisisRes.data
 
-        crisisData.requests.sort( (a, b) => {
+        crisisData.requests.sort((a, b) => {
           return a.resource.id - b.resource.id
         })
 
         const refactorCrisisForm = (crisisData) => {
           delete crisisData.owner
-
-          const refactoredRequests = crisisData.requests.map( (request) => {
-
+          
+          const refactoredRequests = crisisData.requests.map((request) => {
             return {
               requestId: request.id,
               resource: request.resource.id,
@@ -67,7 +61,6 @@ function CrisisEdit() {
         setHumanResources(humanResources)
         setMaterialResources(materialResources)
 
-        // * just in case, you never know...
         if (updatedCrisisForm) {
           setIsCrisis(true)
         }
@@ -79,17 +72,15 @@ function CrisisEdit() {
         setCurrentRequests(requests)
 
       } catch (err) {
-        console.log('err: ', err)
         setIsError(true)
       }
     }
     getData()
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[crisisId])
 
   const handleRequests = (e) => {
-    const updatedRequests = currentRequests.map( (request) => {
+    const updatedRequests = currentRequests.map((request) => {
       if (request.requestId === Number(e.target.id)) {
         return {
           ...request,
@@ -105,7 +96,7 @@ function CrisisEdit() {
     setFormData({ ...formData, isSolved: !formData.isSolved })
   }
 
-  const handleResult = e => {
+  const handleResult = (e) => {
     function getCountry() {
       if (e.place_type[0] === 'country') {
         return e.text
@@ -129,8 +120,6 @@ function CrisisEdit() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // * Updating crisis
     try {
       await editCrisis(crisisId, formData)
       history.push('/hs/dashboard')
@@ -138,8 +127,7 @@ function CrisisEdit() {
       setIsError(true)
     }
 
-    // * Updating crisis requests
-    currentRequests.forEach( async (request, index) => {
+    currentRequests.forEach(async (request, index) => {
       const requestId = initialRequests[index].requestId
       const initialQuantity = initialRequests[index].quantity
       const updatedQuantity = request.quantity
@@ -150,12 +138,10 @@ function CrisisEdit() {
             quantity: updatedQuantity,
           })
         } catch (err) {
-          console.log('err: ', err)
           setIsError(true)
         }
       }
     })
-
   }
 
   return (
@@ -252,8 +238,11 @@ function CrisisEdit() {
                   <div className="col-4">
                     <div className="form-group border m-4 p-3 shadow">
                       <h4>Human resources:</h4>
-                      {humanResources && humanResources.map( (resourceObject) => (
-                        <div key={resourceObject.id} className={resourceObject.resource.resourceType}>
+                      {humanResources && humanResources.map((resourceObject) => (
+                        <div 
+                          key={resourceObject.id} 
+                          className={resourceObject.resource.resourceType}
+                        >
                           <label className="col-sm-2 col-form-label">
                             {resourceObject.resource.resourceName}s:
                           </label>
@@ -274,8 +263,11 @@ function CrisisEdit() {
                   <div className="col-4">
                     <div className="form-group border m-4 p-3 shadow">
                       <h4>Material resources:</h4>
-                      {materialResources && materialResources.map( (resourceObject) => (
-                        <div key={resourceObject.id} className={resourceObject.resource.resourceType} >
+                      {materialResources && materialResources.map((resourceObject) => (
+                        <div 
+                          key={resourceObject.id} 
+                          className={resourceObject.resource.resourceType}
+                        >
                           <label className="col-sm-2 col-form-label">
                             {resourceObject.resource.resourceName}:
                           </label>
@@ -305,7 +297,6 @@ function CrisisEdit() {
           </div>
         </form>
       }
-
     </div>
   )
 }

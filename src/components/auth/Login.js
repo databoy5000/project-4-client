@@ -26,7 +26,6 @@ function Login() {
       }
 
     } catch (err) {
-      // console.log('err.response.data: ', err.response.data)
       setIsError(true)
     }
   }
@@ -35,13 +34,8 @@ function Login() {
   }
 
   return (
-    <section className="">
-      {/* {console.log('formData: ', formData)}
-      {console.log('formErrors: ', formErrors)} */}
-      <form 
-        className=""
-        onSubmit={handleSubmit}
-      >
+    <section>
+      <form onSubmit={handleSubmit}>
         <div className="container border bg-light shadow-sm mt-5 mb-5">
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">

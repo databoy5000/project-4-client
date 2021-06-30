@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 
 function ResourcesShow({ header, resourcesData }) {
-
-  const [ humanResources, setHumanResources ] = useState(null)
-  const [ materialResources, setMaterialResources ] = useState(null)
+  const [humanResources, setHumanResources] = useState(null)
+  const [materialResources, setMaterialResources] = useState(null)
 
   useEffect(() => {
     const humanResources = resourcesData
@@ -13,7 +12,6 @@ function ResourcesShow({ header, resourcesData }) {
 
     setHumanResources(humanResources)
     setMaterialResources(materialResources)
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

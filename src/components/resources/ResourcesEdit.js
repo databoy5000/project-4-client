@@ -7,14 +7,13 @@ import Error from '../common/Error'
 import Loading from '../common/Loading'
 
 function ResourcesEdit() {
-
   const history = useHistory()
 
-  const [ humanResources, setHumanResources ] = useState(null)
-  const [ materialResources, setMaterialResources ] = useState(null)
+  const [humanResources, setHumanResources] = useState(null)
+  const [materialResources, setMaterialResources] = useState(null)
   const { formData, setFormData } = useForm(editNGOResourcesForm, ngoResourcesErrorForm)
 
-  const [ isError, setIsError ] = useState(false)
+  const [isError, setIsError] = useState(false)
   const isLoading = !humanResources && !materialResources && !isError
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function ResourcesEdit() {
         const res = await getUserNGOResources()
         const resResources = res.data
 
-        resResources.sort( (a, b) => {
+        resResources.sort((a, b) => {
           return a.resource.id - b.resource.id
         })
 
@@ -43,7 +42,6 @@ function ResourcesEdit() {
         setHumanResources(humanResources)
         setMaterialResources(materialResources)
       } catch (err) {
-        console.log('err: ', err)
         setIsError(true)
       }
     }
@@ -51,13 +49,14 @@ function ResourcesEdit() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleNestedChange = e => {
+  const handleNestedChange = (e) => {
     for (let i = 0; i < formData.resources.length; i++) {
       if (formData.resources[i].resource === Number(e.target.id)) {
         const resourceCopy = [ ...formData.resources ]
         resourceCopy[i] = { ...resourceCopy[i],
           quantity: e.target.value,
         }
+
         setFormData({ ...FormData, resources: resourceCopy })
         return
       }
@@ -68,7 +67,6 @@ function ResourcesEdit() {
     e.preventDefault()
 
     try {
-
       for (let i = 0; i < formData.resources.length; i++) {
         const ngoResourceId = formData.resources[i].id
         const resourceId = formData.resources[i].resource
@@ -86,7 +84,6 @@ function ResourcesEdit() {
 
       history.push('/ngo/dashboard')
     } catch (err) {
-      console.log('err: ', err)
       setIsError(true)
     }
   }
@@ -95,9 +92,7 @@ function ResourcesEdit() {
     <div>
       {isError && <Error/>}
       {isLoading && <Loading/>}
-      <form
-        onSubmit={handleSubmit}
-      >
+      <form onSubmit={handleSubmit}>
         <div className="container border bg-light shadow-sm mt-5 mb-5">
           <div className="row justify-content-center">
             <div className="d-grid gap-2 col-8 mx-auto">
@@ -135,7 +130,9 @@ function ResourcesEdit() {
                     <h4>Material resources:</h4>
                     {materialResources && materialResources.map((element) => (
                       <div className={element.resource.resourceType} key={element.id}>
-                        <label className="col-sm-2 col-form-label">{element.resource.resourceName}:</label>
+                        <label className="col-sm-2 col-form-label">
+                          {element.resource.resourceName}:
+                        </label>
                         <input
                           className="form-control fw-light fst-italic"
                           type="number"

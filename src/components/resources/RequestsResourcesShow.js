@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
 function ResourcesShow({ header, requestsData, resourcesData }) {
-
   const humanResources = requestsData
     .filter((resource) => resource.resource.resourceType === 'Human')
   const materialResources = requestsData
@@ -10,7 +9,6 @@ function ResourcesShow({ header, requestsData, resourcesData }) {
   const isError = !humanResources && !resourcesData && !resourcesData
 
   useEffect(() => {
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestsData])
 

@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
 import Home from './components/common/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
@@ -18,7 +17,7 @@ import { SecureRoute, NGOSecureRoute } from './components/common/SecureRoute'
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
       <Switch>
         <Route exact path="/" component={Home}/>
         <Route path="/about" component={About}/>
@@ -31,7 +30,7 @@ function App() {
         <NGOSecureRoute Route path="/ngo/dashboard" component={NGODashboard}/>
         <NGOSecureRoute Route path="/ngo/crises/:crisisId" component={CrisisShowNGO}/>
         <NGOSecureRoute Route path="/ngo/editngoresources" component={ResourcesEdit}/>
-        <Route path="/*" component={Error} />
+        <Route path="/*" component={Error}/>
       </Switch>
     </Router>
   ) 
