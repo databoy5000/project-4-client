@@ -1,29 +1,28 @@
-# Project 3: Memory.map
-by [Antoinette Demonceaux](https://github.com/Ant0inette), [Kat Hackethal](https://github.com/khackethal/) and [Anthony Graham](https://github.com/databoy5000/).
+# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #4: WoCRO
+## World Crisis Response Organisation
 
-Memory.map is a platform to connect with places and cities, through people.
+by [Raphaëlle Charrier](https://github.com/RaphaelleC) and [Anthony Graham](https://github.com/databoy5000/).
 
-![Homepage](./screenshots/Homepage.png "Homepage")
+WoCRO is an app for Help-seekers (governmental entities) and NGOs to log major world crises into one place to collaborate efficently on solving them.
 
-Share memories on a map-based platform, track down urban legends, ancestry & much more.
+![Homepage](./screenshots/Homepage.png)
 
 ## Contents
 
-- [Contents](#contents)
-- [Brief](#brief)
+- [Project Brief](#project-brief)
 - [Approach](#approach)
-- [Technologies Used](#technologies-used)
-- [Wireframe](#wireframe)
+- [Technologies](#technologies-used)
+- [Wireframes](#wireframes)
 - [Responsibilities](#responsibilities)
 - [Key Learnings](#key-learnings)
 - [Achievements](#achievements)
 - [Challenges](#challenges)
 - [Conclusions](#conclusions)
 
-## Brief
+## Project Brief
 
 * **Build a full-stack application** by making your own backend and your own front-end
-* **Use an Express API** to serve your data from a Mongo database
+* **Use a Python Django API** using Django REST Framework to serve your data from a Postgres database
 * **Consume your API with a separate front-end** built with React
 * **Be a complete product** which most likely means multiple relationships and CRUD functionality for at least a couple of models
 * **Implement thoughtful user stories/wireframes** that are significant enough to help you know which features are core MVP and which you can cut
@@ -31,48 +30,89 @@ Share memories on a map-based platform, track down urban legends, ancestry & muc
 * **Be deployed online** so it's publicly accessible.
 
 ## Approach
-From the off, we established the following elements to guarantee continuity during the project build:
+To guarantee continuity during the project build, we established the following elements:
+* To assure communications on a messaging app where we could write, talk, exchange resources and share screens.
+* [Project Management Sheet](https://docs.google.com/spreadsheets/d/1g-ZKAiVj09dBAaLHXUu5pl-V6kxmzfIp10CzKzqRgqc/view): to document the project scope and all specifications to the app into a single shared space.
 
-### Communication
-To be assured on a messaging app where developpers can write & talk to each other, exchange resources and share screens.
+(Sample of the main specifications tab)
+<center>
+  <img src="./screenshots/PM_Specs.png" alt="App Specifications" width="700">
+</center><br>
 
-### Project Scope
-We use a spreadsheet program ([see here](https://docs.google.com/spreadsheets/d/17YFoGBlmBzowzMGTn-n-OWcBpImDZlBbY4UEJlJJn4I/edit?usp=sharing)) to allow us to manage the project across all team members, into one organised place. We use the following tabs:
-- App Specifications: to articulate the project's objectives & milestones, outline constraints and to store any shareable resources (github links, libraries, third party API documentation)
-- Tasks Board: where we defined each team member's tasks to tick off and pick the next.
-- API: where we defined Memory.map's models and CRUD operations.
-- Naming Conventions: to keep code readability and continuity across the project.
+Then, we defined the following milestones:
+1. Establish database collections, their relationships and validated diagram.
+2. Define API endpoints.
+3. Construct wireframes.
+4. Build cycle
+    - Task planning/coordinating
+    - Code
+    - Test
+    - Fix errors
+    - Push working feature to GitHub
+5. Syle completed components/pages
+6. Final tests to validate app flow and design finishing
+7. Backend & Frontend deployment
 
-### Building
-We chose to work our way linearly from the back-end to the front-end, but clearly defining tasks between developpers to work through tasks in parallel, in order to have minimum overlap and avoid confusion (e.g. working similar files).
+During the <ins>build cycle</ins>, we worked our way linearly from the back-end to the front-end, clearly defining tasks (one or multiple complete features per task) between team members to work through them separately in order to have minimum overlap, avoiding merge conflicts and/or work being done twice.
 
 ## Technologies Used
 
-- HTML
-- CSS/Sass
-- JavaScript
-- React
-- Node.js,
-- Mongoose
-- Mongoose Unique Validator
-- Mongoose Hidden
-- Express
-- Cloudinary
-- Axios
-- bcrypt
-- Json Web Token
-- React Map GL
-- React Map GL Geocoder
-- Moment
-- React Confirm Alert
-- Bulma framework
+### <ins>Back-end</ins>
+<img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white"/><br>
+<img alt="DjangoREST" src="https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray"/><br>
+<img alt="Postgres" src ="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"/>
 
-## Wireframe
-![Wireframe](./screenshots/Wireframes_Combined.png "Wireframe")
+#### Additional technologies:
+* TablePlus
+* pyjwt
+* pipenv
+* pylint
+* DjangoREST camel case
+
+### <ins>Front-end</ins>
+<img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/><br>
+<img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/><br>
+<img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/><br>
+<img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+
+#### Additional technologies:
+* SASS
+* Axios
+* Cloudinary
+* React MapGL
+* React MapGL Geocoder
+
+## Project Planning Diagrams
+
+### <ins>Flow Chart</ins>
+Setting the flow chart allowed us to brainstorm our way from a few different ideas to a sustainable one, and allowing us to manage expectations during the build across the team.
+
+<center><img src="./screenshots/Flow_Diagram.jpg" alt="Flowchart" width="600"></center>
+
+### <ins>Entity Relationship Diagram</ins>
+<center><img src="./screenshots/ERD.png" alt="ERD" width="600"></center>
+
+### <ins>Wireframes</ins>
+The wireframes include features which we thought could be part of our MVP. We quickly realised whilst working our way through the back end that we had to make things simpler to complete our MVP within the given deadline.
+
+#### <center><ins>Homepage</ins></center>
+<center><img src="./screenshots/WF_Homepage.jpg" alt="Homepage" width="400"></center>
+
+#### <center><ins>Register Form</ins></center>
+<center><img src="./screenshots/WF_Register.jpg" alt="Register Form" width="400"></center>
+
+#### <center><ins>New Crisis Form</ins></center>
+<center><img src="./screenshots/WF_HS_NEW_CRISIS_FORM.jpg" alt="New Crisis Form (Help-seekers)" width="400"></center>
+
+#### <center><ins>NGO Dashboard</ins></center>
+<center><img src="./screenshots/WF_NGO_Dashboard.jpg" alt="NGO Dashboard" width="400"></center>
+
 
 ## Responsibilities
 
-### Cloudinary
+### Back-end
+
+### Front-end
 
 ### User Preferences
 
