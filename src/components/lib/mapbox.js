@@ -1,6 +1,4 @@
-export const apiUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
-export const publicToken = 'pk.eyJ1IjoicmFwaGNoYXIiLCJhIjoiY2txMHMwajBpMDdxZzJucDhpdGRxMnUzdSJ9.5QE1OTa_Uw-1S3_5oQpcTw'
-export const endUrl = `.json?access_token=${publicToken}`
+export const publicToken = process.env.REACT_APP_MAPBOX_TOKEN
 export function defaultViewport(crisesData, homepageViewPort = false) {
 
   if (crisesData.length === 1 && !homepageViewPort) {

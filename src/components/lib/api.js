@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getToken } from './auth'
+import { baseUrl } from '../../config'
 
-export const baseUrl = '/api'
 export const crisesPath = 'crises'
 export const crisisPath = 'crisis'
 export const resourcesPath = 'resources'

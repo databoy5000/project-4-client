@@ -85,7 +85,7 @@ During the <ins>build cycle</ins>, we worked our way linearly from the back-end 
 ## Project Planning Diagrams
 
 ### <ins>Flow Chart</ins>
-Setting the flow chart allowed us to brainstorm our way from a few different ideas to a sustainable one, and allowing us to manage expectations during the build across the team.
+Setting the flow chart helped us to brainstorm our way from a few different ideas to a sustainable one, and allowing us to manage expectations during the build across the team.
 
 <center><img src="./screenshots/Flow_Diagram.jpg" alt="Flowchart" width="600"></center>
 
@@ -93,7 +93,7 @@ Setting the flow chart allowed us to brainstorm our way from a few different ide
 <center><img src="./screenshots/ERD.png" alt="ERD" width="600"></center>
 
 ### <ins>Wireframes</ins>
-The wireframes include features which we thought could be part of our MVP. We quickly realised whilst working our way through the back end that we had to make things simpler to complete our MVP within the given deadline.
+The wireframes include features which we thought could be part of our MVP. We quickly realised - whilst working our way through the back end - that we had to make things simpler to complete our MVP within the given deadline.
 
 #### <center><ins>Homepage</ins></center>
 <center><img src="./screenshots/WF_Homepage.jpg" alt="Homepage" width="400"></center>
@@ -109,12 +109,52 @@ The wireframes include features which we thought could be part of our MVP. We qu
 
 
 ## Responsibilities
+This project was a great team effort of bringing things together as a pair, but let's take a look at the elements which I configured...
 
-### Back-end
+### <ins>Back-end (crises app)</ins>
 
-### Front-end
+#### 1. Models
+As set in the ERD, the following subclasses were built, inheriting from `django.db.models.Model` class (which allowed access to the class's attributes to create the database fields):
+- Crisis
+- Request
+- Resource
+- NGOResource
 
-### User Preferences
+Some of the fields required to be guided through a selection of values. The documentation recommended we implement the following (e.g. `Crisis`):
+```py
+    TSUNAMI = 'Tsunami'
+    HURRICANE = 'Hurricane'
+    FLOOD = 'Flood'
+    EARTHQUAKE = 'Earthquake'
+    WAR = 'War'
+    PANDEMIC = 'Pandemic'
+    WILDFIRE = 'Wildfire'
+
+    DISASTER_TYPES = [
+        (TSUNAMI, 'Tsunami'),
+        (HURRICANE, 'Hurricane'),
+        (FLOOD, 'Flood'),
+        (EARTHQUAKE, 'Earthquake'),
+        (WAR, 'War'),
+        (PANDEMIC, 'Pandemic'),
+        (WILDFIRE, 'Wildfire')
+    ]
+
+    disaster_type = models.CharField(
+        max_length=20,
+        choices=DISASTER_TYPES,
+    )
+```
+
+#### Views
+#### Serialization
+#### URLs
+
+### <ins>Back-end (jwt_auth)</ins>
+
+
+### <ins>Front-end</ins>
+
 
 ## Key Learnings
 
@@ -123,4 +163,3 @@ The wireframes include features which we thought could be part of our MVP. We qu
 ## Challenges
 
 ## Conclusions
-

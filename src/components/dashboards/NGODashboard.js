@@ -17,7 +17,7 @@ function NGODashboard() {
     longitude: 0,
     width: viewportWidth,
     height: viewportHeight,
-    zoom: 1.85,
+    zoom: 0,
   })
 
   function handleResize() {

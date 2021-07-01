@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Error from './Error'
-import { baseUrl, crisesPath } from '../lib/api'
+import { crisesPath } from '../lib/api'
+import { baseUrl } from '../../config'
 import MapGLHomepage from '../mapbox/MapGLHomepage'
 
 function Home() {
+
   const [searchTerm, setSearchTerm] = useState('')
   const [crises, setCrises] = useState(null)
 

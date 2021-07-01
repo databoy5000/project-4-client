@@ -18,7 +18,7 @@ function HSDashboard() {
     longitude: 0,
     width: viewportWidth,
     height: viewportHeight,
-    zoom: 1.85,
+    zoom: 0,
   })
 
   const [userCrises, setUserCrises] = useState(null)
