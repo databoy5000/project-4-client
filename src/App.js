@@ -3,6 +3,7 @@ import Home from './components/common/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import { About } from './components/common/About'
+
 import Navbar from './components/common/Navbar'
 import CrisisCreate from './components/crises/CrisisCreate'
 import CrisisEdit from './components/crises/CrisisEdit'
@@ -13,6 +14,7 @@ import HSDashboard from './components/dashboards/HSDashboard'
 import ResourcesEdit from './components/resources/ResourcesEdit'
 import Error from './components/common/Error'
 import { SecureRoute, NGOSecureRoute } from './components/common/SecureRoute'
+import ThankYou from './components/common/ThankYou'
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/about" component={About}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
+        <Route path="/thankyou" component={ThankYou}/>
         <SecureRoute Route path="/hs/dashboard" component={HSDashboard}/>
         <SecureRoute Route path="/hs/crises/:crisisId/edit" component={CrisisEdit}/>
         <Route path="/crises/:crisisId" component={CrisisShowHS}/>

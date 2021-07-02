@@ -13,11 +13,11 @@ function NGODashboard() {
   const viewportHeight = (window.innerHeight / 2)
 
   const [viewport, setViewport] = useState({
-    latitude: 30,
-    longitude: 0,
+    latitude: 54.5260,
+    longitude: 15.2551,
     width: viewportWidth,
     height: viewportHeight,
-    zoom: 0,
+    zoom: 1.25,
   })
 
   function handleResize() {

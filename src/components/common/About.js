@@ -9,7 +9,7 @@ export function About() {
 
       <p className="lh-sm text-center m-4">Let us all care for humanity together !</p>
 
-      <img className="position-absolute bottom-0 start-50 translate-middle-x" src="https://i.imgur.com/qZQCgKz.jpg?1" alt="Humanity icon" />
+      <img className="about-us-img" src="https://i.imgur.com/qZQCgKz.jpg?1" alt="Humanity icon" />
     </div>
   )
 }

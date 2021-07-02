@@ -10,7 +10,7 @@ function Navbar() {
 
   const handleLogout = () => {
     removeToken()
-    history.push('/')
+    history.push('/thankyou')
   }
 
   return (
