@@ -56,7 +56,7 @@ function Home() {
           '  title', ': \'Junior Software Engineer\',', '\n',
           '  github: \'https://github.com/databoy5000\',', '\n',
           '  linkedin: \'https://www.linkedin.com/in/anthonygdev/\',', '\n',
-          '  readMe: \'\',', '\n',
+          '  projectReadMe: \'https://github.com/databoy5000/project-4-client/blob/main/README.md\',', '\n',
           '}'
         )
       } catch (err) {

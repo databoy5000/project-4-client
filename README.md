@@ -7,6 +7,40 @@ WoCRO is an app for Help-seekers (governmental entities) and NGOs to log major w
 
 ![Homepage](./screenshots/Homepage.png)
 
+## Live Demo & Useful Links
+
+<div style="text-align:center">
+  <img
+    src="https://imgur.com/P2NkQ7Q.png"
+    href="https://wocro.netlify.app/"
+    alt="Live Demo"
+  />
+</div>
+
+<div style="text-align:center">
+  <img
+    src="https://imgur.com/QCKp4U4.png"
+    href="https://github.com/databoy5000"
+    alt="Live Demo"
+  />
+</div>
+
+<div style="text-align:center">
+  <img
+    src="https://imgur.com/XyaL8Dg.png"
+    href="https://github.com/databoy5000/project-4-client"
+    alt="Live Demo"
+  />
+</div>
+
+<div style="text-align:center">
+  <img
+    src="https://imgur.com/rod7TG4.png"
+    href="https://github.com/databoy5000/project-4-server"
+    alt="Live Demo"
+  />
+</div>
+
 ## Contents
 
 - [Project Brief](#project-brief)
@@ -99,13 +133,19 @@ The wireframes include features which we thought could be part of our MVP. We qu
 <center><img src="./screenshots/WF_Homepage.jpg" alt="Homepage" width="400"></center>
 
 #### <center><ins>Register Form</ins></center>
-<center><img src="./screenshots/WF_Register.jpg" alt="Register Form" width="400"></center>
+<center>
+  <img src="./screenshots/WF_Register.jpg" alt="Register Form" width="400">
+</center>
 
 #### <center><ins>New Crisis Form</ins></center>
-<center><img src="./screenshots/WF_HS_NEW_CRISIS_FORM.jpg" alt="New Crisis Form (Help-seekers)" width="400"></center>
+<center>
+  <img src="./screenshots/WF_HS_NEW_CRISIS_FORM.jpg" alt="New Crisis Form (Help-seekers)" width="400">
+</center>
 
 #### <center><ins>NGO Dashboard</ins></center>
-<center><img src="./screenshots/WF_NGO_Dashboard.jpg" alt="NGO Dashboard" width="400"></center>
+<center>
+  <img src="./screenshots/WF_NGO_Dashboard.jpg" alt="NGO Dashboard" width="400">
+</center>
 
 
 ## Responsibilities
@@ -114,13 +154,13 @@ This project was a great team effort of bringing things together as a pair, but 
 ### <ins>Back-end (crises app)</ins>
 
 #### 1. Models
-As set in the ERD, the following subclasses were built, inheriting from `django.db.models.Model` class (which allowed access to the class's attributes to create the database fields):
+The following subclasses were matched with the ERD, inheriting from `django.db.models.Model` class (to access to the class's attributes for creating the database fields):
 - Crisis
 - Request
 - Resource
 - NGOResource
 
-Some of the fields required to be guided through a selection of values. The documentation recommended we implement the following (e.g. `Crisis`):
+Some specific fields required to be channeled through a selection of values. The documentation recommended we implement the following to declare a list of available choices (e.g. `Crisis`):
 ```py
     TSUNAMI = 'Tsunami'
     HURRICANE = 'Hurricane'
@@ -146,9 +186,44 @@ Some of the fields required to be guided through a selection of values. The docu
     )
 ```
 
-#### Views
-#### Serialization
-#### URLs
+#### 2. URLs & Views
+We followed the CRUD pattern to read all crises & single crisis, create, update and delete, for crises and NGO resources separately. Additionally, I personalised the backend by adding enpoints to serve specific tasks for better interaction continuity between the front & back ends. Let's take a look at the URLs:
+
+```py
+urlpatterns = [
+    path('', CrisisListView.as_view()),
+    path('types/', DisasterTypesListView.as_view()),
+    path('<int:user_pk>/', UserCrisisListView.as_view()),
+    path('crisis/<int:crisis_pk>/', CrisisDetailView.as_view()),
+    path('request/<int:crisis_request_pk>/', RequestDetailView.as_view()),
+    path('resources/', ResourceListView.as_view()),
+    path('ngo_resources/<int:resource_pk>/', NGOResourceDetailView.as_view()),
+    path('ngo_resources/', NGOResourceListView.as_view()),
+]
+```
+Here is a condensed breakdown of the personnalised urls:
+
+  - `DisasterTypesListView`: calls the custom `Crisis` model method `get_disaster_types()` to be used at the front-end's create & update forms. That way, the single point to ammend - when more disaster types are added to the list - is the back-end's model list of choices.
+  - `RequestDetailView`: updates a single existing crisis request. The front end form will only send a put request to updated request values.
+  - `ResourceListView`: calls the list of resource values in the Resource model, with the same idea to optimize as the first point (scalability).
+
+#### 3. Serialization
+
+  - <ins>Crisis</ins>
+
+What we wanted was to create a crisis within a single request. That way, if for some reason there was an interruption during the create request, the crisis object wouldn't get validated and therefore keep the database clean from unfinished and/or duplicate objects.
+
+To help understand the process, here is a diagram where:
+  - Request: refers to the model
+  - **requests** (bold): referes to the crisis dictionary key named requests, which are resources 'requests'.
+  - request (not bold): refers to client request.
+
+<center>
+  <img src="./screenshots/crisis_serializer.jpg" alt="Crisis Serializer" width="600">
+</center>
+
+  - <ins>NGOResource</ins>
+
 
 ### <ins>Back-end (jwt_auth)</ins>
 

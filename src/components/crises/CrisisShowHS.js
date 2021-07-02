@@ -44,7 +44,6 @@ function CrisisShowHS() {
         setIsOwner(isCreator(crisis.owner.id))
 
       } catch (err) {
-        console.log('err.response.data: ', err.response.data)
         setIsError(true)
       }
     }

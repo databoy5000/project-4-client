@@ -27,10 +27,6 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (formData.userType === 'NGO') {
-      formData.country = ''
-    }
-
     if (formData.profilePictureUrl === '') {
       formData.profilePictureUrl = 'https://i.imgur.com/6da62wI.png?1'
     }
@@ -47,14 +43,7 @@ function Register() {
       }
       
     } catch (err) {
-      if (formData.userType === 'Help-seeker' && formData.country === '') {
-        setFormErrors({ ...formErrors,
-          ...err.response.data,
-          country: ['This field may not be blank.'],
-        })
-      } else {
-        setFormErrors({ ...formErrors, ...err.response.data })
-      }
+      setFormErrors({ ...formErrors, ...err.response.data })
     }
   }
 

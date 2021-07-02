@@ -24,7 +24,7 @@ function HSDashboard() {
   const [userCrises, setUserCrises] = useState(null)
   const [selectedCrisisId, setSelectedCrisisId] = useState(null)
   const [isError, setIsError] = useState(false)
-  const isLoading = !userCrises && !isError
+  const isLoading = !userCrises === null && !isError
 
   useEffect(() => {
     const getData = async () => {
@@ -58,8 +58,13 @@ function HSDashboard() {
           const stageTwoUpdatedCrisis = setDotColoursProp(stageOneUpdatedCrisis)
           setUserCrises(stageTwoUpdatedCrisis)
         } else setUserCrises(stageOneUpdatedCrisis)
+
       } catch (err) {
-        setIsError(true)
+        if (err.response.data.detail.includes('Not found.')) {
+          setUserCrises(false)
+        } else {
+          setIsError(true)
+        }
       }
     }
     getData()
