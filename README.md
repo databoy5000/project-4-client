@@ -5,52 +5,50 @@ by [Raphaëlle Charrier](https://github.com/RaphaelleC) and [Anthony Graham](htt
 
 WoCRO is an app for Help-seekers (governmental entities) and NGOs to log major world crises into one place to collaborate efficently on solving them.
 
-![Homepage](./screenshots/Homepage.png)
+![Homepage](https://imgur.com/2fRpLOF.png)
 
-## Live Demo & Useful Links
+## Live Demo, Useful Links
 
-<div style="text-align:center">
-  <img
-    src="https://imgur.com/P2NkQ7Q.png"
-    href="https://wocro.netlify.app/"
-    alt="Live Demo"
-  />
-</div>
+[<img alt="Live Demo" src="https://imgur.com/P2NkQ7Q.png" height="35px">](https://wocro.netlify.app/)
+[<img alt="Follow databoy5000" src="https://imgur.com/QCKp4U4.png" height="35px">](https://github.com/databoy5000)
+[<img alt="Client Repository" src="https://imgur.com/XyaL8Dg.png" height="35px">](https://github.com/databoy5000/project-4-client)
+[<img alt="Server Repository" src="https://imgur.com/rod7TG4.png" height="35px">](https://github.com/databoy5000/project-4-server)
 
-<div style="text-align:center">
-  <img
-    src="https://imgur.com/QCKp4U4.png"
-    href="https://github.com/databoy5000"
-    alt="Live Demo"
-  />
-</div>
-
-<div style="text-align:center">
-  <img
-    src="https://imgur.com/XyaL8Dg.png"
-    href="https://github.com/databoy5000/project-4-client"
-    alt="Live Demo"
-  />
-</div>
-
-<div style="text-align:center">
-  <img
-    src="https://imgur.com/rod7TG4.png"
-    href="https://github.com/databoy5000/project-4-server"
-    alt="Live Demo"
-  />
-</div>
 
 ## Contents
 
+- [World Crisis Response Organisation](#world-crisis-response-organisation)
+- [Live Demo, Useful Links](#live-demo-useful-links)
+- [Contents](#contents)
 - [Project Brief](#project-brief)
 - [Approach](#approach)
-- [Technologies](#technologies-used)
-- [Wireframes](#wireframes)
+- [Technologies Used](#technologies-used)
+  * [<ins>Back-end</ins>](#-ins-back-end--ins-)
+  * [<ins>Front-end</ins>](#-ins-front-end--ins-)
+- [Project Planning Diagrams](#project-planning-diagrams)
+  * [<ins>Flow Chart</ins>](#-ins-flow-chart--ins-)
+  * [<ins>Entity Relationship Diagram</ins>](#-ins-entity-relationship-diagram--ins-)
+  * [<ins>Wireframes</ins>](#-ins-wireframes--ins-)
 - [Responsibilities](#responsibilities)
-- [Key Learnings](#key-learnings)
-- [Achievements](#achievements)
-- [Challenges](#challenges)
+  * [<ins>Back-end (crises app)</ins>](#-ins-back-end--crises-app---ins-)
+    + [1. Models](#1-models)
+    + [2. URLs & Views](#2-urls---views)
+    + [3. Serialization](#3-serialization)
+  * [<ins>Back-end (jwt_auth)</ins>](#-ins-back-end--jwt-auth---ins-)
+  * [<ins>Front-end</ins>](#-ins-front-end--ins--1)
+    + [**1. Create Crisis Form**](#--1-create-crisis-form------crisiscreatejs---)
+      - [`useEffect`](#-useeffect-)
+      - [Handling nested changes](#handling-nested-changes)
+      - [MapboxSearch and handling search results](#mapboxsearch-and-handling-search-results)
+      - [Field validation and error handling](#field-validation-and-error-handling)
+    + [**2. Edit Crisis form, Resources Create/Edit forms**](#--2-edit-crisis-form--resources-create-edit-forms--)
+    + [**3. User dashboards**](#--3-user-dashboards--)
+    + [**4. Show single Crisis page**](#--4-show-single-crisis-page--)
+    + [**5. Homepage map**](#--5-homepage-map--)
+    + [**6. Register & Login forms**](#--6-register---login-forms--)
+- [Key Learnings, Achievements & Challenges](#key-learnings--achievements---challenges)
+  * [<ins>Back-end</ins>](#-ins-back-end--ins--1)
+  * [<ins>Front-end</ins>](#-ins-front-end--ins--2)
 - [Conclusions](#conclusions)
 
 ## Project Brief
@@ -70,7 +68,7 @@ To guarantee continuity during the project build, we established the following e
 
 (Sample of the main specifications tab)
 <center>
-  <img src="./screenshots/PM_Specs.png" alt="App Specifications" width="700">
+  <img src="https://imgur.com/KgrkJt7.png" alt="App Specifications" width="700">
 </center><br>
 
 Then, we defined the following milestones:
@@ -121,30 +119,30 @@ During the <ins>build cycle</ins>, we worked our way linearly from the back-end 
 ### <ins>Flow Chart</ins>
 Setting the flow chart helped us to brainstorm our way from a few different ideas to a sustainable one, and allowing us to manage expectations during the build across the team.
 
-<center><img src="./screenshots/Flow_Diagram.jpg" alt="Flowchart" width="600"></center>
+<center><img src="https://imgur.com/cPNBjBt.png" alt="Flowchart" width="600"></center>
 
 ### <ins>Entity Relationship Diagram</ins>
-<center><img src="./screenshots/ERD.png" alt="ERD" width="600"></center>
+<center><img src="https://imgur.com/pozpEPt.png" alt="ERD" width="600"></center>
 
 ### <ins>Wireframes</ins>
 The wireframes include features which we thought could be part of our MVP. We quickly realised - whilst working our way through the back end - that we had to make things simpler to complete our MVP within the given deadline.
 
 #### <center><ins>Homepage</ins></center>
-<center><img src="./screenshots/WF_Homepage.jpg" alt="Homepage" width="400"></center>
+<center><img src="https://imgur.com/SNPDQ5z.png" alt="Homepage" width="400"></center>
 
 #### <center><ins>Register Form</ins></center>
 <center>
-  <img src="./screenshots/WF_Register.jpg" alt="Register Form" width="400">
+  <img src="https://imgur.com/TwAjZ6r.png" alt="Register Form" width="400">
 </center>
 
 #### <center><ins>New Crisis Form</ins></center>
 <center>
-  <img src="./screenshots/WF_HS_NEW_CRISIS_FORM.jpg" alt="New Crisis Form (Help-seekers)" width="400">
+  <img src="https://imgur.com/qJdeykI.png" alt="New Crisis Form (Help-seekers)" width="400">
 </center>
 
 #### <center><ins>NGO Dashboard</ins></center>
 <center>
-  <img src="./screenshots/WF_NGO_Dashboard.jpg" alt="NGO Dashboard" width="400">
+  <img src="https://imgur.com/bL49IVX.png" alt="NGO Dashboard" width="400">
 </center>
 
 
@@ -219,7 +217,7 @@ To help understand the process, here is a the diagram of the writable nested rep
   - request (not bold): refers to HTTP client requests.
 
 <center>
-  <img src="./screenshots/crisis_serializer.jpg" alt="Crisis Serializer" width="600">
+  <img src="https://imgur.com/ninITDZ.png" alt="Crisis Serializer" width="600">
 </center>
 
   - <ins>Read Crisis</ins>
