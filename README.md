@@ -10,7 +10,7 @@ WoCRO is an app for Help-seekers (governmental entities) and NGOs to log major w
 ## Live Demo, Useful Links
 
 [<img alt="Live Demo" src="https://imgur.com/P2NkQ7Q.png" height="35px">](https://wocro.netlify.app/)
-[<img alt="Follow databoy5000" src="https://imgur.com/QCKp4U4.png" height="35px">](https://github.com/databoy5000)
+[<img alt="Follow databoy5000" src="https://imgur.com/QCKp4U4.png" height="35px">](https://github.com/login?return_to=%2Fdataboy5000)
 [<img alt="Client Repository" src="https://imgur.com/XyaL8Dg.png" height="35px">](https://github.com/databoy5000/project-4-client)
 [<img alt="Server Repository" src="https://imgur.com/rod7TG4.png" height="35px">](https://github.com/databoy5000/project-4-server)
 
