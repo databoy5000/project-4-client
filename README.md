@@ -76,7 +76,7 @@ Then, we defined the following milestones:
 1. Establish database collections, their relationships and validated diagram.
 2. Define API endpoints.
 3. Construct wireframes.
-4. Build cycle;
+4. Build cycle:
   - Task planning/coordinating,
   - Code,
   - Test,
