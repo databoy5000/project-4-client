@@ -122,7 +122,7 @@ function CrisisEdit() {
     e.preventDefault()
     try {
       await editCrisis(crisisId, formData)
-      history.push('/hs/dashboard')
+      history.push(`/crises/${crisisId}`)
     } catch (err) {
       setIsError(true)
     }
