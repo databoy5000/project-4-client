@@ -46,6 +46,7 @@ WoCRO is an app for Help-seekers (governmental entities) and NGOs to log major w
     + [**4. Show single Crisis page**](#--4-show-single-crisis-page--)
     + [**5. Homepage map**](#--5-homepage-map--)
     + [**6. Register & Login forms**](#--6-register---login-forms--)
+- [Thoughts on Additional Features](#thoughts-on-additional-features)
 - [Key Learnings, Achievements & Challenges](#key-learnings--achievements---challenges)
   * [<ins>Back-end</ins>](#-ins-back-end--ins--1)
   * [<ins>Front-end</ins>](#-ins-front-end--ins--2)
@@ -473,7 +474,12 @@ Refactored its hardcoded map to the child component `MapGLHomepage.js`, adding c
  
 #### **6. Register & Login forms**
 Here I worked on the conditionals when a form submission returns validation errors from the backend, to display the error messages, to have the input borders glowing in red and to remove the border colour `onBlur`, similar to validations on `createCrisis.js` and other forms.
+
+## Thoughts on Additional Features
+The main update we would've liked was for NGO's to be able to contribute to whichever crises they chose to dispatch help, with the amount of resources of their choice, with the possibility to time how long the resources would stay on location or to retrieve these manually. Perhaps a different management system would've been needed to work with material resources such as consumables.
  
+Additionally we had a discussion to add a digital currency, rewards and resources shop, for NGOs (but also Help-Seekers) to stock-up on resources to fill their needs. We also liked the idea to include Contributors (new user type) to feed the platform with resource donations in exchange of rewards.
+
 ## Key Learnings, Achievements & Challenges
  
 In broad terms, although we managed to deliver a fully working MVP within the given timeline, we hadn't measured the scale of complexity of our initial MVP's included features. With the help of our instructor, we manage to strip it down to a simpler, more realistic version (and a much simpler ERD), which yet still required us to compensate with a great amount of extra work.
