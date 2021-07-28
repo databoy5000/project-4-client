@@ -34,6 +34,7 @@ WoCRO is an app for Help-seekers (governmental entities) and NGOs to log major w
     + [1. Models](#1-models)
     + [2. URLs & Views](#2-urls---views)
     + [3. Serialization](#3-serialization)
+    + [4. Note on NGO Resources](#4-note-on-ngo-resources)
   * [<ins>Back-end (jwt_auth)</ins>](#-ins-back-end--jwt-auth---ins-)
   * [<ins>Front-end</ins>](#-ins-front-end--ins--1)
     + [**1. Create Crisis Form**](#--1-create-crisis-form------crisiscreatejs---)
@@ -78,16 +79,16 @@ Then, we defined the following milestones:
 2. Define API endpoints.
 3. Construct wireframes.
 4. Build cycle:
-  - Task planning/coordinating,
-  - Code,
-  - Test,
-  - Fix errors,
-  - Push working feature to GitHub.
+    - Task planning/coordinating,
+    - Code,
+    - Test,
+    - Fix errors,
+    - Push working feature to GitHub.
 5. Syle completed components/pages.
 6. Final tests to validate app flow and design finishing.
 7. Backend & Frontend deployment.
  
-During the <ins>build cycle</ins>, we worked our way linearly from the back-end to the front-end, clearly defining tasks (one or multiple complete features per task) between team members to work through them separately to have minimum overlap, avoiding merge conflicts and/or work being done twice. This was all managed through the [Project Management Sheet](https://docs.google.com/spreadsheets/d/1g-ZKAiVj09dBAaLHXUu5pl-V6kxmzfIp10CzKzqRgqc/view)'s 'Tasks Board' tab.
+During the <ins>build cycle</ins>, we worked our way linearly from the back to front end, clearly defining tasks (one or multiple complete features per task) between team members to work through them separately and to have minimum overlap, avoiding merge conflicts and/or work being done twice. This was all managed through the [Project Management Sheet](https://docs.google.com/spreadsheets/d/1g-ZKAiVj09dBAaLHXUu5pl-V6kxmzfIp10CzKzqRgqc/view)'s 'Tasks Board' tab.
  
 For readability, we also set a template of naming conventions to follow (again, managed through the same document), which were also updated as we coded along when we figured certain syntaxes would need to follow the same form.
  
@@ -106,13 +107,17 @@ For readability, we also set a template of naming conventions to follow (again, 
 * DjangoREST camel case
  
 ### <ins>Front-end</ins>
-<img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/><br>
-<img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/><br>
-<img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/><br>
+<img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/>
+<img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/>
+<img alt="Bootstrap" src="https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white"/>
 <img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+<img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
  
 #### Additional technologies:
-* SASS
+<img alt="SASS" src="https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white"/>
+<img alt="Git" src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white"/>
+<img alt="GitHub" src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"/>
+
 * Axios
 * Cloudinary
 * React MapGL
@@ -129,7 +134,7 @@ Setting the flow chart helped us to brainstorm our way from a few different idea
 <center><img src="https://imgur.com/pozpEPt.png" alt="ERD" width="600"></center>
  
 ### <ins>Wireframes</ins>
-The wireframes include features that we thought could be part of our MVP. We quickly realised - whilst working our way through the back end - that we had to make things simpler to complete our MVP within the given deadline.
+The wireframes include features that we thought could be part of our MVP. We quickly realised, whilst working our way through the back end, that we had to make things simpler to complete our MVP within the given deadline.
  
 #### <center><ins>Homepage</ins></center>
 <center><img src="https://imgur.com/SNPDQ5z.png" alt="Homepage" width="400"></center>
@@ -151,7 +156,7 @@ The wireframes include features that we thought could be part of our MVP. We qui
  
  
 ## Responsibilities
-This project was a great team effort of bringing things together as a pair, but let's take a look at the elements which I configured...
+This project was a great team effort of bringing things together as a pair. Now let's take a look at the elements which I worked on...
  
 ### <ins>Back-end (crises app)</ins>
  
@@ -189,7 +194,7 @@ Some specific fields required to be channeled through a selection of values. The
 ```
  
 #### 2. URLs & Views
-We followed the CRUD pattern to read all crises & single crisis, create, update and delete, for crises and NGO resources separately. Additionally, I personalised the backend by adding enpoints to serve specific tasks for better interaction continuity between the front & back ends. Let's take a look at the URLs:
+We followed the CRUD pattern to read all crises & single crisis, create, update and delete, for crises and NGO resources separately. Additionally, I personalised the backend by adding endpoints serving specific tasks for better interaction continuity between the front & back ends. Here are the URLs:
  
 ```py
 urlpatterns = [
@@ -203,17 +208,17 @@ urlpatterns = [
    path('ngo_resources/', NGOResourceListView.as_view()),
 ]
 ```
-Here is a condensed breakdown of the personalised URLs:
+Condensed breakdown of the personalised URLs:
  
- - `DisasterTypesListView`: calls the custom `Crisis` model method `get_disaster_types()` to be used at the front-end's create & update forms. That way, the single point to amend - when more disaster types are added to the list - is the back-end's model list of choices.
- - `RequestDetailView`: updates a single existing crisis request. The front end form will only send a put request to updated request values.
+ - `DisasterTypesListView`: calls the custom `Crisis` model method `get_disaster_types()` to be used at the front-end's create & update forms. That way, the single point to amend (when more disaster types are added to the list) is the back-end's model list of choices.
+ - `RequestDetailView`: updates a single existing crisis request. The front end form will only send a **PUT** request to updated request values.
  - `ResourceListView`: calls the list of resource values in the Resource model, with the same idea to optimize as the first point (scalability).
  
 #### 3. Serialization
  
  - <ins>Write Crisis</ins>
  
-We wanted to create a crisis within a single request (as opposed to multiple looped requests). That way, if there was an interruption during the **create** request, the crisis object wouldn't get validated and therefore keep the database clean from unfinished and/or duplicate objects.
+We wanted to create a crisis within a single **POST** request (as opposed to multiple looped requests posting individual elements). That way, if there was an interruption during the request, the crisis object wouldn't get validated and therefore keep the database clean from unfinished and/or duplicate objects.
  
 To help understand the process, here is a diagram of the writable nested representation where:
  - Request: refers to the model for a resource request (such as medic, nurse, shelter, etc...).
@@ -330,8 +335,11 @@ Here's what it outputs:
  },
  ...
 ]
- ```
- 
+```
+
+#### 4. Note on NGO Resources
+I realised a little late that having NGO resources as a separate Django app would've improved readability. There was no semantic and/or functional point having 'NGO resources' mixed with the `crises` app.
+
 ### <ins>Back-end (jwt_auth)</ins>
  
 There were a few additional customisations that I thought would be good to have on the `jwt_auth` app, from a user experience's point of view, but also to make the code simpler to handle and more robust (avoiding form validation for specific fields on the front end).
@@ -357,9 +365,7 @@ On field level serializer validation, you can access other keys from the HTTP cl
 For this, in the `RegisterView(APIView)`, we created the method `new_user_token(self, new_user)` which outputs a 7-day expiry token in the registration's response to `setToken()` in the front-end, which has the user logged directly at registration and pushed to its respective dashboard.
  
 ### <ins>Front-end</ins>
- 
-For continuity, we decided to stick at the front-end with the features we built in the back-end.
- 
+
 In general, components support the following standard configuration:
 - updating states with the `useState()` hook to declare variables storing data (e.g. HTTP client responses, primitive data and structural types).
 - `useEffect()` for http client async requests to the back-end enclosed in try/catch blocks.
@@ -395,7 +401,7 @@ That way, on changes, the thread would loop through the `formData.requests` unti
  
 ##### MapboxSearch and handling search results
  
-MapboxSearch is a standalone component that could've been hardcoded directly into `CrisisCreate.js`, but for readability, it made more sense to have it separate. Simply put, here are the main moving parts:
+`MapboxSearch.js` is a standalone component that could've been hardcoded directly into `CrisisCreate.js`, but for readability, it made more sense to have it separate. Simply put, here are the main moving parts:
 - The viewport object has an initial set of values. Any changes are handled by `handleViewportChange`.
 - ReactMapGl: returns Mapbox’s map.
 - Geocoder: returns Mapbox’s search bar result.
@@ -406,11 +412,10 @@ Error handling occurs when a form submission is attempted. If the back-end respo
 Then, arbitrarily assuming that when an input loses focus ( `onBlur={handleFormError}` ) a change has occurred, `formError`'s respective property is set to back to blank and bootstrap's `is-invalid` class is removed.
  
 #### **2. Edit Crisis form, Resources Create/Edit forms**
-These roughly follow the same structure, with their tweaks and intricacies.
  
-Where it differs for Edit forms is where we generally used the attribute `defaultValue` to set the initial value with the unchanged data coming from the app's database, and with `onChange`, updating the form's state with the new value changed by the user.
+Where it differs for 'Edit' forms is where we generally used the attribute `defaultValue` to set the initial value with the unchanged data coming from the app's database, and with `onChange`, updating the form's state with the new value changed by the user.
  
-At last, because Edit forms were part of our stretch goals, they were coded after our MVP was completed, from both the back and front end perspectives. To make `PUT` requests simpler and faster to implement, instead of requesting a single object update with nested data (containing all changed and/or unchanged values at once), only the resources values which sustained a change from their default value, are updated <ins>in a FOR loop</ins>.
+Because 'Edit' forms were part of our stretch goals, they were coded after our MVP was completed, from both the back and front end perspectives. To make **PUT** requests simpler and faster to implement, instead of requesting a single object update with nested data (containing all changed and/or unchanged values at once), only the resources values which sustained a change from their default value are updated <ins>in a FOR loop</ins>.
  
 Because of this, resources will be stored back into the database in most recent order. Therefore, they are sorted back, always in the same manner, with the following `sort()` method:
 ```js
@@ -476,33 +481,30 @@ Refactored its hardcoded map to the child component `MapGLHomepage.js`, adding c
 Here I worked on the conditionals when a form submission returns validation errors from the backend, to display the error messages, to have the input borders glowing in red and to remove the border colour `onBlur`, similar to validations on `createCrisis.js` and other forms.
 
 ## Thoughts on Additional Features
-The main update we would've liked was for NGO's to be able to contribute to whichever crises they chose to dispatch help, with the amount of resources of their choice, with the possibility to time how long the resources would stay on location or to retrieve these manually. Perhaps a different management system would've been needed to work with material resources such as consumables.
+We would've liked for NGO accounts to be able to contribute to whichever crisis they chose to dispatch help, with the amount of resources of their choice, with the possibility to time how long the resources would stay on location or to retrieve these manually. Perhaps a different management system would've been needed to work with material resources such as consumables.
  
 Additionally we had a discussion to add a digital currency, rewards and resources shop, for NGOs (but also Help-Seekers) to stock-up on resources to fill their needs. We also liked the idea to include Contributors (new user type) to feed the platform with resource donations in exchange of rewards.
 
-## Key Learnings, Achievements & Challenges
- 
-In broad terms, although we managed to deliver a fully working MVP within the given timeline, we hadn't measured the scale of complexity of our initial MVP's included features. With the help of our instructor, we manage to strip it down to a simpler, more realistic version (and a much simpler ERD), which yet still required us to compensate with a great amount of extra work.
- 
+## Challenges
+- In broad terms, although we managed to deliver a fully working MVP within the given timeline, we hadn't measured the scale of complexity of our initial MVP's included features. With the help of our instructor, we manage to strip it down to a simpler, more realistic version (and a much simpler ERD), which yet still required us to compensate with a great amount of extra work.
+
+- Although I wasn't comfortable with Django, I'm really glad we set ourselves tasks with nested/populated serializers and custom validations. It was a great learning curve that helped me explore the Django rest framework and solidify my knowledge of it.
+
+- Overall, the back-end build took us just as long (if not longer) as the front-end's. I can appreciate that a well-built foundation of the back-end can simplify the front-end work making it seamless.
+
+- Initially, we planned to use single components (e.g. Dashboard, MapGL) and depending on the user type (Help-seeker or NGO) or the component's use, to incorporate conditionals to display the component and its data differently. Because it became complex to manage and didn't provide value (neither to the user, neither to developing the app), we separated components per user type (e.g. HSDashboard & NGODashboard, CrisisShowHS & CrisisShowNGO, MapGL & MapGLHomepage).
+
+## Wins
+- Succesfully nesting data with serilizers was a great win and I believe that it offers flexibility to do advanced work on the backend. I will defintely be looking forward to study use cases for these.
+
+- From the User model point of view, I learnt how to use custom fields & object-level validation which I think is a great tool when having to conditionally validate models depending on the user type.
+
+- Overall, this was a great exercise to keep practising states, effects, passing props to/from components, exploring 3rd party documentation, handling forms, input objects and playing with their attributes. Additionally, it helped in making choices whether to build/amend code in the front or back end for short/long term solutions.
+
+## Key Learnings
+
 This exercise being an educational project, my objective was to aim for the better programmatic choices as opposed to the quickest ones, the reason being that I wanted to get the most value out of this course and my instructor’s knowledge. By no means do I believe they were the best, but I am confident that they fulfilled my objectives. I can also appreciate that in a professional/commercial environment, the choices that I made may not be suitable for an agile environment where delivery can be a priority over optimisation.
- 
-### <ins>Back-end</ins>
-Although I wasn't comfortable with Django, I'm really glad we set ourselves tasks with nested/populated serializers and custom validations. It was a great learning curve that helped me explore the Django rest framework and solidify my knowledge of it.
- 
-I realised a little late that having NGO resources as a separate Django app would've improved readability. There was no semantic and/or functional point having these elements in the crisis app.
- 
-From the User model point of view, I also learnt how to use custom fields & object-level validation which I think is a great tool when having to conditionally validate models depending on the user type.
- 
-Overall, the back-end build took us just as long (if not longer) as the front-end's. I can appreciate that a well-built foundation of the back-end can simplify the front-end work making it seamless.
- 
-### <ins>Front-end</ins>
- 
-Initially, we planned to use single components incorporating conditionals to display data depending on the user type (Help-seeker or NGO). It became complex to manage and didn't provide value (neither to the user, neither to developing the app) so we separated components per user type (e.g. dashboards, single crisis pages), as well as some child components (e.g. MapGL & MapGLHomepage) which weren't exploited the same way from a parent component to another.
- 
-Overall, this was a great exercise to keep practising states, effects, passing props to/from components, exploring 3rd party documentation, handling forms, input objects and playing with their attributes. Additionally, it helped in making choices whether to build/amend code in the front or back end for short/long term solutions.
- 
-## Conclusions
- 
+
 To me, the final takeaway of this project and the whole course is that the learning curve was steep, but with patience and spending more time on problems helped me to greater progress with technologies which I was not comfortable working with initially, and to build strong foundations (skills and mindset) for the long term. I value a lot being surrounded by a mentor (and/or [StackOverflow](https://stackoverflow.com/)) and I believe that our instructor & teaching assistants gave us some great tools and supervision which helped to gain confidence in building our portfolio projects.
- 
+
 I can appreciate how planning is such an important part of developing products. Experience and practice will help me define more realistic goals. If you read this far, I'd appreciate hearing your thoughts on that last point.
